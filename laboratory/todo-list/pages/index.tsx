@@ -1,7 +1,1 @@
-export default function TodoList() {
-  return (
-    <div>
-      <h1>Todo List</h1>
-    </div>
-  );
-}
+export { Main as default } from 'pages/main/Main';

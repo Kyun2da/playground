@@ -8,4 +8,5 @@ project List
 좀더 공부해야할 것
 
 - test
+  - component test
 - zod

@@ -3605,6 +3605,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"football@workspace:apps/football":
+  version: 0.0.0-use.local
+  resolution: "football@workspace:apps/football"
+  dependencies:
+    "@types/node": ^17.0.12
+    "@types/react": 17.0.37
+    eslint: 7.32.0
+    eslint-config-custom: "*"
+    next: 12.0.8
+    next-transpile-modules: 9.0.0
+    react: 17.0.2
+    react-dom: 17.0.2
+    tsconfig: "*"
+    typescript: ^4.5.3
+    ui: "*"
+  languageName: unknown
+  linkType: soft
+
 "for-in@npm:^1.0.1":
   version: 1.0.2
   resolution: "for-in@npm:1.0.2"

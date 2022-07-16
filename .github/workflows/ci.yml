@@ -37,13 +37,24 @@ jobs:
       - name: Type Check
         uses: mathiasvr/command-output@v1
         id: typecheck
-        run: yarn typecheck
+        with:
+          run: yarn typecheck
 
       - name: lint
         run: yarn lint
+        uses: mathiasvr/command-output@v1
+        id: lint
+        with:
+          run: yarn lint
 
-      - name: Build
-        run: yarn build
+      - name: build
+        uses: mathiasvr/command-output@v1
+        id: build
+        with:
+          run: yarn build
 
       - name: Test
-        run: yarn test
+        uses: mathiasvr/command-output@v1
+        id: test
+        with:
+          run: yarn test

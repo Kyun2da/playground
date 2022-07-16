@@ -4927,8 +4927,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.1.0"],\
             ["react-dom", "virtual:2ab965a997b0e6ba68b5e2dd73041f05e21e61ee68c234fe4e9b057c1ba85a50db804a66556eb83429b74223bf92081f4e45bc4b25c140693478762f20ad9db6#npm:18.1.0"],\
             ["tsconfig", "workspace:packages/tsconfig"],\
-            ["typescript", "patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=7ad353"],\
-            ["ui", "npm:0.2.4"]\
+            ["typescript", "patch:typescript@npm%3A4.7.3#~builtin<compat/typescript>::version=4.7.3&hash=7ad353"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -8889,15 +8888,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["std", [\
-        ["npm:0.1.40", {\
-          "packageLocation": "./.yarn/cache/std-npm-0.1.40-80b0386f51-ecc79c56d9.zip/node_modules/std/",\
-          "packageDependencies": [\
-            ["std", "npm:0.1.40"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["stream-browserify", [\
         ["npm:3.0.0", {\
           "packageLocation": "./.yarn/cache/stream-browserify-npm-3.0.0-4c0bd97245-4c47ef64d6.zip/node_modules/stream-browserify/",\
@@ -9658,16 +9648,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/uglify-js-npm-3.15.5-c17c486a8a-f29e0a6ce8.zip/node_modules/uglify-js/",\
           "packageDependencies": [\
             ["uglify-js", "npm:3.15.5"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["ui", [\
-        ["npm:0.2.4", {\
-          "packageLocation": "./.yarn/cache/ui-npm-0.2.4-de676d777e-c79eafb255.zip/node_modules/ui/",\
-          "packageDependencies": [\
-            ["ui", "npm:0.2.4"],\
-            ["std", "npm:0.1.40"]\
           ],\
           "linkType": "HARD"\
         }]\

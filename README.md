@@ -10,5 +10,3 @@ project List
 - test
   - component test
 - zod
-
-1

@@ -5,10 +5,14 @@
       "outputs": ["dist/**", ".next/**"]
     },
     "lint": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "dev": {
       "cache": false
+    },
+    "typecheck": {
+      "outputs": []
     }
   }
 }

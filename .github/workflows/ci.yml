@@ -23,7 +23,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 2
+          fetch-depth: 200
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2
@@ -34,8 +34,26 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Type Check
+        uses: mathiasvr/command-output@v1
+        id: typecheck
+        with:
+          run: yarn typecheck
+
+      - name: Lint
+        uses: mathiasvr/command-output@v1
+        id: lint
+        with:
+          run: yarn lint
+
       - name: Build
-        run: yarn build
+        uses: mathiasvr/command-output@v1
+        id: build
+        with:
+          run: yarn build
 
       - name: Test
-        run: yarn test
+        uses: mathiasvr/command-output@v1
+        id: test
+        with:
+          run: yarn test

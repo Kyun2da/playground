@@ -40,14 +40,13 @@ jobs:
         with:
           run: yarn typecheck
 
-      - name: lint
-        run: yarn lint
+      - name: Lint
         uses: mathiasvr/command-output@v1
         id: lint
         with:
           run: yarn lint
 
-      - name: build
+      - name: Build
         uses: mathiasvr/command-output@v1
         id: build
         with:

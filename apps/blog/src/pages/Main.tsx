@@ -7,13 +7,15 @@ interface Props {
 }
 
 export function Main({ allPosts }: Props) {
-  console.log(process.env.NODE_ENV);
-
   return (
     <Layout>
-      {allPosts.map(post => {
-        return <ContentCard key={post.slug} post={post} css={{ marginTop: 16, maxWidth: 1024 }} />;
-      })}
+      {allPosts
+        .filter(post => process.env.NODE_ENV === 'development' || post.draft === false)
+        .map(post => {
+          return (
+            <ContentCard key={post.slug} post={post} css={{ marginTop: 16, maxWidth: 1024 }} />
+          );
+        })}
     </Layout>
   );
 }

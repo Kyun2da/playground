@@ -4,6 +4,7 @@ export interface Post {
   date: string;
   coverImage: string;
   categories: string[];
+  draft: boolean;
   time: number;
   excerpt: string;
   ogImage: {

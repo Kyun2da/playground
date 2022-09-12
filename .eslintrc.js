@@ -43,5 +43,11 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'react/no-unknown-property': [
+      2,
+      {
+        ignore: ['jsx'],
+      },
+    ],
   },
 };

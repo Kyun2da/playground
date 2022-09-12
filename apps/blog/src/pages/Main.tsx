@@ -7,6 +7,8 @@ interface Props {
 }
 
 export function Main({ allPosts }: Props) {
+  console.log(process.env.NODE_ENV);
+
   return (
     <Layout>
       {allPosts.map(post => {

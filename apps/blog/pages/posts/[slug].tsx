@@ -5,6 +5,7 @@ import { Comment } from '@components/comment/Comment';
 import { MDXComponents } from '@components/mdx/MDXComponents';
 import { Layout } from '@layouts/Layout';
 import { postFilePaths, POSTS_PATH } from '@lib/mdxUtils';
+import { Image } from '@nextui-org/react';
 import matter from 'gray-matter';
 import { GetStaticPropsContext } from 'next';
 import { MDXRemote } from 'next-mdx-remote';
@@ -15,17 +16,22 @@ interface Props {
   frontMatter: {
     title: string;
     description: string;
+    coverImage: string;
   };
 }
 
 export default function PostPage({ source, frontMatter }: Props) {
+  console.log(frontMatter);
+
   return (
-    <Layout>
-      <header></header>
-      <div className="post-header">
-        <h1>{frontMatter.title}</h1>
-        {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
-      </div>
+    <Layout direction="column">
+      <header>
+        <div className="post-header">
+          <h1>{frontMatter.title}</h1>
+          {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
+        </div>
+      </header>
+      <Image src={frontMatter.coverImage} height="25%" />
       <main>
         <MDXRemote {...source} components={MDXComponents} />
       </main>

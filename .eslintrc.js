@@ -49,5 +49,6 @@ module.exports = {
         ignore: ['jsx'],
       },
     ],
+    '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'off',
   },
 };

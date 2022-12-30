@@ -31,7 +31,11 @@ export default function PostPage({ source, frontMatter }: Props) {
           {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
         </div>
       </header>
-      <Image src={frontMatter.coverImage} height="25%" />
+      <Image src={frontMatter.coverImage} height="400px" />
+      <div>2022. 10. 30</div>
+      <div>first write : 2022. 10. 28</div>
+      <div>first write : 2022. 10. 30</div>
+      <div>태그</div>
       <main>
         <MDXRemote {...source} components={MDXComponents} />
       </main>

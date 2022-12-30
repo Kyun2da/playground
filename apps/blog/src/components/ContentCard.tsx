@@ -1,37 +1,21 @@
 import { Post } from '@interfaces/Post';
-import { Card, Col, Row, Text } from '@nextui-org/react';
-import Image from 'next/image';
+import { OmitPropsOf } from '@lib/type';
+import { Card, Row, Text } from '@nextui-org/react';
 import Link from 'next/link';
-import { ComponentProps } from 'react';
 
 import { CategoryBadge } from './CategoryBadge';
 
-interface Props extends ComponentProps<typeof Card> {
+interface Props extends OmitPropsOf<typeof Card, 'children'> {
   post: Post;
 }
 
 export function ContentCard({ post, ...props }: Props) {
   return (
     <Link href={`/posts/${post.slug}`}>
-      <Card hoverable clickable {...props}>
+      <Card isHoverable isPressable {...props}>
         <Row>
-          <div
-            style={{
-              borderRadius: '12px',
-              overflow: 'hidden',
-              backgroundColor: '#f1f3f5',
-              marginRight: 12,
-            }}
-          >
-            <Image
-              src={post.coverImage}
-              objectFit="scale-down"
-              width={200}
-              height={200}
-              alt={post.title}
-            />
-          </div>
-          <Col>
+          <Card.Image src={post.coverImage} objectFit="cover" width="30%" alt={post.title} />
+          <Card.Body style={{ padding: '12px 24px', display: 'flex', alignSelf: 'stretch' }}>
             <Text h2>{post.title}</Text>
             {post.categories.map(category => {
               return (
@@ -41,11 +25,11 @@ export function ContentCard({ post, ...props }: Props) {
               );
             })}
             <Text>{post.excerpt}</Text>
-            <Row gap={1} css={{ justifyContent: 'flex-end' }}>
-              <Text>{post.date}</Text>
+            <Row justify="space-between" css={{ marginTop: 'auto' }}>
+              <Text css={{ marginRight: 12 }}>{post.date}</Text>
               <Text>읽는데 {post.time}분</Text>
             </Row>
-          </Col>
+          </Card.Body>
         </Row>
       </Card>
     </Link>

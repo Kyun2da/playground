@@ -1,10 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
+import { CategoryBadge } from '@components/CategoryBadge';
 import { Comment } from '@components/comment/Comment';
 import { MDXComponents } from '@components/mdx/MDXComponents';
 import { Layout } from '@layouts/Layout';
-import { Image } from '@nextui-org/react';
+import { Col, Image, Text } from '@nextui-org/react';
+import { format } from 'date-fns';
 import matter from 'gray-matter';
 import { GetStaticPropsContext } from 'next';
 import { MDXRemote } from 'next-mdx-remote';
@@ -15,6 +17,8 @@ interface Props {
   source: any;
   frontMatter: {
     title: string;
+    categories: string[];
+    date: string;
     description: string;
     coverImage: string;
   };
@@ -26,16 +30,27 @@ export default function PostPage({ source, frontMatter }: Props) {
   return (
     <Layout direction="column">
       <header>
-        <div className="post-header">
-          <h1>{frontMatter.title}</h1>
-          {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
-        </div>
+        <h1>{frontMatter.title}</h1>
+        {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
       </header>
+      {frontMatter.categories.map(category => {
+        return (
+          <CategoryBadge key={category} size="xs">
+            {category}
+          </CategoryBadge>
+        );
+      })}
+      <Col css={{ justifyContent: 'flex-end', width: 'fit-content', marginLeft: 'auto' }}>
+        <Text>{`최초 게시일  :  ${format(new Date(frontMatter.date), 'yyyy년 MM월 dd일')}`}</Text>
+        {typeof window === 'object' ? (
+          <Text>{`최종 수정일  :  ${format(
+            new Date(window.document.lastModified),
+            'yyyy년 MM월 dd일'
+          )}`}</Text>
+        ) : null}
+      </Col>
       <Image src={frontMatter.coverImage} height="400px" />
-      <div>2022. 10. 30</div>
-      <div>first write : 2022. 10. 28</div>
-      <div>first write : 2022. 10. 30</div>
-      <div>태그</div>
+
       <main>
         <MDXRemote {...source} components={MDXComponents} />
       </main>

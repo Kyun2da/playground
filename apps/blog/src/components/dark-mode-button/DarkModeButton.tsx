@@ -1,10 +1,10 @@
 import { CSS, styled, useTheme } from '@nextui-org/react';
 import { useTheme as useNextTheme } from 'next-themes';
-import { Moon } from 'public/assets/badge/Moon';
-import { Sun } from 'public/assets/badge/Sun';
+import { Moon } from 'public/assets/icon/Moon';
+import { Sun } from 'public/assets/icon/Sun';
 
 const StyledButton = styled('button', {
-  dflex: 'center',
+  flex: 'center',
   size: 'auto',
   cursor: 'pointer',
   background: 'transparent',

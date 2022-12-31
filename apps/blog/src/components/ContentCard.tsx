@@ -17,6 +17,7 @@ export function ContentCard({ post, ...props }: Props) {
           <Card.Image src={post.coverImage} objectFit="cover" width="30%" alt={post.title} />
           <Card.Body style={{ padding: '12px 24px', display: 'flex', alignSelf: 'stretch' }}>
             <Text h2>{post.title}</Text>
+            <Text>{post.excerpt}</Text>
             {post.categories.map(category => {
               return (
                 <CategoryBadge key={category} size="xs">
@@ -24,7 +25,6 @@ export function ContentCard({ post, ...props }: Props) {
                 </CategoryBadge>
               );
             })}
-            <Text>{post.excerpt}</Text>
             <Row justify="space-between" css={{ marginTop: 'auto' }}>
               <Text css={{ marginRight: 12 }}>{post.date}</Text>
               <Text>읽는데 {post.time}분</Text>

@@ -1,7 +1,7 @@
 import { DarkModeButton } from '@components/dark-mode-button/DarkModeButton';
-import { TITLE } from '@lib/constant';
 import { Container, Link, Row, RowProps, Spacer } from '@nextui-org/react';
 import NextLink from 'next/link';
+import { TITLE } from 'src/utils/constant';
 
 import { Category } from './Category';
 

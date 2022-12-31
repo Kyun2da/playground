@@ -1,31 +1,15 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@layouts/*": [
-        "./src/layouts/*"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@pages/*": [
-        "./src/pages/*"
-      ],
-      "@interfaces/*": [
-        "./src/interfaces/*"
-      ]
+      "@layouts/*": ["./src/layouts/*"],
+      "@lib/*": ["src/utils/*"],
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@interfaces/*": ["./src/interfaces/*"]
     },
     "noEmit": true,
     "incremental": true

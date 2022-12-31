@@ -1,4 +1,4 @@
-import { getAllPosts } from '@lib/api';
+import { getAllPosts } from 'src/utils/api';
 
 export { Main as default } from '@pages/Main';
 

@@ -4,12 +4,12 @@ import path from 'path';
 import { Comment } from '@components/comment/Comment';
 import { MDXComponents } from '@components/mdx/MDXComponents';
 import { Layout } from '@layouts/Layout';
-import { postFilePaths, POSTS_PATH } from '@lib/mdxUtils';
 import { Image } from '@nextui-org/react';
 import matter from 'gray-matter';
 import { GetStaticPropsContext } from 'next';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
+import { postFilePaths, POSTS_PATH } from 'src/utils/mdxUtils';
 
 interface Props {
   source: any;

@@ -11,12 +11,12 @@ interface Props extends RowProps {}
 export function Header(props: Props) {
   return (
     <Row as="header" justify="space-between" {...props}>
-      <SnowFlakeButton />
       <NextLink href="/">
-        <Link href="/" color="text">
+        <Link href="/" color="text" style={{ marginRight: '12px' }}>
           <h1>{TITLE}</h1>
         </Link>
       </NextLink>
+      <SnowFlakeButton />
       <Container display="flex" justify="flex-end">
         <DarkModeButton css={{ marginTop: '4px' }} />
         <Spacer />

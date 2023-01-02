@@ -1,4 +1,3 @@
-import { CssBaseline } from '@nextui-org/react';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
 
@@ -15,7 +14,7 @@ export default class BlogDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {CssBaseline.flush()}
+          <link rel="shortcut icon" href="/assets/icon/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
           <link

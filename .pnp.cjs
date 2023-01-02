@@ -3361,6 +3361,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@vercel/analytics", [\
+        ["npm:0.1.6", {\
+          "packageLocation": "./.yarn/cache/@vercel-analytics-npm-0.1.6-dff8b3c785-4428e27778.zip/node_modules/@vercel/analytics/",\
+          "packageDependencies": [\
+            ["@vercel/analytics", "npm:0.1.6"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:0.1.6", {\
+          "packageLocation": "./.yarn/__virtual__/@vercel-analytics-virtual-e212a0f475/0/cache/@vercel-analytics-npm-0.1.6-dff8b3c785-4428e27778.zip/node_modules/@vercel/analytics/",\
+          "packageDependencies": [\
+            ["@vercel/analytics", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:0.1.6"],\
+            ["@types/react", "npm:18.0.26"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["abbrev", [\
         ["npm:1.1.1", {\
           "packageLocation": "./.yarn/cache/abbrev-npm-1.1.1-3659247eab-a4a97ec07d.zip/node_modules/abbrev/",\
@@ -3796,6 +3818,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash", "npm:4.14.185"],\
             ["@types/node", "npm:17.0.45"],\
             ["@types/react", "npm:18.0.26"],\
+            ["@vercel/analytics", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:0.1.6"],\
             ["classnames", "npm:2.3.1"],\
             ["date-fns", "npm:2.29.2"],\
             ["eslint", "npm:7.32.0"],\

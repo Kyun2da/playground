@@ -34,6 +34,10 @@ export default class BlogDocument extends Document {
             }}
           />
           <meta property="og:image" content="https://kyun2da.dev/api/og" />
+          <meta
+            name="google-site-verification"
+            content="jJz693nK3Tz7qS2gRN3SIH81fUSmI5eYsyTxBIPGSbY"
+          />
         </Head>
         <body>
           <Main />

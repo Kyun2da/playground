@@ -12,6 +12,7 @@
       "@interfaces/*": ["./src/interfaces/*"]
     },
     "noEmit": true,
-    "incremental": true
+    "incremental": true,
+    "types": ["@types/gtag.js"]
   }
 }

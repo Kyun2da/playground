@@ -1,19 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
-import { CategoryBadge } from '@components/CategoryBadge';
-import { Comment } from '@components/comment/Comment';
-import { MDXComponents } from '@components/mdx/MDXComponents';
-import { Layout } from '@layouts/Layout';
-import { Col, Image, Text } from '@nextui-org/react';
-import { format } from 'date-fns';
+import { Contents } from '@pages/Contents';
 import matter from 'gray-matter';
 import { GetStaticPropsContext } from 'next';
-import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import { postFilePaths, POSTS_PATH } from 'src/utils/mdxUtils';
 
-interface Props {
+export interface ContentsProps {
   source: any;
   frontMatter: {
     title: string;
@@ -24,51 +18,8 @@ interface Props {
   };
 }
 
-export default function PostPage({ source, frontMatter }: Props) {
-  console.log(frontMatter);
-
-  return (
-    <Layout direction="column">
-      <header>
-        <h1>{frontMatter.title}</h1>
-        {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
-      </header>
-      {frontMatter.categories.map(category => {
-        return (
-          <CategoryBadge key={category} size="xs">
-            {category}
-          </CategoryBadge>
-        );
-      })}
-      <Col css={{ justifyContent: 'flex-end', width: 'fit-content', marginLeft: 'auto' }}>
-        <Text>{`최초 게시일  :  ${format(new Date(frontMatter.date), 'yyyy년 MM월 dd일')}`}</Text>
-        {typeof window === 'object' ? (
-          <Text>{`최종 수정일  :  ${format(
-            new Date(window.document.lastModified),
-            'yyyy년 MM월 dd일'
-          )}`}</Text>
-        ) : null}
-      </Col>
-      <Image src={frontMatter.coverImage} height="400px" />
-
-      <main>
-        <MDXRemote {...source} components={MDXComponents} />
-      </main>
-
-      <style jsx>{`
-        .post-header h1 {
-          margin-bottom: 0;
-        }
-        .post-header {
-          margin-bottom: 2rem;
-        }
-        .description {
-          opacity: 0.6;
-        }
-      `}</style>
-      <Comment />
-    </Layout>
-  );
+export default function PostPage(props: ContentsProps) {
+  return <Contents {...props} />;
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {

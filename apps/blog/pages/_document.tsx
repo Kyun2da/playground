@@ -25,7 +25,6 @@ export default class BlogDocument extends Document {
           />
           <meta property="og:image" content="https://kyun2da.dev/api/og" />
         </Head>
-
         <body>
           <Main />
           <NextScript />

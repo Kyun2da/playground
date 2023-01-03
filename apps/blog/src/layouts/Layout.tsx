@@ -22,7 +22,7 @@ export function Layout({ title, children, ...props }: Props) {
       <Container display="flex" alignItems="center" {...props}>
         {children}
       </Container>
-      <Footer css={{ height: 'fit-content', marginTop: 'auto', marginBottom: 24 }} />
+      <Footer css={{ height: 'fit-content', marginTop: 120, marginBottom: 24 }} />
     </Container>
   );
 }

@@ -11,7 +11,7 @@ interface Props extends ComponentProps<typeof Container> {
 
 export function Layout({ title, children, ...props }: Props) {
   return (
-    <Container display="flex" justify="center" css={{ maxWidth: 1024, minHeight: '100vh' }}>
+    <Container display="flex" css={{ maxWidth: 1024, minHeight: '100vh', flexDirection: 'column' }}>
       <NextSeo
         title={title}
         titleTemplate="%s | Kyun2da.dev"
@@ -19,10 +19,10 @@ export function Layout({ title, children, ...props }: Props) {
         description="Kyun2da's Dev Blog"
       />
       <Header align="center" css={{ position: 'sticky', width: '100%', height: 'fit-content' }} />
-      <Container display="flex" alignItems="center" {...props}>
+      <Container display="flex" css={{ flex: 1 }} {...props}>
         {children}
       </Container>
-      <Footer css={{ height: 'fit-content', marginTop: 120, marginBottom: 24 }} />
+      <Footer css={{ minHeight: 50, marginTop: 24 }} />
     </Container>
   );
 }

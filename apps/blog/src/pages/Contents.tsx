@@ -12,18 +12,29 @@ export function Contents({ source, frontMatter }: ContentsProps) {
 
   return (
     <Layout title={frontMatter.title} direction="column">
-      <header>
-        <h1>{frontMatter.title}</h1>
-        {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
-      </header>
-      {frontMatter.categories.map(category => {
-        return (
-          <CategoryBadge key={category} size="xs">
-            {category}
-          </CategoryBadge>
-        );
-      })}
-      <Col css={{ justifyContent: 'flex-end', width: 'fit-content', marginLeft: 'auto' }}>
+      <Col
+        css={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 40 }}
+      >
+        <header>
+          <h1>{frontMatter.title}</h1>
+          {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
+        </header>
+        {frontMatter.categories.map(category => {
+          return (
+            <CategoryBadge key={category} size="xs" css={{ width: 120 }}>
+              {category}
+            </CategoryBadge>
+          );
+        })}
+      </Col>
+      <Col
+        css={{
+          justifyContent: 'flex-end',
+          width: 'fit-content',
+          marginLeft: 'auto',
+          marginBottom: 40,
+        }}
+      >
         <Text>{`최초 게시일  :  ${format(new Date(frontMatter.date), 'yyyy년 MM월 dd일')}`}</Text>
         {typeof window === 'object' ? (
           <Text>{`최종 수정일  :  ${format(
@@ -32,9 +43,9 @@ export function Contents({ source, frontMatter }: ContentsProps) {
           )}`}</Text>
         ) : null}
       </Col>
-      <Image src={frontMatter.coverImage} height="400px" />
+      <Image src={frontMatter.coverImage} height="400px" css={{ borderRadius: 8 }} />
 
-      <main>
+      <main style={{ margin: '40px 0' }}>
         <MDXRemote {...source} components={MDXComponents} />
       </main>
 

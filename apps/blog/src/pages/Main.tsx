@@ -12,9 +12,7 @@ export function Main({ allPosts }: Props) {
       {allPosts
         .filter(post => process.env.NODE_ENV === 'development' || post.draft === false)
         .map(post => {
-          return (
-            <ContentCard key={post.slug} post={post} css={{ marginTop: 16, maxWidth: 1024 }} />
-          );
+          return <ContentCard key={post.slug} post={post} />;
         })}
     </Layout>
   );

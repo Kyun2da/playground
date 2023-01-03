@@ -849,6 +849,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@next/env", "npm:12.2.3"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:13.1.1", {\
+          "packageLocation": "./.yarn/cache/@next-env-npm-13.1.1-0767e85d5d-e265b9b9e7.zip/node_modules/@next/env/",\
+          "packageDependencies": [\
+            ["@next/env", "npm:13.1.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@next/eslint-plugin-next", [\
@@ -3873,6 +3880,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mapbox/rehype-prism", "npm:0.8.0"],\
             ["@mdx-js/loader", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:2.1.3"],\
             ["@mdx-js/react", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:2.1.3"],\
+            ["@next/env", "npm:13.1.1"],\
             ["@nextui-org/react", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:1.0.0-beta.11"],\
             ["@types/gtag.js", "npm:0.0.12"],\
             ["@types/lodash", "npm:4.14.185"],\
@@ -9235,7 +9243,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["next-sitemap", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:3.1.44"],\
             ["@corex/deepmerge", "npm:4.0.29"],\
-            ["@next/env", null],\
+            ["@next/env", "npm:13.1.1"],\
             ["@types/next", null],\
             ["@types/next__env", null],\
             ["minimist", "npm:1.2.7"],\

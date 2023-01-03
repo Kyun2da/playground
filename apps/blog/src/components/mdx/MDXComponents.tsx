@@ -1,8 +1,9 @@
-import { styled, Text, useTheme } from '@nextui-org/react';
+import { styled, useTheme } from '@nextui-org/react';
 import * as React from 'react';
 
 import Codeblock from './code-block/CodeBlock';
 import Block from './example-block/Block';
+import { HTag } from './heading/Heading';
 
 const Table: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   return (
@@ -95,10 +96,10 @@ const Paragraph = styled('p', {
 });
 
 export const MDXComponents = {
-  h1: (props: React.DetailsHTMLAttributes<unknown>) => <Text as="h1" {...props} />,
-  h2: (props: React.DetailsHTMLAttributes<unknown>) => <Text as="h2" {...props} />,
-  h3: (props: React.DetailsHTMLAttributes<unknown>) => <Text as="h3" {...props} />,
-  h4: (props: React.DetailsHTMLAttributes<unknown>) => <Text as="h4" {...props} />,
+  h1: (props: any) => <HTag as="h1" {...props} />,
+  h2: (props: any) => <HTag as="h2" {...props} />,
+  h3: (props: any) => <HTag as="h3" {...props} />,
+  h4: (props: any) => <HTag as="h4" {...props} />,
   p: Paragraph,
   table: Table,
   thead: Thead,

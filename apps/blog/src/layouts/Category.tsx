@@ -7,8 +7,29 @@ import { useRouter } from 'next/router';
 export function Category() {
   const router = useRouter();
 
+  console.log(router.asPath);
+
   return (
     <Row justify="center" align="center" fluid={false}>
+      <NextLink href="/">
+        <Link
+          aria-disabled
+          className={cn('navbar__link', {
+            active: router.asPath === '/',
+          })}
+          title="Home"
+          css={{
+            color: '$text',
+            '&.active': {
+              fontWeight: '600',
+              color: '$primary',
+            },
+          }}
+        >
+          Home
+        </Link>
+      </NextLink>
+      <Spacer x={1} y={0} />
       <NextLink href="/tags">
         <Link
           aria-disabled

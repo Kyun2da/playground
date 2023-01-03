@@ -16,7 +16,7 @@ export default function () {
           justifyContent: 'center',
           flexDirection: 'column',
           backgroundImage: 'linear-gradient(to bottom, #dbf4ff, #fff1f1)',
-          fontSize: 60,
+          fontSize: 80,
           letterSpacing: -2,
           fontWeight: 700,
         }}

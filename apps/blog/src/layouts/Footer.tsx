@@ -13,7 +13,7 @@ export function Footer(props: Props) {
   return (
     <Container display="flex" justify="center" {...props}>
       <Row justify="space-between">
-        <Text>All rights reserved © Kyun2da 2022</Text>
+        <Text>All rights reserved © Kyun2da {new Date().getFullYear()}</Text>
         <Row justify="flex-end" css={{ width: 'fit-content', gap: 24 }}>
           <IconButton
             icon={<GithubIcon />}

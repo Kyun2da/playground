@@ -92,7 +92,10 @@ const List: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
 };
 
 const Paragraph = styled('p', {
-  fontSize: '1.125rem',
+  fontSize: '17px',
+  wordBreak: 'keep-all',
+  lineHeight: '200%',
+  overflowWrap: 'break-word',
 });
 
 export const MDXComponents = {

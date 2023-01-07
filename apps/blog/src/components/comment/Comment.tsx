@@ -15,6 +15,7 @@ export function Comment() {
       reactionsEnabled="1"
       emitMetadata="0"
       inputPosition="top"
+      lang="ko"
       theme={isDark ? 'dark' : 'light'}
     />
   );

@@ -21,6 +21,7 @@ export function Feedback() {
         reactionsEnabled="1"
         inputPosition="top"
         emitMetadata="0"
+        lang="ko"
         theme={isDark ? 'dark' : 'light'}
       />
     </Layout>

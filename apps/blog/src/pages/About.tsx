@@ -49,17 +49,17 @@ export function About() {
 const list = [
   {
     title: 'Tools',
-    img: 'assets/blog/tools.png',
+    img: 'https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/tools.png',
     isConstruct: true,
   },
   {
     title: '기술 스택',
-    img: 'assets/blog/tools.png',
+    img: 'https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/tools.png',
     isConstruct: true,
   },
   {
     title: 'Archive',
-    img: 'assets/blog/tools.png',
+    img: 'https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/tools.png',
     isConstruct: true,
   },
 ];

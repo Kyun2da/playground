@@ -19,6 +19,7 @@ export function Feedback() {
         categoryId="DIC_kwDOHbjrm84CRXte"
         mapping="pathname"
         reactionsEnabled="1"
+        inputPosition="top"
         emitMetadata="0"
         theme={isDark ? 'dark' : 'light'}
       />

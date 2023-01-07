@@ -14,6 +14,7 @@ export function Comment() {
       mapping="pathname"
       reactionsEnabled="1"
       emitMetadata="0"
+      inputPosition="top"
       theme={isDark ? 'dark' : 'light'}
     />
   );

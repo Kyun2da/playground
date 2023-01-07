@@ -8,8 +8,6 @@ import { MDXRemote } from 'next-mdx-remote';
 import { ContentsProps } from 'pages/posts/[slug]';
 
 export function Contents({ source, frontMatter }: ContentsProps) {
-  console.log(frontMatter);
-
   return (
     <Layout title={frontMatter.title} direction="column">
       <Col

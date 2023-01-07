@@ -7,8 +7,6 @@ import { useRouter } from 'next/router';
 export function Category() {
   const router = useRouter();
 
-  console.log(router.asPath);
-
   return (
     <Row justify="center" align="center" fluid={false}>
       <NextLink href="/">

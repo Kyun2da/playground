@@ -19,7 +19,7 @@ export function ContentCard({ post, ...props }: Props) {
             src={post.coverImage}
             objectFit="cover"
             width="30%"
-            height="200px"
+            height="210px"
             alt={post.title}
           />
           <Card.Body style={{ padding: '12px 24px', display: 'flex', alignSelf: 'stretch' }}>

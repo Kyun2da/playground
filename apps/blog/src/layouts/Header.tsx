@@ -12,7 +12,7 @@ export function Header() {
   const layout = useLayout();
 
   return (
-    <Navbar variant="sticky" isBordered shouldHideOnScroll>
+    <Navbar variant="sticky" shouldHideOnScroll>
       <Navbar.Brand>
         <NextLink href="/">
           <Link href="/" color="text" style={{ marginRight: '12px' }}>

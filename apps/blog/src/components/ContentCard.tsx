@@ -37,18 +37,11 @@ export function ContentCard({ post, ...props }: Props) {
               </Text>
               <Text size="$xs">{post.excerpt}</Text>
               <Col css={{ marginTop: 'auto' }}>
-                {post.categories.map(category => {
-                  return (
-                    <CategoryBadge key={category} size="xs">
-                      {category}
-                    </CategoryBadge>
-                  );
-                })}
                 <Row justify="space-between">
-                  <Text css={{ marginRight: 12 }}>
+                  <Text size="$xs" css={{ marginRight: 12 }}>
                     {format(parse(post.date, 'yyyy-mm-dd', new Date()), 'yyyy - mm - dd')}
                   </Text>
-                  <Text>읽는데 {post.time}분</Text>
+                  <Text size="$xs">읽는데 {post.time}분</Text>
                 </Row>
               </Col>
             </Card.Body>

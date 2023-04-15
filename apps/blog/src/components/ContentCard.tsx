@@ -13,7 +13,12 @@ interface Props extends OmitPropsOf<typeof Card, 'children'> {
 export function ContentCard({ post, ...props }: Props) {
   return (
     <Link href={`/posts/${post.slug}`}>
-      <Card isHoverable isPressable css={{ marginTop: 16, maxWidth: 1024, height: 204 }} {...props}>
+      <Card
+        isHoverable
+        isPressable
+        css={{ margin: '0 auto', marginTop: 32, maxWidth: 724, height: 204 }}
+        {...props}
+      >
         <Row>
           <Card.Image
             src={post.coverImage}

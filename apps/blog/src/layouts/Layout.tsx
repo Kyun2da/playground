@@ -18,7 +18,7 @@ export function Layout({ title, children, ...props }: Props) {
         description="Kyun2da's Dev Blog"
       />
       <Header />
-      <Container display="flex" css={{ flex: 1 }} {...props}>
+      <Container justify="center" {...props}>
         {children}
       </Container>
       {/* <Footer css={{ minHeight: 50, marginTop: 24 }} /> */}

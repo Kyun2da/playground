@@ -6,46 +6,86 @@ import { MailIcon } from 'public/assets/icon/Mail';
 import { RssIcon } from 'public/assets/icon/RssIcon';
 import { TwitterIcon } from 'public/assets/icon/Twitter';
 import { ComponentProps } from 'react';
+import { useLayout } from 'src/hooks/useMedia';
 
 interface Props extends ComponentProps<typeof Container> {}
 
 export function Footer(props: Props) {
+  const layout = useLayout();
+
   return (
-    <Container display="flex" justify="center" {...props}>
-      <Row justify="space-between">
-        <Text>All rights reserved © Kyun2da {new Date().getFullYear()}</Text>
-        <Row justify="flex-end" css={{ width: 'fit-content', gap: 24 }}>
-          <IconButton
-            icon={<GithubIcon />}
-            onClick={() => {
-              window.open('https://github.com/kyun2da');
-            }}
-          />
-          <IconButton
-            icon={<TwitterIcon />}
-            onClick={() => {
-              window.open('https://twitter.com/kyun2da');
-            }}
-          />
-          <IconButton
-            icon={<MailIcon />}
-            onClick={() => {
-              window.open('mailto:kyun2dot@gmail.com');
-            }}
-          />
-          <IconButton
-            icon={<LinkedInIcon />}
-            onClick={() => {
-              window.open('https://www.linkedin.com/in/%EA%B7%A0-%ED%97%88-5217691b9/');
-            }}
-          />
-          <IconButton
-            icon={<RssIcon />}
-            onClick={() => {
-              window.open('https://www.kyun2da.dev/sitemap.xml');
-            }}
-          />
-        </Row>
+    <Layout {...props}>
+      <Text size={layout === 'mobile' ? '$sm' : '$base'}>
+        All rights reserved © Kyun2da {new Date().getFullYear()}
+      </Text>
+      <Row justify="flex-end" css={{ width: 'fit-content', gap: layout === 'mobile' ? 12 : 24 }}>
+        <IconButton
+          icon={<GithubIcon />}
+          onClick={() => {
+            window.open('https://github.com/kyun2da');
+          }}
+        />
+        <IconButton
+          icon={<TwitterIcon />}
+          onClick={() => {
+            window.open('https://twitter.com/kyun2da');
+          }}
+        />
+        <IconButton
+          icon={<MailIcon />}
+          onClick={() => {
+            window.open('mailto:kyun2dot@gmail.com');
+          }}
+        />
+        <IconButton
+          icon={<LinkedInIcon />}
+          onClick={() => {
+            window.open('https://www.linkedin.com/in/%EA%B7%A0-%ED%97%88-5217691b9/');
+          }}
+        />
+        <IconButton
+          icon={<RssIcon />}
+          onClick={() => {
+            window.open('https://www.kyun2da.dev/sitemap.xml');
+          }}
+        />
+      </Row>
+    </Layout>
+  );
+}
+
+function Layout({ children, style, ...props }: Props) {
+  const layout = useLayout();
+
+  if (layout === 'mobile') {
+    return (
+      <Container
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: 8,
+          maxWidth: 768,
+          marginTop: 36,
+          marginBottom: 24,
+          ...style,
+        }}
+        {...props}
+      >
+        {children}
+      </Container>
+    );
+  }
+
+  return (
+    <Container
+      css={{
+        maxWidth: 768,
+        marginTop: 72,
+        marginBottom: 48,
+      }}
+    >
+      <Row justify="space-between" {...props}>
+        {children}
       </Row>
     </Container>
   );

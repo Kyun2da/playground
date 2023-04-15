@@ -2,6 +2,7 @@ import { Container } from '@nextui-org/react';
 import { NextSeo } from 'next-seo';
 import { ComponentProps } from 'react';
 
+import { Footer } from './Footer';
 import { Header } from './Header';
 
 interface Props extends ComponentProps<typeof Container> {
@@ -21,7 +22,7 @@ export function Layout({ title, children, ...props }: Props) {
       <Container justify="center" {...props}>
         {children}
       </Container>
-      {/* <Footer css={{ minHeight: 50, marginTop: 24 }} /> */}
+      <Footer />
     </Container>
   );
 }

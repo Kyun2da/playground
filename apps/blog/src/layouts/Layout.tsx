@@ -11,7 +11,7 @@ interface Props extends ComponentProps<typeof Container> {
 
 export function Layout({ title, children, ...props }: Props) {
   return (
-    <Container gap={0} fluid>
+    <Container gap={0} css={{ maxWidth: '100%' }}>
       <NextSeo
         title={title}
         titleTemplate="%s | Kyun2da.dev"

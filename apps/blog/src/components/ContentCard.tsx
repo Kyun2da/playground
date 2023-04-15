@@ -2,6 +2,7 @@ import { Post } from '@interfaces/Post';
 import { Card, Col, Row, Text } from '@nextui-org/react';
 import { format, parse } from 'date-fns';
 import Link from 'next/link';
+import { useLayout } from 'src/hooks/useMedia';
 import { OmitPropsOf } from 'src/utils/type';
 
 import { CategoryBadge } from './CategoryBadge';
@@ -11,6 +12,52 @@ interface Props extends OmitPropsOf<typeof Card, 'children'> {
 }
 
 export function ContentCard({ post, ...props }: Props) {
+  const layout = useLayout();
+
+  if (layout === 'mobile') {
+    return (
+      <Link href={`/posts/${post.slug}`}>
+        <Card
+          isHoverable
+          isPressable
+          css={{ margin: '0 auto', marginTop: 24, maxWidth: 724, maxHeight: 160 }}
+          {...props}
+        >
+          <Row css={{ maxHeight: 160 }}>
+            <Card.Image
+              src={post.coverImage}
+              objectFit="cover"
+              width={200}
+              height={160}
+              alt={post.title}
+            />
+            <Card.Body style={{ padding: '6px 12px', display: 'flex', alignSelf: 'stretch' }}>
+              <Text size="$1xl" weight={'bold'}>
+                {post.title}
+              </Text>
+              <Text size="$xs">{post.excerpt}</Text>
+              <Col css={{ marginTop: 'auto' }}>
+                {post.categories.map(category => {
+                  return (
+                    <CategoryBadge key={category} size="xs">
+                      {category}
+                    </CategoryBadge>
+                  );
+                })}
+                <Row justify="space-between">
+                  <Text css={{ marginRight: 12 }}>
+                    {format(parse(post.date, 'yyyy-mm-dd', new Date()), 'yyyy - mm - dd')}
+                  </Text>
+                  <Text>읽는데 {post.time}분</Text>
+                </Row>
+              </Col>
+            </Card.Body>
+          </Row>
+        </Card>
+      </Link>
+    );
+  }
+
   return (
     <Link href={`/posts/${post.slug}`}>
       <Card

@@ -9,7 +9,7 @@ import { ContentsProps } from 'pages/posts/[slug]';
 
 export function Contents({ source, frontMatter }: ContentsProps) {
   return (
-    <Layout title={frontMatter.title} direction="column">
+    <Layout title={frontMatter.title} direction="column" css={{ maxWidth: 768 }}>
       <Col
         css={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 40 }}
       >
@@ -26,12 +26,7 @@ export function Contents({ source, frontMatter }: ContentsProps) {
         })}
       </Col>
       <Col
-        css={{
-          justifyContent: 'flex-end',
-          width: 'fit-content',
-          marginLeft: 'auto',
-          marginBottom: 40,
-        }}
+        css={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 24 }}
       >
         <Text>{`최초 게시일  :  ${format(new Date(frontMatter.date), 'yyyy년 MM월 dd일')}`}</Text>
         {typeof window === 'object' ? (
@@ -41,7 +36,9 @@ export function Contents({ source, frontMatter }: ContentsProps) {
           )}`}</Text>
         ) : null}
       </Col>
-      <Image src={frontMatter.coverImage} height="400px" css={{ borderRadius: 8 }} />
+      <Col css={{ marginBottom: 24 }}>
+        <Image src={frontMatter.coverImage} height="400px" css={{ borderRadius: 8 }} />
+      </Col>
 
       <main style={{ margin: '40px 0' }}>
         <MDXRemote {...source} components={MDXComponents} />

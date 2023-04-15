@@ -28,8 +28,10 @@ export function ContentCard({ post, ...props }: Props) {
             alt={post.title}
           />
           <Card.Body style={{ padding: '12px 24px', display: 'flex', alignSelf: 'stretch' }}>
-            <Text h2>{post.title}</Text>
-            <Text>{post.excerpt}</Text>
+            <Text size="$3xl" weight={'bold'}>
+              {post.title}
+            </Text>
+            <Text size="$sm">{post.excerpt}</Text>
             <Col css={{ marginTop: 'auto' }}>
               {post.categories.map(category => {
                 return (

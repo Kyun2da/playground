@@ -7,6 +7,8 @@ interface Props {
 }
 
 export function Main({ allPosts }: Props) {
+  console.log(allPosts);
+
   return (
     <Layout>
       {allPosts

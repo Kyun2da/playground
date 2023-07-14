@@ -1,8 +1,8 @@
 import Giscus from '@giscus/react';
-import { useTheme } from '@nextui-org/react';
+import { useTheme } from 'next-themes';
 
 export function Comment() {
-  const { isDark } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Giscus
@@ -16,7 +16,7 @@ export function Comment() {
       emitMetadata="0"
       inputPosition="top"
       lang="ko"
-      theme={isDark ? 'dark' : 'light'}
+      theme={theme === 'dark' ? 'dark' : 'light'}
     />
   );
 }

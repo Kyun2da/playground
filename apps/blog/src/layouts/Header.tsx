@@ -1,28 +1,28 @@
 import { DarkModeButton } from '@components/dark-mode-button/DarkModeButton';
 import { SnowFlakeButton } from '@components/snow-flake-button/SnowFlakeButton';
-import { Link, Navbar, Text } from '@nextui-org/react';
+import { Link, Navbar, NavbarBrand } from '@nextui-org/react';
 import NextLink from 'next/link';
 import { useLayout } from 'src/hooks/useMedia';
 import { TITLE } from 'src/utils/constant';
 
 import { Category } from './Category';
-import { HamburgerMenu } from './components/header/HambugerMenu';
+// import { HamburgerMenu } from './components/header/HambugerMenu';
 
 export function Header() {
   const layout = useLayout();
 
   return (
-    <Navbar variant="sticky" shouldHideOnScroll>
-      <Navbar.Brand>
+    <Navbar shouldHideOnScroll>
+      <NavbarBrand>
         <NextLink href="/">
-          <Link href="/" color="text" style={{ marginRight: '12px' }}>
-            {layout === 'mobile' ? <Text h3>{TITLE}</Text> : <Text h2>{TITLE}</Text>}
+          <Link href="/" style={{ marginRight: '12px' }}>
+            {layout === 'mobile' ? <p>{TITLE}</p> : <p>{TITLE}</p>}
           </Link>
         </NextLink>
         {layout === 'mobile' ? null : <SnowFlakeButton />}
-        <DarkModeButton css={{ marginTop: '4px' }} />
-      </Navbar.Brand>
-      {layout === 'mobile' ? <HamburgerMenu /> : <Category />}
+        <DarkModeButton />
+      </NavbarBrand>
+      {layout === 'mobile' ? null : <Category />}
     </Navbar>
   );
 }

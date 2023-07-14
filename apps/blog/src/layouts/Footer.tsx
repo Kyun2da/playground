@@ -1,24 +1,19 @@
 import { IconButton } from '@components/icon-button/IconButton';
-import { Container, Row, Text } from '@nextui-org/react';
 import { GithubIcon } from 'public/assets/icon/GIthub';
 import { LinkedInIcon } from 'public/assets/icon/LinkedIn';
 import { MailIcon } from 'public/assets/icon/Mail';
 import { RssIcon } from 'public/assets/icon/RssIcon';
 import { TwitterIcon } from 'public/assets/icon/Twitter';
-import { ComponentProps } from 'react';
+import { ReactNode } from 'react';
 import { useLayout } from 'src/hooks/useMedia';
 
-interface Props extends ComponentProps<typeof Container> {}
+// interface Props {}
 
-export function Footer(props: Props) {
-  const layout = useLayout();
-
+export function Footer() {
   return (
-    <Layout {...props}>
-      <Text size={layout === 'mobile' ? '$sm' : '$base'}>
-        All rights reserved © Kyun2da {new Date().getFullYear()}
-      </Text>
-      <Row justify="flex-end" css={{ width: 'fit-content', gap: layout === 'mobile' ? 12 : 24 }}>
+    <Layout>
+      <p>All rights reserved © Kyun2da {new Date().getFullYear()}</p>
+      <div>
         <IconButton
           icon={<GithubIcon />}
           onClick={() => {
@@ -49,17 +44,17 @@ export function Footer(props: Props) {
             window.open('https://www.kyun2da.dev/sitemap.xml');
           }}
         />
-      </Row>
+      </div>
     </Layout>
   );
 }
 
-function Layout({ children, style, ...props }: Props) {
+function Layout({ children }: { children: ReactNode }) {
   const layout = useLayout();
 
   if (layout === 'mobile') {
     return (
-      <Container
+      <div
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -67,26 +62,22 @@ function Layout({ children, style, ...props }: Props) {
           maxWidth: 768,
           marginTop: 36,
           marginBottom: 24,
-          ...style,
         }}
-        {...props}
       >
         {children}
-      </Container>
+      </div>
     );
   }
 
   return (
-    <Container
-      css={{
-        maxWidth: 768,
-        marginTop: 72,
-        marginBottom: 48,
-      }}
+    <div
+    // css={{
+    //   maxWidth: 768,
+    //   marginTop: 72,
+    //   marginBottom: 48,
+    // }}
     >
-      <Row justify="space-between" {...props}>
-        {children}
-      </Row>
-    </Container>
+      <div>{children}</div>
+    </div>
   );
 }

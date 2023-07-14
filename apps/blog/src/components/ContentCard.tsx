@@ -1,5 +1,5 @@
 import { Post } from '@interfaces/Post';
-import { Card, Col, Row, Text } from '@nextui-org/react';
+import { Card, CardBody } from '@nextui-org/react';
 import { format, parse } from 'date-fns';
 import Link from 'next/link';
 import { useLayout } from 'src/hooks/useMedia';
@@ -20,32 +20,32 @@ export function ContentCard({ post, ...props }: Props) {
         <Card
           isHoverable
           isPressable
-          css={{ margin: '0 auto', marginTop: 24, maxWidth: 724, maxHeight: 160 }}
+          
           {...props}
         >
-          <Row css={{ maxHeight: 160 }}>
-            <Card.Image
+          <div>
+            <img
               src={post.coverImage}
-              objectFit="cover"
+             
               width={200}
               height={160}
               alt={post.title}
             />
-            <Card.Body style={{ padding: '6px 12px', display: 'flex', alignSelf: 'stretch' }}>
-              <Text size="$1xl" weight={'bold'}>
+            <CardBody style={{ padding: '6px 12px', display: 'flex', alignSelf: 'stretch' }}>
+              <p>
                 {post.title}
-              </Text>
-              <Text size="$xs">{post.excerpt}</Text>
-              <Col css={{ marginTop: 'auto' }}>
-                <Row justify="space-between">
-                  <Text size="$xs" css={{ marginRight: 12 }}>
+              </p>
+              <p>{post.excerpt}</p>
+              <div >
+                <div >
+                  <p  >
                     {format(parse(post.date, 'yyyy-mm-dd', new Date()), 'yyyy - mm - dd')}
-                  </Text>
-                  <Text size="$xs">읽는데 {post.time}분</Text>
-                </Row>
-              </Col>
-            </Card.Body>
-          </Row>
+                  </p>
+                  <p >읽는데 {post.time}분</p>
+                </div>
+              </div>
+            </CardBody>
+          </div>
         </Card>
       </Link>
     );
@@ -56,23 +56,22 @@ export function ContentCard({ post, ...props }: Props) {
       <Card
         isHoverable
         isPressable
-        css={{ margin: '0 auto', marginTop: 32, maxWidth: 724, height: 204 }}
         {...props}
       >
-        <Row>
-          <Card.Image
+        <div>
+          <img
             src={post.coverImage}
-            objectFit="cover"
+            
             width="30%"
             height="210px"
             alt={post.title}
           />
-          <Card.Body style={{ padding: '12px 24px', display: 'flex', alignSelf: 'stretch' }}>
-            <Text size="$3xl" weight={'bold'}>
+          <CardBody style={{ padding: '12px 24px', display: 'flex', alignSelf: 'stretch' }}>
+            <p>
               {post.title}
-            </Text>
-            <Text size="$sm">{post.excerpt}</Text>
-            <Col css={{ marginTop: 'auto' }}>
+            </p>
+            <p >{post.excerpt}</p>
+            <div>
               {post.categories.map(category => {
                 return (
                   <CategoryBadge key={category} size="xs">
@@ -80,15 +79,15 @@ export function ContentCard({ post, ...props }: Props) {
                   </CategoryBadge>
                 );
               })}
-              <Row justify="space-between">
-                <Text css={{ marginRight: 12 }}>
+              <div>
+                <p>
                   {format(parse(post.date, 'yyyy-mm-dd', new Date()), 'yyyy - mm - dd')}
-                </Text>
-                <Text>읽는데 {post.time}분</Text>
-              </Row>
-            </Col>
-          </Card.Body>
-        </Row>
+                </p>
+                <p>읽는데 {post.time}분</p>
+              </div>
+            </div>
+          </CardBody>
+        </div>
       </Card>
     </Link>
   );

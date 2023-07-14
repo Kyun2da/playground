@@ -1,5 +1,3 @@
-import { Text } from '@nextui-org/react';
-
 function getAnchor(text: string) {
   return text
     .toLowerCase()
@@ -7,7 +5,7 @@ function getAnchor(text: string) {
     .replace(/[^a-z0-9가-힣_]/g, '')
     .replace(/[ ]/g, '-');
 }
-export const HTag = ({ children, as }: { children: string; as: 'h1' | 'h2' | 'h3' | 'h4' }) => {
+export const HTag = ({ children }: { children: string; as: 'h1' | 'h2' | 'h3' | 'h4' }) => {
   const anchor = getAnchor(children);
   const link = `#${anchor}`;
 
@@ -21,19 +19,19 @@ export const HTag = ({ children, as }: { children: string; as: 'h1' | 'h2' | 'h3
         scrollToTargetAdjusted(anchor);
       }}
     >
-      <Text
-        as={as}
+      <p
+        // as={as}
         id={anchor}
-        css={{
-          marginBottom: 24,
-          marginTop: 48,
-          '&:hover': {
-            color: '#687076',
-          },
-        }}
+        // css={{
+        //   marginBottom: 24,
+        //   marginTop: 48,
+        //   '&:hover': {
+        //     color: '#687076',
+        //   },
+        // }}
       >
         {children}
-      </Text>
+      </p>
     </a>
   );
 };

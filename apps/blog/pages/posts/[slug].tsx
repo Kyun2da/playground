@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Contents } from '@pages/Contents';
+// import { Contents } from '@pages/Contents';
 import matter from 'gray-matter';
 import { GetStaticPropsContext } from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
@@ -18,8 +18,8 @@ export interface ContentsProps {
   };
 }
 
-export default function PostPage(props: ContentsProps) {
-  return <Contents {...props} />;
+export default function PostPage() {
+  return null;
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {

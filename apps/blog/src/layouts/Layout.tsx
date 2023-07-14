@@ -1,17 +1,17 @@
-import { Container } from '@nextui-org/react';
 import { NextSeo } from 'next-seo';
-import { ComponentProps } from 'react';
+import { ReactNode } from 'react';
 
 import { Footer } from './Footer';
 import { Header } from './Header';
 
-interface Props extends ComponentProps<typeof Container> {
+interface Props {
   title?: string;
+  children: ReactNode;
 }
 
 export function Layout({ title, children, ...props }: Props) {
   return (
-    <Container gap={0} css={{ maxWidth: '100%' }}>
+    <div>
       <NextSeo
         title={title}
         titleTemplate="%s | Kyun2da.dev"
@@ -19,10 +19,8 @@ export function Layout({ title, children, ...props }: Props) {
         description="Kyun2da's Dev Blog"
       />
       <Header />
-      <Container justify="center" {...props}>
-        {children}
-      </Container>
+      <div {...props}>{children}</div>
       <Footer />
-    </Container>
+    </div>
   );
 }

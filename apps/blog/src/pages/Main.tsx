@@ -1,3 +1,5 @@
+'use client';
+
 import { ContentCard } from '@components/ContentCard';
 import { Post } from '@interfaces/Post';
 import { Layout } from '@layouts/Layout';

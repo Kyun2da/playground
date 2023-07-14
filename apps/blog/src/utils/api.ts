@@ -9,9 +9,7 @@ export function getPostSlugs() {
   return fs.readdirSync(postsDirectory);
 }
 
-interface Items {
-  [key: string]: string;
-}
+type Items = Record<string, string>;
 
 export function getPostBySlug(slug: string, fields: string[] = []) {
   const realSlug = slug.replace(/\.mdx$/, '');

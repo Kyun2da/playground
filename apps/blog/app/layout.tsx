@@ -2,6 +2,7 @@
 import { Analytics } from '@vercel/analytics/react';
 
 import { ThemeProvider } from '@components/theme-provider.tsx/ThemeProvider';
+import { notoSansKR } from 'constants/font';
 import Script from 'next/script';
 import * as gtag from 'utils/gtag';
 import '../styles/global.css';
@@ -10,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body>
+      <body className={`${notoSansKR.className}  prose lg:prose-xl dark:prose-invert`}>
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
           strategy="afterInteractive"

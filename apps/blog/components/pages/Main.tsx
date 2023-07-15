@@ -12,7 +12,7 @@ export function Main({ allPosts }: Props) {
   return (
     <>
       <Header />
-      <main className="flex flex-col justify-center px-16 gap-10">
+      <main className="w-screen flex flex-col justify-center px-16 gap-10">
         {allPosts
           .filter(post => process.env.NODE_ENV === 'development' || post.draft === false)
           .map(post => {

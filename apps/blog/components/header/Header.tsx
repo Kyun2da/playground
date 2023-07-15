@@ -12,16 +12,16 @@ import {
 
 export function Header() {
   return (
-    <header className="flex sticky items-center justify-between px-24 gap-6 h-16">
+    <header className="w-screen flex sticky items-center justify-around px-80 gap-6 h-24">
       <div className="flex gap-6">
-        <h1 className="text-4xl">Kyun2da.dev</h1>
+        <h2 className="contents my-auto">Kyun2da.dev</h2>
         <DarkModeButton />
       </div>
       <NavigationMenu className="flex items-center">
         <NavigationMenuList className="gap-6">
           {siteConfig.navItems.map(menu => {
             return (
-              <NavigationMenuItem key={menu.label}>
+              <NavigationMenuItem key={menu.label} className="list-none">
                 <Link href={menu.href} legacyBehavior passHref>
                   <NavigationMenuLink className="text-2xl">
                     <Button>{menu.label}</Button>

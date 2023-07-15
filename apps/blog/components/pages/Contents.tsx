@@ -6,49 +6,50 @@ import { ContentsProps } from 'app/posts/[slug]/page';
 import { format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export function Contents({ source, frontMatter }: ContentsProps) {
-  console.log(source);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
-    <div>
+    <div className="flex flex-col max-w-3xl mx-auto justify-center">
       <div>
         <header>
-          <h1>{frontMatter.title}</h1>
-          {frontMatter!.description && <p className="description">{frontMatter.description}</p>}
+          <h1 className="text-center">{frontMatter.title}</h1>
+          {frontMatter.excerpt && <p className="description text-center">{frontMatter.excerpt}</p>}
         </header>
-        {frontMatter.categories.map(category => {
-          return <div key={category}>{category}</div>;
-        })}
       </div>
-      <div>
-        <p>{`최초 게시일  :  ${format(new Date(frontMatter.date), 'yyyy년 MM월 dd일')}`}</p>
+      <div className="flex flex-col ml-auto">
+        {frontMatter.categories.map(category => {
+          return (
+            <span className="ml-auto" key={category}>
+              {category}
+            </span>
+          );
+        })}
+        <span>{`최초 게시일  :  ${format(new Date(frontMatter.date), 'yyyy년 MM월 dd일')}`}</span>
         {typeof window === 'object' ? (
-          <p>{`최종 수정일  :  ${format(
+          <span>{`최종 수정일  :  ${format(
             new Date(window.document.lastModified),
             'yyyy년 MM월 dd일'
-          )}`}</p>
+          )}`}</span>
         ) : null}
       </div>
-      <div>
+      <div className="flex justify-center">
         <Image src={frontMatter.coverImage} width={200} height={200} alt="coverImage" />
       </div>
 
-      <main style={{ margin: '40px 0' }}>
-        <MDXRemote {...source} />
-      </main>
-
-      <style jsx>{`
-        .post-header h1 {
-          margin-bottom: 0;
-        }
-        .post-header {
-          margin-bottom: 2rem;
-        }
-        .description {
-          opacity: 0.6;
-        }
-      `}</style>
+      <div className="not-prose">
+        <MDXRemote {...source} lazy={true} />
+      </div>
       <Comment />
     </div>
   );

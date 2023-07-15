@@ -15,7 +15,7 @@ export interface ContentsProps {
     title: string;
     categories: string[];
     date: string;
-    description: string;
+    excerpt: string;
     coverImage: string;
   };
 }

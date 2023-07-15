@@ -1,10 +1,6 @@
-import { IconButton } from 'components/icon-button/IconButton';
+'use client';
+
 import { useLayout } from 'hooks/useMedia';
-import { GithubIcon } from 'public/assets/icon/GIthub';
-import { LinkedInIcon } from 'public/assets/icon/LinkedIn';
-import { MailIcon } from 'public/assets/icon/Mail';
-import { RssIcon } from 'public/assets/icon/RssIcon';
-import { TwitterIcon } from 'public/assets/icon/Twitter';
 import { ReactNode } from 'react';
 
 // interface Props {}
@@ -13,7 +9,7 @@ export function Footer() {
   return (
     <Layout>
       <p>All rights reserved © Kyun2da {new Date().getFullYear()}</p>
-      <div>
+      {/* <div>
         <IconButton
           icon={<GithubIcon />}
           onClick={() => {
@@ -44,7 +40,7 @@ export function Footer() {
             window.open('https://www.kyun2da.dev/sitemap.xml');
           }}
         />
-      </div>
+      </div> */}
     </Layout>
   );
 }

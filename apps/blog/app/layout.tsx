@@ -6,8 +6,6 @@ import '../styles/global.css';
 import Script from 'next/script';
 import * as gtag from 'utils/gtag';
 
-import { Providers } from './providers';
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -32,10 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `,
           }}
         />
-        <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
-          {children}
-          <Analytics />
-        </Providers>
+        {children}
+        <Analytics />
       </body>
     </html>
   );

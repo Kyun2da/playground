@@ -54,7 +54,7 @@ async function getData({ params }: GetStaticPropsContext) {
   };
 }
 
-export default async function PostPage({ params }: GetStaticPropsContext) {
+export default async function PostPage({ params }: any) {
   const {
     props: { frontMatter, source },
   } = await getData({ params });

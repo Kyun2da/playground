@@ -1,5 +1,5 @@
 import { Button } from '@nextui-org/button';
-import { useTheme as useNextTheme } from 'next-themes';
+import { useTheme } from 'next-themes';
 import { Moon } from 'public/assets/icon/Moon';
 import { Sun } from 'public/assets/icon/Sun';
 
@@ -23,18 +23,16 @@ import { Sun } from 'public/assets/icon/Sun';
 // }
 
 export function DarkModeButton() {
-  const { setTheme } = useNextTheme();
-  // const { isDark } = useTheme();
-  const isDark = false;
+  const { theme, setTheme } = useTheme();
 
   return (
     <Button
       aria-label="toggle a light and dark color scheme"
       onClick={() => {
-        setTheme(isDark ? 'light' : 'dark');
+        setTheme(theme === 'dark' ? 'light' : 'dark');
       }}
     >
-      {isDark ? <Moon size={24} /> : <Sun size={24} />}
+      {theme === 'dark' ? <Moon size={24} /> : <Sun size={24} />}
     </Button>
   );
 }

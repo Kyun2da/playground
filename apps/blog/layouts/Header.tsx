@@ -2,31 +2,41 @@
 
 import { Button } from '@nextui-org/button';
 import { Link } from '@nextui-org/link';
-import { Navbar, NavbarBrand } from '@nextui-org/navbar';
-import { DarkModeButton } from 'components/dark-mode-button/DarkModeButton';
-import { useLayout } from 'hooks/useMedia';
-import NextLink from 'next/link';
-import { TITLE } from 'utils/constant';
-
-import { Category } from './Category';
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar';
 
 export function Header() {
-  const layout = useLayout();
-
   return (
     <>
-      <Button>asdsad</Button>
       <Navbar shouldHideOnScroll>
-        <NavbarBrand>
-          <NextLink href="/">
-            <Link href="/" style={{ marginRight: '12px' }}>
-              {layout === 'mobile' ? <p>{TITLE}</p> : <p>{TITLE}</p>}
-            </Link>
-          </NextLink>
-          {/* {layout === 'mobile' ? null : <SnowFlakeButton />} */}
-          <DarkModeButton />
-        </NavbarBrand>
-        {layout === 'mobile' ? null : <Category />}
+        <Navbar position="static">
+          <NavbarBrand>
+            <p className="font-bold text-inherit">Kyun2da.dev</p>
+          </NavbarBrand>
+          <NavbarContent className="hidden sm:flex gap-4" justify="center">
+            <NavbarItem as={Link} color="foreground" href="#">
+              Features
+            </NavbarItem>
+            <NavbarItem isActive as={Link} href="#">
+              Customers
+            </NavbarItem>
+            <NavbarItem as={Link} color="foreground" href="#">
+              Integrations
+            </NavbarItem>
+          </NavbarContent>
+          <NavbarContent justify="end">
+            <NavbarItem as={Link} className="hidden lg:flex" href="#">
+              Login
+            </NavbarItem>
+            <NavbarItem>
+              <Button as={Link} color="primary" href="#" variant="flat">
+                Sign Up
+              </Button>
+            </NavbarItem>
+          </NavbarContent>
+        </Navbar>
+        {/* {layout === 'mobile' ? null : <SnowFlakeButton />} */}
+        {/* <DarkModeButton /> */}
+        {/* {layout === 'mobile' ? null : <Category />} */}
       </Navbar>
     </>
   );

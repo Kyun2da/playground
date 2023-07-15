@@ -1,3 +1,4 @@
+import { DarkModeButton } from '@components/dark-mode-button/DarkModeButton';
 import { siteConfig } from 'config/site';
 import Link from 'next/link';
 
@@ -12,7 +13,10 @@ import {
 export function Header() {
   return (
     <header className="flex sticky items-center justify-between px-24 gap-6 h-16">
-      <h1 className="text-4xl">Kyun2da.dev</h1>
+      <div className="flex gap-6">
+        <h1 className="text-4xl">Kyun2da.dev</h1>
+        <DarkModeButton />
+      </div>
       <NavigationMenu className="flex items-center">
         <NavigationMenuList className="gap-6">
           {siteConfig.navItems.map(menu => {

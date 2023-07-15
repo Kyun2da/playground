@@ -1,10 +1,10 @@
-// eslint-disable-next-line import/order
+/* eslint-disable import/order */
 import { Analytics } from '@vercel/analytics/react';
-import '../styles/global.css';
 
-// eslint-disable-next-line import/order
+import { ThemeProvider } from '@components/theme-provider.tsx/ThemeProvider';
 import Script from 'next/script';
 import * as gtag from 'utils/gtag';
+import '../styles/global.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -30,7 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `,
           }}
         />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

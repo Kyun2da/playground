@@ -27,7 +27,7 @@ export function DarkModeButton() {
 
   return (
     <Button
-      aria-label="toggle a light and dark color scheme"
+      aria-label="dark mode toggle button"
       onClick={() => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
       }}

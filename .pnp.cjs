@@ -3098,6 +3098,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vercel/og", "npm:0.0.21"],\
             ["autoprefixer", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:10.4.14"],\
             ["classnames", "npm:2.3.2"],\
+            ["clsx", "npm:1.2.1"],\
             ["date-fns", "npm:2.30.0"],\
             ["eslint", "npm:7.32.0"],\
             ["eslint-config-custom", "npm:0.0.0"],\

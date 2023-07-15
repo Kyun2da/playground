@@ -2205,6 +2205,7 @@ __metadata:
     "@vercel/og": ^0.0.21
     autoprefixer: ^10.4.14
     classnames: ^2.3.1
+    clsx: ^1.2.1
     date-fns: ^2.29.1
     eslint: 7.32.0
     eslint-config-custom: "*"

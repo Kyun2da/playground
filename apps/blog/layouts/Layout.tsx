@@ -3,7 +3,7 @@
 import { NextSeo } from 'next-seo';
 import { ReactNode } from 'react';
 
-import { Header } from './Header';
+import { Navbar } from './Navbar';
 
 interface Props {
   title?: string;
@@ -19,7 +19,7 @@ export function Layout({ title, children, ...props }: Props) {
         defaultTitle="Kyun2da.dev"
         description="Kyun2da's Dev Blog"
       />
-      <Header />
+      <Navbar />
       {/* <div {...props}>{children}</div>
       <Footer /> */}
     </div>

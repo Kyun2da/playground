@@ -30,7 +30,7 @@ export async function generateStaticParams() {
   return paths;
 }
 
-export async function getData({ params }: GetStaticPropsContext) {
+async function getData({ params }: GetStaticPropsContext) {
   const postFilePath = path.join(POSTS_PATH, `${params!.slug}.mdx`);
 
   const source = fs.readFileSync(postFilePath);

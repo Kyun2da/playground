@@ -1,6 +1,6 @@
 'use client';
 
-import { Navbar } from '@components/navbar/Navbar';
+import { Header } from '@components/header/Header';
 import { Post } from 'interfaces/Post';
 
 interface Props {
@@ -12,7 +12,7 @@ export function Main({ allPosts }: Props) {
 
   return (
     <>
-      <Navbar />
+      <Header />
       {/* {allPosts
         .filter(post => process.env.NODE_ENV === 'development' || post.draft === false)
         .map(post => {

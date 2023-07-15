@@ -5,11 +5,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@layouts/*": ["./src/layouts/*"],
-      "@utils/*": ["src/utils/*"],
-      "@components/*": ["./src/components/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@interfaces/*": ["./src/interfaces/*"]
+      "@layouts/*": ["layouts/*"],
+      "@utils/*": ["utils/*"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["components/pages/*"],
+      "@interfaces/*": ["interfaces/*"]
     },
     "noEmit": true,
     "incremental": true,

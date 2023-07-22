@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next-remote-watch _posts",
+    "dev": "NODE_ENV=dev next-remote-watch _posts",
     "postbuild": "next-sitemap",
     "build": "next build",
     "lint": "next lint",

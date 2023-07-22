@@ -40,6 +40,7 @@ async function getData({ params }: GetStaticPropsContext) {
   const mdxSource = await serialize(content, {
     // Optionally pass remark/rehype plugins
     mdxOptions: {
+      development: process.env.NODE_ENV === 'development',
       remarkPlugins: [remarkGfm],
       rehypePlugins: [rehypePrism],
     },

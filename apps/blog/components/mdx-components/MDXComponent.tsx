@@ -5,10 +5,7 @@ export const MDXComponents = {
   h4: (props: any) => <h4 className="text-lg font-bold my-4" {...props} />,
   h5: (props: any) => <h5 className="text-base font-bold m-2" {...props} />,
   h6: (props: any) => <h6 className="text-sm font-bold" {...props} />,
-  p: (props: any) => {
-    console.log(props);
-    return <p className="text-base" {...props} />;
-  },
+  p: (props: any) => <p className="text-base" {...props} />,
   a: (props: any) => <a className="text-blue-500 hover:underline" {...props} />,
   ul: (props: any) => <ul className="list-disc list-inside" {...props} />,
   ol: (props: any) => <ol className="list-decimal list-inside" {...props} />,

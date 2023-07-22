@@ -41,6 +41,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "refractor": "^4.7.0",
+    "rehype-code-titles": "^1.2.0",
     "rehype-katex": "^6.0.3",
     "rehype-parse": "^8.0.4",
     "rehype-prism-plus": "^1.6.1",

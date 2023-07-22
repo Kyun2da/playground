@@ -1,3 +1,8 @@
+import { CheckIcon } from '@components/icon/CheckIcon';
+import { CopyIcon } from '@components/icon/CopyIcon';
+import { useHover } from 'hooks/useHover';
+import { useState } from 'react';
+
 export const MDXComponents = {
   h1: (props: any) => <h1 className="text-4xl font-bold my-12" {...props} />,
   h2: (props: any) => <h2 className="text-2xl font-bold my-8" {...props} />,
@@ -16,10 +21,35 @@ export const MDXComponents = {
   th: (props: any) => <th className="border border-gray-300 px-4 py-2" {...props} />,
   td: (props: any) => <td className="border border-gray-300 px-4 py-2" {...props} />,
   inlineCode: (props: any) => <code className="text-sm bg-gray-100 px-1 rounded" {...props} />,
-  pre: (props: any) => <pre className="bg-gray-100 rounded" {...props} />,
-  code: (props: any) => <code className="text-sm bg-gray-100 px-1 rounded" {...props} />,
+  pre: (props: any) => <pre className="text-base" {...props} />,
+  code: (props: any) => <Code {...props} />,
   img: (props: any) => <img className="rounded" {...props} />,
   strong: (props: any) => <strong className="font-bold" {...props} />,
   em: (props: any) => <em className="italic" {...props} />,
   del: (props: any) => <del className="line-through" {...props} />,
 };
+
+function Code(props: any) {
+  const [ref, isHover] = useHover<HTMLDivElement>();
+  const [copied, setCopied] = useState(false);
+
+  return (
+    <div className="relative" ref={ref}>
+      <pre {...props} className={`text-base ${props?.className}`} />
+      {isHover ? (
+        <button
+          className={`absolute top-2 right-4`}
+          onClick={() => {
+            setCopied(true);
+            navigator.clipboard.writeText(ref.current?.textContent || '');
+            setTimeout(() => {
+              setCopied(false);
+            }, 2000);
+          }}
+        >
+          {copied ? <CheckIcon /> : <CopyIcon />}
+        </button>
+      ) : null}
+    </div>
+  );
+}

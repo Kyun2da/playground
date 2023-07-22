@@ -99,7 +99,7 @@ Html의 h1~h6와 유사한 문서의 제목등을 강조할 때는 # ~ ###### �
 
 ### 사용 방법
 
-```
+```code
 [여기를 클릭](https://github.com/Kyun2da)하면 제 홈페이지로 이동합니다!
 ```
 
@@ -116,7 +116,7 @@ Html의 h1~h6와 유사한 문서의 제목등을 강조할 때는 # ~ ###### �
 
 ### 사용 방법
 
-```
+```code
 > 여기에 인용된 문구를 적습니다
 ```
 
@@ -136,11 +136,10 @@ Html의 h1~h6와 유사한 문서의 제목등을 강조할 때는 # ~ ###### �
 
 ### 실행 결과
 
-```
-#include<stdio.h>
-int main(){
-  printf("hello world");
-}
+```typescript:lib/mdx.ts
+const a = 1;
+
+console.log(a);
 ```
 
 #### 2.2+ 프로그래밍 구문 강조
@@ -154,8 +153,9 @@ int main(){
 
 ### 실행 결과
 
-```c
+```c:hi.c {2-4}
 # include<stdio.h>
+
 int main(){
   printf("hello world");
 }
@@ -173,7 +173,7 @@ int main(){
 
 ### 사용 방법
 
-```
+```code
 문구 중간에도 사용이 `이렇게 하면` 가능합니다.
 ```
 
@@ -290,14 +290,3 @@ Header1 | Header2 | Header3
 ## 수학 문구
 
 $\sqrt{a^2 + b^2}$
-
-##### 사용할 수 있는 이모티콘은 아래의 링크를 참조하세요
-
-- http://www.emoji-cheat-sheet.com/
-- https://getemoji.com/
-
-이상 Markdown 작성법과 이모티콘 emoji에 대해 알아보았습니다.
-이렇게 첫 번째 포스팅이 끝났습니다~ 😊  
-궁금한게 있으시면 아래 댓글 남겨주세요.🙏  
-댓글은 저에게 큰 힘이 됩니다!  
-감사합니다. ❤️

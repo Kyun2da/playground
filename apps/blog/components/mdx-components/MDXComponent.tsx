@@ -1,11 +1,14 @@
 export const MDXComponents = {
-  h1: (props: any) => <h1 className="text-4xl font-bold" {...props} />,
-  h2: (props: any) => <h2 className="text-2xl font-bold" {...props} />,
-  h3: (props: any) => <h3 className="text-xl font-bold" {...props} />,
-  h4: (props: any) => <h4 className="text-lg font-bold" {...props} />,
-  h5: (props: any) => <h5 className="text-base font-bold" {...props} />,
+  h1: (props: any) => <h1 className="text-4xl font-bold my-12" {...props} />,
+  h2: (props: any) => <h2 className="text-2xl font-bold my-8" {...props} />,
+  h3: (props: any) => <h3 className="text-xl font-bold my-6" {...props} />,
+  h4: (props: any) => <h4 className="text-lg font-bold my-4" {...props} />,
+  h5: (props: any) => <h5 className="text-base font-bold m-2" {...props} />,
   h6: (props: any) => <h6 className="text-sm font-bold" {...props} />,
-  p: (props: any) => <p className="text-base" {...props} />,
+  p: (props: any) => {
+    console.log(props);
+    return <p className="text-base" {...props} />;
+  },
   a: (props: any) => <a className="text-blue-500 hover:underline" {...props} />,
   ul: (props: any) => <ul className="list-disc list-inside" {...props} />,
   ol: (props: any) => <ol className="list-decimal list-inside" {...props} />,

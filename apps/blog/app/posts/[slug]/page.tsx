@@ -6,8 +6,10 @@ import { POSTS_PATH, postFilePaths } from '@utils/mdxUtils';
 import matter from 'gray-matter';
 import { GetStaticPropsContext } from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
+import rehypeKatex from 'rehype-katex';
 import rehypePrism from 'rehype-prism-plus';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 
 export interface ContentsProps {
   source: any;
@@ -41,8 +43,8 @@ async function getData({ params }: GetStaticPropsContext) {
     // Optionally pass remark/rehype plugins
     mdxOptions: {
       development: process.env.NODE_ENV === 'development',
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [rehypePrism],
+      remarkPlugins: [remarkGfm, remarkMath],
+      rehypePlugins: [rehypePrism, rehypeKatex],
     },
     scope: data,
   });

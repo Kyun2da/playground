@@ -1595,6 +1595,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/katex", [\
+        ["npm:0.14.0", {\
+          "packageLocation": "./.yarn/cache/@types-katex-npm-0.14.0-acd5bc3e87-330e0d0337.zip/node_modules/@types/katex/",\
+          "packageDependencies": [\
+            ["@types/katex", "npm:0.14.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:0.16.1", {\
+          "packageLocation": "./.yarn/cache/@types-katex-npm-0.16.1-b68768fd05-f09c40920d.zip/node_modules/@types/katex/",\
+          "packageDependencies": [\
+            ["@types/katex", "npm:0.16.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/keyv", [\
         ["npm:3.1.4", {\
           "packageLocation": "./.yarn/cache/@types-keyv-npm-3.1.4-a8082ea56b-e009a2bfb5.zip/node_modules/@types/keyv/",\
@@ -2605,12 +2621,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:18.2.0"],\
             ["refractor", "npm:4.8.1"],\
+            ["rehype-katex", "npm:6.0.3"],\
             ["rehype-parse", "npm:8.0.4"],\
             ["rehype-prism-plus", "npm:1.6.1"],\
             ["remark", "npm:14.0.3"],\
             ["remark-autolink-headings", "npm:7.0.1"],\
             ["remark-gfm", "npm:3.0.1"],\
             ["remark-html", "npm:15.0.2"],\
+            ["remark-math", "npm:5.1.1"],\
             ["tailwind-merge", "npm:1.13.2"],\
             ["tailwind-variants", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:0.1.13"],\
             ["tailwindcss", "npm:3.3.3"],\
@@ -3226,6 +3244,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/commander-npm-5.1.0-7e939e7832-0b7fec1712.zip/node_modules/commander/",\
           "packageDependencies": [\
             ["commander", "npm:5.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:8.3.0", {\
+          "packageLocation": "./.yarn/cache/commander-npm-8.3.0-c0d18c66d5-0f82321821.zip/node_modules/commander/",\
+          "packageDependencies": [\
+            ["commander", "npm:8.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3898,6 +3923,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["enquirer", "npm:2.3.6"],\
             ["ansi-colors", "npm:4.1.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["entities", [\
+        ["npm:4.5.0", {\
+          "packageLocation": "./.yarn/cache/entities-npm-4.5.0-7cdb83b832-853f8ebd5b.zip/node_modules/entities/",\
+          "packageDependencies": [\
+            ["entities", "npm:4.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5818,6 +5852,44 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["hast-util-from-dom", [\
+        ["npm:4.2.0", {\
+          "packageLocation": "./.yarn/cache/hast-util-from-dom-npm-4.2.0-b7534daab1-0eac72cfb2.zip/node_modules/hast-util-from-dom/",\
+          "packageDependencies": [\
+            ["hast-util-from-dom", "npm:4.2.0"],\
+            ["hastscript", "npm:7.2.0"],\
+            ["web-namespaces", "npm:2.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["hast-util-from-html", [\
+        ["npm:1.0.2", {\
+          "packageLocation": "./.yarn/cache/hast-util-from-html-npm-1.0.2-eae375c504-81cbda7dfa.zip/node_modules/hast-util-from-html/",\
+          "packageDependencies": [\
+            ["hast-util-from-html", "npm:1.0.2"],\
+            ["@types/hast", "npm:2.3.4"],\
+            ["hast-util-from-parse5", "npm:7.1.2"],\
+            ["parse5", "npm:7.1.2"],\
+            ["vfile", "npm:5.3.7"],\
+            ["vfile-message", "npm:3.1.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["hast-util-from-html-isomorphic", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/hast-util-from-html-isomorphic-npm-1.0.0-52a27d3453-a72786d675.zip/node_modules/hast-util-from-html-isomorphic/",\
+          "packageDependencies": [\
+            ["hast-util-from-html-isomorphic", "npm:1.0.0"],\
+            ["@types/hast", "npm:2.3.4"],\
+            ["hast-util-from-dom", "npm:4.2.0"],\
+            ["hast-util-from-html", "npm:1.0.2"],\
+            ["unist-util-remove-position", "npm:4.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["hast-util-from-parse5", [\
         ["npm:7.1.2", {\
           "packageLocation": "./.yarn/cache/hast-util-from-parse5-npm-7.1.2-bf968822e1-7b4ed5b508.zip/node_modules/hast-util-from-parse5/",\
@@ -5830,6 +5902,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vfile", "npm:5.3.7"],\
             ["vfile-location", "npm:4.1.0"],\
             ["web-namespaces", "npm:2.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["hast-util-is-element", [\
+        ["npm:2.1.3", {\
+          "packageLocation": "./.yarn/cache/hast-util-is-element-npm-2.1.3-3051d610ff-9d988f6839.zip/node_modules/hast-util-is-element/",\
+          "packageDependencies": [\
+            ["hast-util-is-element", "npm:2.1.3"],\
+            ["@types/hast", "npm:2.3.4"],\
+            ["@types/unist", "npm:2.0.6"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5953,6 +6036,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["hast-util-to-string", "npm:2.0.0"],\
             ["@types/hast", "npm:2.3.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["hast-util-to-text", [\
+        ["npm:3.1.2", {\
+          "packageLocation": "./.yarn/cache/hast-util-to-text-npm-3.1.2-922eb1f623-d17cf3344c.zip/node_modules/hast-util-to-text/",\
+          "packageDependencies": [\
+            ["hast-util-to-text", "npm:3.1.2"],\
+            ["@types/hast", "npm:2.3.4"],\
+            ["@types/unist", "npm:2.0.6"],\
+            ["hast-util-is-element", "npm:2.1.3"],\
+            ["unist-util-find-after", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6901,6 +6997,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["katex", [\
+        ["npm:0.16.8", {\
+          "packageLocation": "./.yarn/cache/katex-npm-0.16.8-5aa3337981-4e75b47861.zip/node_modules/katex/",\
+          "packageDependencies": [\
+            ["katex", "npm:0.16.8"],\
+            ["commander", "npm:8.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["keyv", [\
         ["npm:3.1.0", {\
           "packageLocation": "./.yarn/cache/keyv-npm-3.1.0-81c9ff4454-bb7e8f3acf.zip/node_modules/keyv/",\
@@ -7417,6 +7523,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["mdast-util-math", [\
+        ["npm:2.0.2", {\
+          "packageLocation": "./.yarn/cache/mdast-util-math-npm-2.0.2-2a515a3146-60b3c1ca8d.zip/node_modules/mdast-util-math/",\
+          "packageDependencies": [\
+            ["mdast-util-math", "npm:2.0.2"],\
+            ["@types/mdast", "npm:3.0.11"],\
+            ["longest-streak", "npm:3.1.0"],\
+            ["mdast-util-to-markdown", "npm:1.5.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["mdast-util-mdx", [\
         ["npm:2.0.1", {\
           "packageLocation": "./.yarn/cache/mdast-util-mdx-npm-2.0.1-fa9e345324-7303149230.zip/node_modules/mdast-util-mdx/",\
@@ -7713,6 +7831,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/micromark-extension-gfm-task-list-item-npm-1.0.5-0fb4eed065-929f05343d.zip/node_modules/micromark-extension-gfm-task-list-item/",\
           "packageDependencies": [\
             ["micromark-extension-gfm-task-list-item", "npm:1.0.5"],\
+            ["micromark-factory-space", "npm:1.1.0"],\
+            ["micromark-util-character", "npm:1.2.0"],\
+            ["micromark-util-symbol", "npm:1.1.0"],\
+            ["micromark-util-types", "npm:1.1.0"],\
+            ["uvu", "npm:0.5.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["micromark-extension-math", [\
+        ["npm:2.1.2", {\
+          "packageLocation": "./.yarn/cache/micromark-extension-math-npm-2.1.2-957b34601d-cbfd1c1ab0.zip/node_modules/micromark-extension-math/",\
+          "packageDependencies": [\
+            ["micromark-extension-math", "npm:2.1.2"],\
+            ["@types/katex", "npm:0.16.1"],\
+            ["katex", "npm:0.16.8"],\
             ["micromark-factory-space", "npm:1.1.0"],\
             ["micromark-util-character", "npm:1.2.0"],\
             ["micromark-util-symbol", "npm:1.1.0"],\
@@ -9114,6 +9248,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["parse5", "npm:6.0.1"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:7.1.2", {\
+          "packageLocation": "./.yarn/cache/parse5-npm-7.1.2-aa9a92c270-59465dd05e.zip/node_modules/parse5/",\
+          "packageDependencies": [\
+            ["parse5", "npm:7.1.2"],\
+            ["entities", "npm:4.5.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["parseurl", [\
@@ -9895,6 +10037,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["rehype-katex", [\
+        ["npm:6.0.3", {\
+          "packageLocation": "./.yarn/cache/rehype-katex-npm-6.0.3-7b27f72ca1-164905b642.zip/node_modules/rehype-katex/",\
+          "packageDependencies": [\
+            ["rehype-katex", "npm:6.0.3"],\
+            ["@types/hast", "npm:2.3.4"],\
+            ["@types/katex", "npm:0.14.0"],\
+            ["hast-util-from-html-isomorphic", "npm:1.0.0"],\
+            ["hast-util-to-text", "npm:3.1.2"],\
+            ["katex", "npm:0.16.8"],\
+            ["unist-util-visit", "npm:4.1.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["rehype-parse", [\
         ["npm:8.0.4", {\
           "packageLocation": "./.yarn/cache/rehype-parse-npm-8.0.4-e6b5072759-e678a5f9fa.zip/node_modules/rehype-parse/",\
@@ -9972,6 +10129,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["hast-util-sanitize", "npm:4.1.0"],\
             ["hast-util-to-html", "npm:8.0.4"],\
             ["mdast-util-to-hast", "npm:12.3.0"],\
+            ["unified", "npm:10.1.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["remark-math", [\
+        ["npm:5.1.1", {\
+          "packageLocation": "./.yarn/cache/remark-math-npm-5.1.1-6a0cb6e9f6-1baec5862e.zip/node_modules/remark-math/",\
+          "packageDependencies": [\
+            ["remark-math", "npm:5.1.1"],\
+            ["@types/mdast", "npm:3.0.11"],\
+            ["mdast-util-math", "npm:2.0.2"],\
+            ["micromark-extension-math", "npm:2.1.2"],\
             ["unified", "npm:10.1.2"]\
           ],\
           "linkType": "HARD"\
@@ -11513,6 +11683,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/unist", "npm:2.0.6"],\
             ["unist-util-is", "npm:5.2.1"],\
             ["unist-util-visit-parents", "npm:5.1.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["unist-util-find-after", [\
+        ["npm:4.0.1", {\
+          "packageLocation": "./.yarn/cache/unist-util-find-after-npm-4.0.1-0f069ee279-bed7e7a1a8.zip/node_modules/unist-util-find-after/",\
+          "packageDependencies": [\
+            ["unist-util-find-after", "npm:4.0.1"],\
+            ["@types/unist", "npm:2.0.6"],\
+            ["unist-util-is", "npm:5.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\

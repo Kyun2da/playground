@@ -10,7 +10,13 @@ import '../styles/global.css';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className={`${notoSansKR.className}  prose lg:prose-xl dark:prose-invert`}>
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script

@@ -41,7 +41,7 @@ function Code(props: any) {
           className={`absolute top-2 right-4`}
           onClick={() => {
             setCopied(true);
-            navigator.clipboard.writeText(ref.current?.textContent || '');
+            navigator.clipboard.writeText(ref.current?.textContent ?? '');
             setTimeout(() => {
               setCopied(false);
             }, 2000);

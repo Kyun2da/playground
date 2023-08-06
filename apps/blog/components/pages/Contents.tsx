@@ -23,7 +23,7 @@ export function Contents({ source, frontMatter }: ContentsProps) {
   return (
     <div className="flex flex-col max-w-3xl mx-auto justify-center">
       <div>
-        <header>
+        <header className="my-20">
           <h1 className="text-center">{frontMatter.title}</h1>
           {frontMatter.excerpt && <p className="description text-center">{frontMatter.excerpt}</p>}
         </header>

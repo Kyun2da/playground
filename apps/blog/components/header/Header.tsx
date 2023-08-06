@@ -25,8 +25,8 @@ export function Header() {
             return (
               <NavigationMenuItem key={menu.label} className="list-none">
                 <Link href={menu.href} legacyBehavior passHref>
-                  <NavigationMenuLink className="text-2xl">
-                    <Button>{menu.label}</Button>
+                  <NavigationMenuLink>
+                    <Button className="text-lg">{menu.label}</Button>
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>

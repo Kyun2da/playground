@@ -7,10 +7,10 @@ import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/c
 
 export function ContentCard({ post }: { post: Post }) {
   return (
-    <Card className="not-prose">
+    <Card className="not-prose border-0">
       <Link
         href={`/posts/${post.slug}`}
-        className="flex m-auto border-solid shadow-lg transition duration-300 ease-in-out hover:scale-105 bg-clip-border rounded-3xl max-w-3xl h-52"
+        className="flex m-auto shadow-lg transition duration-300 ease-in-out hover:scale-105 rounded-3xl max-w-3xl h-52"
       >
         <Image
           src={post.coverImage}

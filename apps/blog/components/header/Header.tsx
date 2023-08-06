@@ -14,7 +14,9 @@ export function Header() {
   return (
     <header className="w-screen flex sticky items-center justify-around px-80 gap-6 h-24">
       <div className="flex gap-6">
-        <h2 className="contents my-auto">Kyun2da.dev</h2>
+        <Link className="outline-none no-underline" href="/">
+          <h2 className="contents my-auto">Kyun2da.dev</h2>
+        </Link>
         <DarkModeButton />
       </div>
       <NavigationMenu className="flex items-center">

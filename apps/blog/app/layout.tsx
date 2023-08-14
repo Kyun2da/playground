@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
           crossOrigin="anonymous"
         />
+        <link rel="icon" href="favicon.ico" sizes="any" />
       </head>
       <body className={`${notoSansKR.className}  prose lg:prose-xl dark:prose-invert`}>
         {/* Global Site Tag (gtag.js) - Google Analytics */}

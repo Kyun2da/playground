@@ -1,6 +1,7 @@
 'use client';
 
 import { ContentCard } from '@components/content-card/ContentCard';
+import { Footer } from '@components/footer/Footer';
 import { Header } from '@components/header/Header';
 import { Post } from 'interfaces/Post';
 import { useState } from 'react';
@@ -34,6 +35,7 @@ export function Main({ allPosts }: Props) {
             return <ContentCard key={post.slug} post={post} />;
           })}
       </main>
+      <Footer />
     </>
   );
 }

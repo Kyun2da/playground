@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <link rel="icon" href="favicon.ico" sizes="any" />
       </head>
-      <body className={`${notoSansKR.className}  prose lg:prose-xl dark:prose-invert`}>
+      <body className={`${notoSansKR.className}  prose lg:prose-xl dark:prose-invert max-w-full`}>
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
           strategy="afterInteractive"

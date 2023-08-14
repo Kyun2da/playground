@@ -3,7 +3,7 @@
 /* eslint-disable import/order */
 import { Comment } from '@components/comment/Comment';
 import { MDXComponents } from '@components/mdx-components/MDXComponent';
-import { ContentsProps } from 'app/posts/[slug]/page';
+import { ContentsProps } from 'app/posts/[...slug]/page';
 import { format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import Image from 'next/image';

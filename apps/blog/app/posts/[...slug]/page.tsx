@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 
 import { Contents } from '@components/pages/Contents';
-import { POSTS_PATH, postFilePaths } from '@utils/mdxUtils';
 import matter from 'gray-matter';
 import { GetStaticPropsContext } from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
@@ -23,20 +22,13 @@ export interface ContentsProps {
   };
 }
 
-export async function generateStaticParams() {
-  const paths = postFilePaths
-    // Remove file extensions for page paths
-    .map(path => path.replace(/\.mdx?$/, ''))
-    // Map the path into the static paths object required by Next.js
-    .map(slug => ({ params: { slug } }));
-
-  return paths;
-}
-
 async function getData({ params }: GetStaticPropsContext) {
-  const postFilePath = path.join(POSTS_PATH, `${params!.slug}.mdx`);
+  const slug = params!.slug;
 
-  const source = fs.readFileSync(postFilePath);
+  const [fileType, fileName] = slug as [DeployType, string];
+
+  const filePath = path.join(POSTS_PATH(fileType), `${fileName}.mdx`);
+  const source = fs.readFileSync(filePath);
 
   const { content, data } = matter(source);
 
@@ -65,3 +57,14 @@ export default async function PostPage({ params }: any) {
 
   return <Contents source={source} frontMatter={frontMatter as any} />;
 }
+
+type DeployType = 'draft' | 'published';
+
+// POSTS_PATH is useful when you want to get the path to a specific file
+const POSTS_PATH = (type: DeployType) => {
+  if (type === 'draft') {
+    return path.join(process.cwd(), '_drafts');
+  }
+
+  return path.join(process.cwd(), '_posts');
+};

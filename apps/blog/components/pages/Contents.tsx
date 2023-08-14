@@ -7,19 +7,8 @@ import { ContentsProps } from 'app/posts/[...slug]/page';
 import { format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 export function Contents({ source, frontMatter }: ContentsProps) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
-
   return (
     <div className="flex flex-col max-w-3xl mx-auto justify-center">
       <div>
@@ -49,7 +38,7 @@ export function Contents({ source, frontMatter }: ContentsProps) {
       </div>
 
       <div className="not-prose">
-        <MDXRemote {...source} components={MDXComponents} lazy={true} />
+        <MDXRemote {...source} components={MDXComponents} />
       </div>
       <Comment />
     </div>

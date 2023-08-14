@@ -11,6 +11,7 @@ export function ContentCard({ post }: { post: Post }) {
       <Link
         href={`/posts/${post.draft ? 'draft' : 'published'}/${post.slug}`}
         className="flex m-auto shadow-lg transition duration-300 ease-in-out hover:scale-105 rounded-3xl max-w-3xl h-52"
+        prefetch={true}
       >
         <Image
           src={post.coverImage}

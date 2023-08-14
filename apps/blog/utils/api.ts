@@ -3,17 +3,11 @@ import { join } from 'path';
 
 import matter from 'gray-matter';
 
-const postsDirectory = join(process.cwd(), '_posts');
-
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory);
-}
-
 type Items = Record<string, string>;
 
-export function getPostBySlug(slug: string, fields: string[] = []) {
+export function getPostBySlug(slug: string, fields: string[] = [], directoryPath: string) {
   const realSlug = slug.replace(/\.mdx$/, '');
-  const fullPath = join(postsDirectory, `${realSlug}.mdx`);
+  const fullPath = join(directoryPath, `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -36,10 +30,13 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   return items;
 }
 
-export function getAllPosts(fields: string[] = []) {
-  const slugs = getPostSlugs();
+export function getAllPosts(fields: string[] = [], type: 'draft' | 'published') {
+  const filePostfix = type === 'draft' ? '_posts' : '_drafts';
+  const directoryPath = join(process.cwd(), filePostfix);
+  const slugs = fs.readdirSync(directoryPath);
+
   const posts = slugs
-    .map(slug => getPostBySlug(slug, fields))
+    .map(slug => getPostBySlug(slug, fields, directoryPath))
     // sort posts by date in descending order
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;

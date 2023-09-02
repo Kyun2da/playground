@@ -5,7 +5,6 @@ import { Contents } from '@components/pages/Contents';
 import matter from 'gray-matter';
 import { GetStaticPropsContext } from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
-import rehypeCodeTitles from 'rehype-code-titles';
 import rehypeKatex from 'rehype-katex';
 import rehypePrism from 'rehype-prism-plus';
 import remarkGfm from 'remark-gfm';
@@ -37,7 +36,7 @@ async function getData({ params }: GetStaticPropsContext) {
     mdxOptions: {
       development: process.env.NODE_ENV === 'development',
       remarkPlugins: [remarkGfm, remarkMath],
-      rehypePlugins: [rehypeCodeTitles, rehypeKatex, [rehypePrism, { ignoreMissing: true }]],
+      rehypePlugins: [rehypeKatex, [rehypePrism, { ignoreMissing: true }]],
     },
     scope: data,
   });

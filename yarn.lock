@@ -2014,7 +2014,6 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     refractor: ^4.7.0
-    rehype-code-titles: ^1.2.0
     rehype-katex: ^6.0.3
     rehype-parse: ^8.0.4
     rehype-prism-plus: ^1.6.1
@@ -4830,13 +4829,6 @@ __metadata:
   version: 2.0.1
   resolution: "hast-util-whitespace@npm:2.0.1"
   checksum: 431be6b2f35472f951615540d7a53f69f39461e5e080c0190268bdeb2be9ab9b1dddfd1f467dd26c1de7e7952df67beb1307b6ee940baf78b24a71b5e0663868
-  languageName: node
-  linkType: hard
-
-"hast@npm:~1.0.0":
-  version: 1.0.0
-  resolution: "hast@npm:1.0.0"
-  checksum: 3891e00e634172029d92fd49cc3b62ad99b1e6e8833ea626ca5ffe1c5c631a9a52c439e296c7e2984ddcf23b04c8dd1f57fda251996081ccb3dca9ec38cff730
   languageName: node
   linkType: hard
 
@@ -8311,16 +8303,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehype-code-titles@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "rehype-code-titles@npm:1.2.0"
-  dependencies:
-    hast: ~1.0.0
-    unist-util-visit: ~4.1.2
-  checksum: c82bc7abd66a7fb91208fed85bfdb39fe66c723d242278a43c01ac581bcf172f331df65f2bbdef90e344bd59fc8b95be761879314bf281409e4957d8d3f99595
-  languageName: node
-  linkType: hard
-
 "rehype-katex@npm:^6.0.3":
   version: 6.0.3
   resolution: "rehype-katex@npm:6.0.3"
@@ -9916,7 +9898,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-visit@npm:^4.0.0, unist-util-visit@npm:~4.1.2":
+"unist-util-visit@npm:^4.0.0":
   version: 4.1.2
   resolution: "unist-util-visit@npm:4.1.2"
   dependencies:

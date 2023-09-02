@@ -2621,7 +2621,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:18.2.0"],\
             ["refractor", "npm:4.8.1"],\
-            ["rehype-code-titles", "npm:1.2.0"],\
             ["rehype-katex", "npm:6.0.3"],\
             ["rehype-parse", "npm:8.0.4"],\
             ["rehype-prism-plus", "npm:1.6.1"],\
@@ -5849,15 +5848,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/has-yarn-npm-2.1.0-b73f6750d9-5eb1d0bb85.zip/node_modules/has-yarn/",\
           "packageDependencies": [\
             ["has-yarn", "npm:2.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["hast", [\
-        ["npm:1.0.0", {\
-          "packageLocation": "./.yarn/cache/hast-npm-1.0.0-8bc837c888-3891e00e63.zip/node_modules/hast/",\
-          "packageDependencies": [\
-            ["hast", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10043,17 +10033,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["registry-url", "npm:5.1.0"],\
             ["rc", "npm:1.2.8"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["rehype-code-titles", [\
-        ["npm:1.2.0", {\
-          "packageLocation": "./.yarn/unplugged/rehype-code-titles-npm-1.2.0-ec3c6fbeae/node_modules/rehype-code-titles/",\
-          "packageDependencies": [\
-            ["rehype-code-titles", "npm:1.2.0"],\
-            ["hast", "npm:1.0.0"],\
-            ["unist-util-visit", "npm:4.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\

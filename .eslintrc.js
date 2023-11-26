@@ -4,53 +4,37 @@ module.exports = {
     es2021: true,
   },
   extends: [
+    'eslint:recommended',
+    'prettier',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
-    'standard-with-typescript',
-    'plugin:react/jsx-runtime',
-    'plugin:prettier/recommended',
   ],
-  overrides: [],
+  overrides: [
+    {
+      env: {
+        node: true,
+      },
+      files: [
+        '.eslintrc.{js,cjs}',
+        'tailwind.config.js',
+        'postcss.config.js',
+        'next.config.js',
+        'next-sitemap.config.js',
+      ],
+      parserOptions: {
+        sourceType: 'script',
+      },
+    },
+  ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ['./tsconfig.json'],
   },
-  plugins: ['react'],
+  plugins: ['prettier', '@typescript-eslint', 'react'],
   rules: {
     'prettier/prettier': 'error',
-    'comma-dangle': 'off',
-    semi: 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-floating-promises': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/restrict-template-expressions': 'off',
-    '@typescript-eslint/no-unnecessary-type-assertion': 'off',
-    '@typescript-eslint/strict-boolean-expressions': 'off',
-    '@typescript-eslint/consistent-type-imports': 'off',
-    'import/order': [
-      'error',
-      {
-        groups: ['builtin', 'external', ['parent', 'sibling'], 'index'],
-        pathGroups: [
-          {
-            pattern: 'react',
-            group: 'external',
-            position: 'before',
-          },
-        ],
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-        'newlines-between': 'always',
-      },
-    ],
-    'react/no-unknown-property': [
-      2,
-      {
-        ignore: ['jsx'],
-      },
-    ],
-    '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'off',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };

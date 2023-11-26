@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import { Analytics } from '@vercel/analytics/react';
 
 import { ThemeProvider } from '@components/theme-provider.tsx/ThemeProvider';

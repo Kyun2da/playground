@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable import/order */
 import { Comment } from '@components/comment/Comment';
 import { MDXComponents } from '@components/mdx-components/MDXComponent';
 import { ContentsProps } from 'app/posts/[...slug]/page';

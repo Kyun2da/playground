@@ -8,32 +8,46 @@ import { MDXRemote } from 'next-mdx-remote';
 import Image from 'next/image';
 
 export function Contents({ source, frontMatter }: ContentsProps) {
+  console.log(frontMatter);
+
   return (
     <div className="flex flex-col max-w-3xl mx-auto justify-center">
-      <div>
-        <header className="my-20">
-          <h1 className="text-center">{frontMatter.title}</h1>
-          {frontMatter.excerpt && <p className="description text-center">{frontMatter.excerpt}</p>}
-        </header>
-      </div>
-      <div className="flex flex-col ml-auto">
-        {frontMatter.categories.map(category => {
-          return (
-            <span className="ml-auto" key={category}>
-              {category}
-            </span>
-          );
-        })}
-        <span className="text-sm">{`최초 게시일  :  ${format(
+      <h1 className="text-center !mb-3">{frontMatter.title}</h1>
+      {frontMatter.excerpt && (
+        <span className="flex justify-center my-0 description text-center">
+          {frontMatter.excerpt}
+        </span>
+      )}
+
+      <div className="flex flex-col gap-2 mt-8">
+        <div className="flex justify-center">
+          {frontMatter.categories.map(category => {
+            return (
+              <div
+                className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
+                key={category}
+              >
+                {category}
+              </div>
+            );
+          })}
+        </div>
+        <span className="flex justify-center text-sm">{`${format(
           new Date(frontMatter.date),
-          'yyyy년 MM월 dd일'
-        )}`}</span>
+          'yyyy.MM.dd'
+        )} ·
+        ${frontMatter.time} min read`}</span>
       </div>
       <div className="flex justify-center">
-        <Image src={frontMatter.coverImage} width={200} height={200} alt="coverImage" />
+        <Image
+          src={frontMatter.coverImage}
+          width={200}
+          height={200}
+          className="rounded-xl"
+          alt="coverImage"
+        />
       </div>
-
-      <div className="not-prose">
+      <div className="not-prose mb-16">
         <MDXRemote {...source} components={MDXComponents} />
       </div>
       <Comment />

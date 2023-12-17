@@ -18,6 +18,7 @@ export interface ContentsProps {
     date: string;
     excerpt: string;
     coverImage: string;
+    time: number;
   };
 }
 

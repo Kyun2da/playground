@@ -25,9 +25,9 @@ export function ContentCard({ post }: { post: Post }) {
             <CardTitle>{post.title}</CardTitle>
             <CardDescription>{post.excerpt}</CardDescription>
           </div>
-          <div className="flex justify-between w-full">
-            <p>{format(parse(post.date, 'yyyy-mm-dd', new Date()), 'yyyy - mm - dd')}</p>
-            <p>읽는데 {post.time}분</p>
+          <div className="flex justify-between w-full text-base">
+            <span>{format(parse(post.date, 'yyyy-mm-dd', new Date()), 'yyyy - mm - dd')}</span>
+            <span>{post.time} min read</span>
           </div>
         </CardContent>
       </Link>

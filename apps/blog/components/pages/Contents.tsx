@@ -24,13 +24,10 @@ export function Contents({ source, frontMatter }: ContentsProps) {
             </span>
           );
         })}
-        <span>{`최초 게시일  :  ${format(new Date(frontMatter.date), 'yyyy년 MM월 dd일')}`}</span>
-        {typeof window === 'object' ? (
-          <span>{`최종 수정일  :  ${format(
-            new Date(window.document.lastModified),
-            'yyyy년 MM월 dd일'
-          )}`}</span>
-        ) : null}
+        <span className="text-sm">{`최초 게시일  :  ${format(
+          new Date(frontMatter.date),
+          'yyyy년 MM월 dd일'
+        )}`}</span>
       </div>
       <div className="flex justify-center">
         <Image src={frontMatter.coverImage} width={200} height={200} alt="coverImage" />

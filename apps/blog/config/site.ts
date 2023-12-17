@@ -16,10 +16,6 @@ export const siteConfig = {
       label: 'About',
       href: '/about',
     },
-    {
-      label: 'feedback',
-      href: '/feedback',
-    },
   ],
   links: {
     github: 'https://github.com/kyun2da',

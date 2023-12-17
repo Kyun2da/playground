@@ -2039,6 +2039,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@vercel/speed-insights", [\
+      ["npm:1.0.2", {\
+        "packageLocation": "./.yarn/unplugged/@vercel-speed-insights-npm-1.0.2-a50c331998/node_modules/@vercel/speed-insights/",\
+        "packageDependencies": [\
+          ["@vercel/speed-insights", "npm:1.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["abbrev", [\
       ["npm:1.1.1", {\
         "packageLocation": "./.yarn/cache/abbrev-npm-1.1.1-3659247eab-2d88294118.zip/node_modules/abbrev/",\
@@ -2614,6 +2623,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.2.8"],\
           ["@vercel/analytics", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:0.1.11"],\
           ["@vercel/og", "npm:0.0.21"],\
+          ["@vercel/speed-insights", "npm:1.0.2"],\
           ["autoprefixer", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:10.4.14"],\
           ["class-variance-authority", "npm:0.6.1"],\
           ["classnames", "npm:2.3.2"],\

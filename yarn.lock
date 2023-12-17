@@ -1539,6 +1539,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vercel/speed-insights@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@vercel/speed-insights@npm:1.0.2"
+  checksum: cbb301dc2bb599024a5f5762e5deecc0ec5fcef1074e7505da5cc5fb824e7d9c5c5e6f13a3460912a5476f99fe53bdb15801e0bbdb385fbc15f98c3a2cb9e237
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:^1.0.0":
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
@@ -2034,6 +2041,7 @@ __metadata:
     "@types/react": "npm:^18.0.26"
     "@vercel/analytics": "npm:^0.1.6"
     "@vercel/og": "npm:^0.0.21"
+    "@vercel/speed-insights": "npm:^1.0.2"
     autoprefixer: "npm:^10.4.14"
     class-variance-authority: "npm:^0.6.1"
     classnames: "npm:^2.3.1"

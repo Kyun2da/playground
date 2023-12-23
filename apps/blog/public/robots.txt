@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://kyun2da.dev
-
-# Sitemaps
-Sitemap: https://kyun2da.dev/sitemap.xml

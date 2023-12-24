@@ -55,7 +55,7 @@ async function getData({ params }: GetStaticPropsContext): Promise<{ props: Cont
     mdxOptions: {
       development: process.env.NODE_ENV === 'development',
       remarkPlugins: [remarkGfm, remarkMath],
-      rehypePlugins: [rehypeKatex, [rehypePrism, { ignoreMissing: true }]],
+      rehypePlugins: [rehypeKatex as any, [rehypePrism, { ignoreMissing: true }]],
     },
     scope: data,
   });

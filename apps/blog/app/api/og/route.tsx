@@ -7,53 +7,73 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     const hasTitle = searchParams.has('title');
-    const title = hasTitle ? searchParams.get('title')?.slice(0, 100) : 'My default title';
+    const hasDescription = searchParams.has('description');
+    const hasImageUrl = searchParams.has('imageUrl');
+    const title = searchParams.get('title')?.slice(0, 100);
+    const imageUrl = hasImageUrl
+      ? searchParams.get('imageUrl')
+      : 'https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/redpanda.png';
+    const description = searchParams.get('description')?.slice(0, 300);
 
     return new ImageResponse(
       (
         <div
           style={{
-            backgroundColor: 'black',
-            backgroundSize: '150px 150px',
+            display: 'flex',
             height: '100%',
             width: '100%',
-            display: 'flex',
-            textAlign: 'center',
             alignItems: 'center',
             justifyContent: 'center',
-            flexDirection: 'column',
-            flexWrap: 'nowrap',
+            letterSpacing: '-.02em',
+            backgroundImage: 'linear-gradient(to bottom, #dbf4ff, #ffffff)',
+            fontFamily: 'Noto Sans KR',
           }}
         >
           <div
             style={{
+              left: 42,
+              top: 42,
+              position: 'absolute',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              justifyItems: 'center',
             }}
           >
-            <img
-              alt="Vercel"
-              height={200}
-              src="data:image/svg+xml,%3Csvg width='116' height='100' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M57.5 0L115 100H0L57.5 0z' /%3E%3C/svg%3E"
-              style={{ margin: '0 30px' }}
-              width={232}
-            />
+            <span
+              style={{
+                marginLeft: 8,
+                fontSize: !hasTitle && !hasDescription ? 60 : 20,
+                fontWeight: 700,
+              }}
+            >
+              Kyun2da.dev
+            </span>
           </div>
-          <div
-            style={{
-              fontSize: 60,
-              fontStyle: 'normal',
-              letterSpacing: '-0.025em',
-              color: 'white',
-              marginTop: 30,
-              padding: '0 120px',
-              lineHeight: 1.4,
-              whiteSpace: 'pre-wrap',
-            }}
-          >
-            {title}
+          <div style={{ display: 'flex', position: 'absolute', left: 42, bottom: 42 }}>
+            <img
+              src="https://avatars.githubusercontent.com/u/50328132?v=4"
+              width="80"
+              height="80"
+              style={{ borderRadius: '50%' }}
+            />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'absolute',
+                left: 100,
+                bottom: 4,
+              }}
+            >
+              <span>허균</span>
+              <span>Frontend Developer</span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: 48 }}>
+            {hasTitle ? <span style={{ fontSize: 32 }}>{title}</span> : null}
+            {hasDescription ? <span>{description}</span> : null}
+          </div>
+          <div style={{ display: 'flex', position: 'absolute', right: 48 }}>
+            <img src={imageUrl as string} width="160" height="280" style={{ borderRadius: 4 }} />
           </div>
         </div>
       ),

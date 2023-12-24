@@ -1777,6 +1777,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/rss", [\
+      ["npm:0.0.32", {\
+        "packageLocation": "./.yarn/cache/@types-rss-npm-0.0.32-7c7dd5a505-72a5e02ac4.zip/node_modules/@types/rss/",\
+        "packageDependencies": [\
+          ["@types/rss", "npm:0.0.32"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/scheduler", [\
       ["npm:0.16.3", {\
         "packageLocation": "./.yarn/cache/@types-scheduler-npm-0.16.3-887bfc0086-2b0aec39c2.zip/node_modules/@types/scheduler/",\
@@ -2583,6 +2592,7 @@ const RAW_RUNTIME_STATE =
           ["@types/lodash", "npm:4.14.202"],\
           ["@types/node", "npm:20.10.5"],\
           ["@types/react", "npm:18.2.45"],\
+          ["@types/rss", "npm:0.0.32"],\
           ["@vercel/analytics", "npm:1.1.1"],\
           ["@vercel/speed-insights", "npm:1.0.2"],\
           ["autoprefixer", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:10.4.16"],\
@@ -2616,6 +2626,7 @@ const RAW_RUNTIME_STATE =
           ["remark-gfm", "npm:4.0.0"],\
           ["remark-html", "npm:16.0.1"],\
           ["remark-math", "npm:6.0.0"],\
+          ["rss", "npm:1.2.2"],\
           ["tailwind-merge", "npm:2.2.0"],\
           ["tailwind-variants", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:0.1.19"],\
           ["tailwindcss", "npm:3.4.0"],\
@@ -7880,6 +7891,13 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["mime-db", [\
+      ["npm:1.25.0", {\
+        "packageLocation": "./.yarn/cache/mime-db-npm-1.25.0-95b93b6da4-04c91aa98b.zip/node_modules/mime-db/",\
+        "packageDependencies": [\
+          ["mime-db", "npm:1.25.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:1.52.0", {\
         "packageLocation": "./.yarn/cache/mime-db-npm-1.52.0-b5371d6fd2-54bb60bf39.zip/node_modules/mime-db/",\
         "packageDependencies": [\
@@ -7889,6 +7907,14 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["mime-types", [\
+      ["npm:2.1.13", {\
+        "packageLocation": "./.yarn/cache/mime-types-npm-2.1.13-8cbe59736a-e76a6749e9.zip/node_modules/mime-types/",\
+        "packageDependencies": [\
+          ["mime-types", "npm:2.1.13"],\
+          ["mime-db", "npm:1.25.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:2.1.35", {\
         "packageLocation": "./.yarn/cache/mime-types-npm-2.1.35-dd9ea9f3e2-89aa9651b6.zip/node_modules/mime-types/",\
         "packageDependencies": [\
@@ -9663,6 +9689,17 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["rss", [\
+      ["npm:1.2.2", {\
+        "packageLocation": "./.yarn/cache/rss-npm-1.2.2-ffab1e65a7-0121e1c826.zip/node_modules/rss/",\
+        "packageDependencies": [\
+          ["rss", "npm:1.2.2"],\
+          ["mime-types", "npm:2.1.13"],\
+          ["xml", "npm:1.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["run-applescript", [\
       ["npm:5.0.0", {\
         "packageLocation": "./.yarn/cache/run-applescript-npm-5.0.0-ea4b8840dd-d00c2dbfa5.zip/node_modules/run-applescript/",\
@@ -11355,6 +11392,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/wrappy-npm-1.0.2-916de4d4b3-159da4805f.zip/node_modules/wrappy/",\
         "packageDependencies": [\
           ["wrappy", "npm:1.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["xml", [\
+      ["npm:1.0.1", {\
+        "packageLocation": "./.yarn/cache/xml-npm-1.0.1-f50a7aeb8e-6c4c31a130.zip/node_modules/xml/",\
+        "packageDependencies": [\
+          ["xml", "npm:1.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\

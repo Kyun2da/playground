@@ -24,7 +24,6 @@ export async function GET(request: Request) {
             width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-            letterSpacing: '-.02em',
             backgroundImage: 'linear-gradient(to bottom, #dbf4ff, #ffffff)',
             fontFamily: 'Noto Sans KR',
           }}
@@ -41,7 +40,7 @@ export async function GET(request: Request) {
             <span
               style={{
                 marginLeft: 8,
-                fontSize: !hasTitle && !hasDescription ? 60 : 20,
+                fontSize: 64,
                 fontWeight: 700,
               }}
             >
@@ -51,8 +50,8 @@ export async function GET(request: Request) {
           <div style={{ display: 'flex', position: 'absolute', left: 42, bottom: 42 }}>
             <img
               src="https://avatars.githubusercontent.com/u/50328132?v=4"
-              width="80"
-              height="80"
+              width="160"
+              height="160"
               style={{ borderRadius: '50%' }}
             />
             <div
@@ -60,20 +59,21 @@ export async function GET(request: Request) {
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'absolute',
-                left: 100,
+                left: 200,
                 bottom: 4,
+                fontSize: 32,
               }}
             >
-              <span>허균</span>
-              <span>Frontend Developer</span>
+              <p>허균</p>
+              <p>FrontendDeveloper</p>
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: 48 }}>
-            {hasTitle ? <span style={{ fontSize: 32 }}>{title}</span> : null}
-            {hasDescription ? <span>{description}</span> : null}
+            {hasTitle ? <span style={{ fontSize: 58 }}>{title}</span> : null}
+            {hasDescription ? <span style={{ fontSize: 32 }}>{description}</span> : null}
           </div>
           <div style={{ display: 'flex', position: 'absolute', right: 48 }}>
-            <img src={imageUrl as string} width="160" height="280" style={{ borderRadius: 4 }} />
+            <img src={imageUrl as string} width="360" height="360" style={{ borderRadius: 32 }} />
           </div>
         </div>
       ),

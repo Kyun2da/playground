@@ -8,8 +8,6 @@ import { MDXRemote } from 'next-mdx-remote';
 import Image from 'next/image';
 
 export function Contents({ source, frontMatter }: ContentsProps) {
-  console.log(frontMatter);
-
   return (
     <div className="flex flex-col max-w-3xl mx-auto justify-center">
       <h1 className="text-center !mb-3">{frontMatter.title}</h1>

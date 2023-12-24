@@ -33,7 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } = await getData({ params });
 
   return {
-    title: frontMatter.title,
+    title: `${frontMatter.title} | Kyun2da Blog`,
+    description: frontMatter.excerpt,
     openGraph: {
       images: [
         `https://kyun2da.dev/api/og?title=${frontMatter.title}&imageUrl=${frontMatter.coverImage}`,

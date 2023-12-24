@@ -8,8 +8,8 @@ export async function GET() {
   const allPosts = await getAllPosts(postCategory, 'published');
 
   const feedOptions = {
-    title: 'Blog posts | RSS Feed',
-    description: 'Welcome to Kyun2da Blog',
+    title: 'Kyun2da Blog',
+    description: '허균의 블로그',
     site_url: site_url,
     feed_url: `${site_url}/rss.xml`,
     image_url: `${site_url}/favicon.ico`,

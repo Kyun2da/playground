@@ -47,6 +47,15 @@ export async function GET(request: Request) {
               Kyun2da.dev
             </span>
           </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: 48 }}>
+            {hasTitle ? <span style={{ fontSize: 58 }}>{title}</span> : null}
+            {hasDescription ? <span style={{ fontSize: 32 }}>{description}</span> : null}
+          </div>
+          <div style={{ display: 'flex', position: 'absolute', right: 48 }}>
+            <img src={imageUrl as string} width="360" height="360" style={{ borderRadius: 32 }} />
+          </div>
+
           <div style={{ display: 'flex', position: 'absolute', left: 42, bottom: 42 }}>
             <img
               src="https://avatars.githubusercontent.com/u/50328132?v=4"
@@ -67,13 +76,6 @@ export async function GET(request: Request) {
               <p>허균</p>
               <p>Frontend Developer</p>
             </div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: 48 }}>
-            {hasTitle ? <span style={{ fontSize: 58 }}>{title}</span> : null}
-            {hasDescription ? <span style={{ fontSize: 32 }}>{description}</span> : null}
-          </div>
-          <div style={{ display: 'flex', position: 'absolute', right: 48 }}>
-            <img src={imageUrl as string} width="360" height="360" style={{ borderRadius: 32 }} />
           </div>
         </div>
       ),

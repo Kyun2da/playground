@@ -2004,7 +2004,6 @@ __metadata:
     next: "npm:^14.0.4"
     next-mdx-remote: "npm:^4.4.1"
     next-remote-watch: "npm:^2.0.0"
-    next-seo: "npm:^6.4.0"
     next-sitemap: "npm:^4.2.3"
     next-themes: "npm:^0.2.1"
     next-transpile-modules: "npm:10.0.1"
@@ -6894,17 +6893,6 @@ __metadata:
   bin:
     next-remote-watch: bin/next-remote-watch
   checksum: 229dbbd15be2f05d342ffb6934d55d47ce4c59800fddeaf6bd81da62c8f985ac36ac7767e9de3d7277cada79163657c5c37cbb93090e2347ab43a2996cc3f490
-  languageName: node
-  linkType: hard
-
-"next-seo@npm:^6.4.0":
-  version: 6.4.0
-  resolution: "next-seo@npm:6.4.0"
-  peerDependencies:
-    next: ^8.1.1-canary.54 || >=9.0.0
-    react: ">=16.0.0"
-    react-dom: ">=16.0.0"
-  checksum: acb7ea474f121f788d2cc312f9c8ec2061f72c28b4d9ef6beb89d0707f0319e7b5025d08c1970bad7d0cda451820751ecf9a40507c1b97098a18d00a99436856
   languageName: node
   linkType: hard
 

@@ -2565,7 +2565,6 @@ const RAW_RUNTIME_STATE =
           ["next", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:14.0.4"],\
           ["next-mdx-remote", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:4.4.1"],\
           ["next-remote-watch", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:2.0.0"],\
-          ["next-seo", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:6.4.0"],\
           ["next-sitemap", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:4.2.3"],\
           ["next-themes", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:0.2.1"],\
           ["next-transpile-modules", "npm:10.0.1"],\
@@ -8201,36 +8200,6 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/next",\
           "next"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["next-seo", [\
-      ["npm:6.4.0", {\
-        "packageLocation": "./.yarn/cache/next-seo-npm-6.4.0-53000c899b-acb7ea474f.zip/node_modules/next-seo/",\
-        "packageDependencies": [\
-          ["next-seo", "npm:6.4.0"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:6.4.0", {\
-        "packageLocation": "./.yarn/__virtual__/next-seo-virtual-9439c33de5/0/cache/next-seo-npm-6.4.0-53000c899b-acb7ea474f.zip/node_modules/next-seo/",\
-        "packageDependencies": [\
-          ["next-seo", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:6.4.0"],\
-          ["@types/next", null],\
-          ["@types/react", "npm:18.2.45"],\
-          ["@types/react-dom", null],\
-          ["next", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:14.0.4"],\
-          ["react", "npm:18.2.0"],\
-          ["react-dom", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:18.2.0"]\
-        ],\
-        "packagePeers": [\
-          "@types/next",\
-          "@types/react-dom",\
-          "@types/react",\
-          "next",\
-          "react-dom",\
-          "react"\
         ],\
         "linkType": "HARD"\
       }]\

@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'Kyun2da.dev',
     description: '허균의 블로그',
     openGraph: {
-      images: ['https://kyun2da/blog/api/og'],
+      images: ['https://kyun2da.dev/blog/api/og'],
     },
   };
 }

@@ -22,3 +22,15 @@ export const siteConfig = {
     twitter: 'https://twitter.com/kyun2da',
   },
 };
+
+export const postCategory = [
+  'title',
+  'date',
+  'slug',
+  'draft',
+  'categories',
+  'time',
+  'author',
+  'coverImage',
+  'excerpt',
+];

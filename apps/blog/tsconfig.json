@@ -1,19 +1,39 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "build/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@layouts/*": ["layouts/*"],
-      "@utils/*": ["utils/*"],
-      "@components/*": ["components/*"],
-      "@pages/*": ["components/pages/*"],
-      "@interfaces/*": ["interfaces/*"]
+      "@layouts/*": [
+        "layouts/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@pages/*": [
+        "components/pages/*"
+      ],
+      "@interfaces/*": [
+        "interfaces/*"
+      ]
     },
     "noEmit": true,
     "incremental": true,
-    "types": ["@types/gtag.js"],
+    "types": [
+      "@types/gtag.js"
+    ],
     "plugins": [
       {
         "name": "next"

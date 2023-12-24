@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "postbuild": "next-sitemap",
     "build": "next build",
     "lint": "yarn run -T eslint '*.{js,ts,tsx}'",
     "typecheck": "tsc --noEmit"
@@ -32,7 +31,6 @@
     "next": "^14.0.4",
     "next-mdx-remote": "^4.4.1",
     "next-remote-watch": "^2.0.0",
-    "next-sitemap": "^4.2.3",
     "next-themes": "^0.2.1",
     "parse-numeric-range": "^1.3.0",
     "postcss": "^8.4.32",
@@ -58,10 +56,12 @@
   "devDependencies": {
     "@babel/core": "^7.23.6",
     "@tailwindcss/typography": "^0.5.10",
+    "@types/eslint": "^8",
     "@types/gtag.js": "^0.0.18",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.5",
     "@types/react": "^18.2.45",
+    "eslint": "^8.56.0",
     "next-transpile-modules": "10.0.1",
     "prettier": "^3.1.1",
     "tsconfig": "7.0.0",

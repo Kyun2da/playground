@@ -9,6 +9,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypePrism from 'rehype-prism-plus';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import type { Metadata } from 'next';
 
 export interface ContentsProps {
   source: any;
@@ -22,7 +23,24 @@ export interface ContentsProps {
   };
 }
 
-async function getData({ params }: GetStaticPropsContext) {
+type Props = {
+  params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const {
+    props: { frontMatter },
+  } = await getData({ params });
+
+  return {
+    title: frontMatter.title,
+    openGraph: {
+      images: [frontMatter.coverImage],
+    },
+  };
+}
+
+async function getData({ params }: GetStaticPropsContext): Promise<{ props: ContentsProps }> {
   const slug = params!.slug;
 
   const [fileType, fileName] = slug as [DeployType, string];
@@ -45,7 +63,7 @@ async function getData({ params }: GetStaticPropsContext) {
   return {
     props: {
       source: mdxSource,
-      frontMatter: data,
+      frontMatter: data as ContentsProps['frontMatter'],
     },
   };
 }

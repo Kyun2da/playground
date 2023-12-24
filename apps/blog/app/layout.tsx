@@ -7,19 +7,6 @@ import Script from 'next/script';
 import * as gtag from 'utils/gtag';
 import '../styles/global.css';
 
-const title = '허균의 블로그';
-const description = '개발자 허균의 블로그입니다.';
-
-export const metadata = {
-  title,
-  description,
-  openGraph: {
-    title,
-    authors: ['Kyun2da'],
-    description,
-  },
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>

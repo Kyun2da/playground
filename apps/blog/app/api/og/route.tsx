@@ -7,13 +7,11 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     const hasTitle = searchParams.has('title');
-    const hasDescription = searchParams.has('description');
     const hasImageUrl = searchParams.has('imageUrl');
     const title = searchParams.get('title')?.slice(0, 100);
     const imageUrl = hasImageUrl
       ? searchParams.get('imageUrl')
       : 'https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/redpanda.png';
-    const description = searchParams.get('description')?.slice(0, 300);
 
     return new ImageResponse(
       (
@@ -61,7 +59,6 @@ export async function GET(request: Request) {
             }}
           >
             {hasTitle ? <span style={{ fontSize: 58 }}>{title}</span> : null}
-            {hasDescription ? <span style={{ fontSize: 32 }}>{description}</span> : null}
           </div>
           <div style={{ display: 'flex', position: 'absolute', right: 48 }}>
             <img src={imageUrl as string} width="360" height="360" style={{ borderRadius: 32 }} />
@@ -70,8 +67,8 @@ export async function GET(request: Request) {
           <div style={{ display: 'flex', position: 'absolute', left: 42, bottom: 42 }}>
             <img
               src="https://avatars.githubusercontent.com/u/50328132?v=4"
-              width="160"
-              height="160"
+              width="120"
+              height="120"
               style={{ borderRadius: '50%' }}
             />
             <div
@@ -79,7 +76,7 @@ export async function GET(request: Request) {
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'absolute',
-                left: 200,
+                left: 148,
                 bottom: 4,
                 fontSize: 32,
               }}

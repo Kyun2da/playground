@@ -17,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
         <link rel="icon" href="favicon.ico" sizes="any" />
+        <meta property="og:image" content="https://www.kyun2da.dev/og" />
       </head>
       <body className={`${notoSansKR.className}  prose lg:prose-xl dark:prose-invert max-w-full`}>
         {/* Global Site Tag (gtag.js) - Google Analytics */}

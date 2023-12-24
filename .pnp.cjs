@@ -1369,31 +1369,11 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["@resvg/resvg-wasm", [\
-      ["npm:2.6.0", {\
-        "packageLocation": "./.yarn/cache/@resvg-resvg-wasm-npm-2.6.0-44754065ac-16433d7840.zip/node_modules/@resvg/resvg-wasm/",\
-        "packageDependencies": [\
-          ["@resvg/resvg-wasm", "npm:2.6.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["@rushstack/eslint-patch", [\
       ["npm:1.6.0", {\
         "packageLocation": "./.yarn/cache/@rushstack-eslint-patch-npm-1.6.0-5901435a0f-f5a44ad19f.zip/node_modules/@rushstack/eslint-patch/",\
         "packageDependencies": [\
           ["@rushstack/eslint-patch", "npm:1.6.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@shuding/opentype.js", [\
-      ["npm:1.4.0-beta.0", {\
-        "packageLocation": "./.yarn/cache/@shuding-opentype.js-npm-1.4.0-beta.0-498d62cde8-0a39d17ef8.zip/node_modules/@shuding/opentype.js/",\
-        "packageDependencies": [\
-          ["@shuding/opentype.js", "npm:1.4.0-beta.0"],\
-          ["fflate", "npm:0.7.4"],\
-          ["string.prototype.codepointat", "npm:0.2.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2018,18 +1998,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["@vercel/og", [\
-      ["npm:0.6.1", {\
-        "packageLocation": "./.yarn/cache/@vercel-og-npm-0.6.1-c9a279a2bd-efd3a58fcd.zip/node_modules/@vercel/og/",\
-        "packageDependencies": [\
-          ["@vercel/og", "npm:0.6.1"],\
-          ["@resvg/resvg-wasm", "npm:2.6.0"],\
-          ["satori", "npm:0.10.9"],\
-          ["yoga-wasm-web", "npm:0.3.3"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["@vercel/speed-insights", [\
       ["npm:1.0.2", {\
         "packageLocation": "./.yarn/unplugged/@vercel-speed-insights-npm-1.0.2-a50c331998/node_modules/@vercel/speed-insights/",\
@@ -2576,15 +2544,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["base64-js", [\
-      ["npm:0.0.8", {\
-        "packageLocation": "./.yarn/cache/base64-js-npm-0.0.8-f2946f7960-ab7f7b09a5.zip/node_modules/base64-js/",\
-        "packageDependencies": [\
-          ["base64-js", "npm:0.0.8"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["big-integer", [\
       ["npm:1.6.52", {\
         "packageLocation": "./.yarn/cache/big-integer-npm-1.6.52-4bec75720c-4bc6ae152a.zip/node_modules/big-integer/",\
@@ -2622,7 +2581,6 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:17.0.45"],\
           ["@types/react", "npm:18.2.8"],\
           ["@vercel/analytics", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:0.1.11"],\
-          ["@vercel/og", "npm:0.6.1"],\
           ["@vercel/speed-insights", "npm:1.0.2"],\
           ["autoprefixer", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:10.4.14"],\
           ["class-variance-authority", "npm:0.6.1"],\
@@ -2923,15 +2881,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/camelcase-css-npm-2.0.1-90d1b6df08-1cec2b3b3d.zip/node_modules/camelcase-css/",\
         "packageDependencies": [\
           ["camelcase-css", "npm:2.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["camelize", [\
-      ["npm:1.0.1", {\
-        "packageLocation": "./.yarn/cache/camelize-npm-1.0.1-d86ebe085a-0e147b4299.zip/node_modules/camelize/",\
-        "packageDependencies": [\
-          ["camelize", "npm:1.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3474,45 +3423,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["css-background-parser", [\
-      ["npm:0.1.0", {\
-        "packageLocation": "./.yarn/cache/css-background-parser-npm-0.1.0-d1e94221f7-6b606e45dc.zip/node_modules/css-background-parser/",\
-        "packageDependencies": [\
-          ["css-background-parser", "npm:0.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["css-box-shadow", [\
-      ["npm:1.0.0-3", {\
-        "packageLocation": "./.yarn/cache/css-box-shadow-npm-1.0.0-3-2a025ab419-a52a3bcc91.zip/node_modules/css-box-shadow/",\
-        "packageDependencies": [\
-          ["css-box-shadow", "npm:1.0.0-3"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["css-color-keywords", [\
-      ["npm:1.0.0", {\
-        "packageLocation": "./.yarn/cache/css-color-keywords-npm-1.0.0-fc176df58b-8f125e3ad4.zip/node_modules/css-color-keywords/",\
-        "packageDependencies": [\
-          ["css-color-keywords", "npm:1.0.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["css-to-react-native", [\
-      ["npm:3.2.0", {\
-        "packageLocation": "./.yarn/cache/css-to-react-native-npm-3.2.0-46e31a25e3-62ef744254.zip/node_modules/css-to-react-native/",\
-        "packageDependencies": [\
-          ["css-to-react-native", "npm:3.2.0"],\
-          ["camelize", "npm:1.0.1"],\
-          ["css-color-keywords", "npm:1.0.0"],\
-          ["postcss-value-parser", "npm:4.2.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["cssesc", [\
       ["npm:3.0.0", {\
         "packageLocation": "./.yarn/cache/cssesc-npm-3.0.0-15ec56f86f-0e161912c1.zip/node_modules/cssesc/",\
@@ -3912,13 +3822,6 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["emoji-regex", [\
-      ["npm:10.2.1", {\
-        "packageLocation": "./.yarn/cache/emoji-regex-npm-10.2.1-463e5e2567-fb2143d669.zip/node_modules/emoji-regex/",\
-        "packageDependencies": [\
-          ["emoji-regex", "npm:10.2.1"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["npm:7.0.3", {\
         "packageLocation": "./.yarn/cache/emoji-regex-npm-7.0.3-cfe9479bb3-9159b2228b.zip/node_modules/emoji-regex/",\
         "packageDependencies": [\
@@ -5085,15 +4988,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["fflate", [\
-      ["npm:0.7.4", {\
-        "packageLocation": "./.yarn/cache/fflate-npm-0.7.4-df9245ab05-27f61b3536.zip/node_modules/fflate/",\
-        "packageDependencies": [\
-          ["fflate", "npm:0.7.4"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["figures", [\
       ["npm:3.2.0", {\
         "packageLocation": "./.yarn/cache/figures-npm-3.2.0-85d357e955-a3bf94e001.zip/node_modules/figures/",\
@@ -6072,15 +5966,6 @@ const RAW_RUNTIME_STATE =
           ["hast-util-parse-selector", "npm:3.1.1"],\
           ["property-information", "npm:6.2.0"],\
           ["space-separated-tokens", "npm:2.0.2"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["hex-rgb", [\
-      ["npm:4.3.0", {\
-        "packageLocation": "./.yarn/cache/hex-rgb-npm-4.3.0-5f12201aeb-c0d59346b6.zip/node_modules/hex-rgb/",\
-        "packageDependencies": [\
-          ["hex-rgb", "npm:4.3.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7228,17 +7113,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/lilconfig-npm-2.1.0-a179261924-b1314a2e55.zip/node_modules/lilconfig/",\
         "packageDependencies": [\
           ["lilconfig", "npm:2.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["linebreak", [\
-      ["npm:1.1.0", {\
-        "packageLocation": "./.yarn/cache/linebreak-npm-1.1.0-d845ecba6a-f294fc9b34.zip/node_modules/linebreak/",\
-        "packageDependencies": [\
-          ["linebreak", "npm:1.1.0"],\
-          ["base64-js", "npm:0.0.8"],\
-          ["unicode-trie", "npm:2.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9373,32 +9247,12 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["pako", [\
-      ["npm:0.2.9", {\
-        "packageLocation": "./.yarn/cache/pako-npm-0.2.9-c88ac0d326-627c6842e9.zip/node_modules/pako/",\
-        "packageDependencies": [\
-          ["pako", "npm:0.2.9"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["parent-module", [\
       ["npm:1.0.1", {\
         "packageLocation": "./.yarn/cache/parent-module-npm-1.0.1-1fae11b095-6ba8b25514.zip/node_modules/parent-module/",\
         "packageDependencies": [\
           ["parent-module", "npm:1.0.1"],\
           ["callsites", "npm:3.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["parse-css-color", [\
-      ["npm:0.2.1", {\
-        "packageLocation": "./.yarn/cache/parse-css-color-npm-0.2.1-383d1ca16d-319ff24afa.zip/node_modules/parse-css-color/",\
-        "packageDependencies": [\
-          ["parse-css-color", "npm:0.2.1"],\
-          ["color-name", "npm:1.1.4"],\
-          ["hex-rgb", "npm:4.3.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -10703,25 +10557,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["satori", [\
-      ["npm:0.10.9", {\
-        "packageLocation": "./.yarn/cache/satori-npm-0.10.9-57a803828f-210b55f50f.zip/node_modules/satori/",\
-        "packageDependencies": [\
-          ["satori", "npm:0.10.9"],\
-          ["@shuding/opentype.js", "npm:1.4.0-beta.0"],\
-          ["css-background-parser", "npm:0.1.0"],\
-          ["css-box-shadow", "npm:1.0.0-3"],\
-          ["css-to-react-native", "npm:3.2.0"],\
-          ["emoji-regex", "npm:10.2.1"],\
-          ["escape-html", "npm:1.0.3"],\
-          ["linebreak", "npm:1.1.0"],\
-          ["parse-css-color", "npm:0.2.1"],\
-          ["postcss-value-parser", "npm:4.2.0"],\
-          ["yoga-wasm-web", "npm:0.3.3"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["scheduler", [\
       ["npm:0.23.0", {\
         "packageLocation": "./.yarn/cache/scheduler-npm-0.23.0-a379a6bc3b-0c4557aa37.zip/node_modules/scheduler/",\
@@ -11109,15 +10944,6 @@ const RAW_RUNTIME_STATE =
           ["emoji-regex", "npm:8.0.0"],\
           ["is-fullwidth-code-point", "npm:3.0.0"],\
           ["strip-ansi", "npm:6.0.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["string.prototype.codepointat", [\
-      ["npm:0.2.1", {\
-        "packageLocation": "./.yarn/cache/string.prototype.codepointat-npm-0.2.1-82003deaf5-bafa15844d.zip/node_modules/string.prototype.codepointat/",\
-        "packageDependencies": [\
-          ["string.prototype.codepointat", "npm:0.2.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -11623,15 +11449,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["tiny-inflate", [\
-      ["npm:1.0.3", {\
-        "packageLocation": "./.yarn/cache/tiny-inflate-npm-1.0.3-a7419a5c65-f620114fb5.zip/node_modules/tiny-inflate/",\
-        "packageDependencies": [\
-          ["tiny-inflate", "npm:1.0.3"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["titleize", [\
       ["npm:3.0.0", {\
         "packageLocation": "./.yarn/cache/titleize-npm-3.0.0-7deac2f3a3-71fbbeabbf.zip/node_modules/titleize/",\
@@ -12028,17 +11845,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/undici-types-npm-5.26.5-de4f7c7bb9-0097779d94.zip/node_modules/undici-types/",\
         "packageDependencies": [\
           ["undici-types", "npm:5.26.5"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["unicode-trie", [\
-      ["npm:2.0.0", {\
-        "packageLocation": "./.yarn/cache/unicode-trie-npm-2.0.0-54e0a4dd52-60404411db.zip/node_modules/unicode-trie/",\
-        "packageDependencies": [\
-          ["unicode-trie", "npm:2.0.0"],\
-          ["pako", "npm:0.2.9"],\
-          ["tiny-inflate", "npm:1.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -12813,15 +12619,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/yocto-queue-npm-0.1.0-c6c9a7db29-f77b3d8d00.zip/node_modules/yocto-queue/",\
         "packageDependencies": [\
           ["yocto-queue", "npm:0.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["yoga-wasm-web", [\
-      ["npm:0.3.3", {\
-        "packageLocation": "./.yarn/cache/yoga-wasm-web-npm-0.3.3-3f063ab1a0-7a60a7dbb6.zip/node_modules/yoga-wasm-web/",\
-        "packageDependencies": [\
-          ["yoga-wasm-web", "npm:0.3.3"]\
         ],\
         "linkType": "HARD"\
       }]\

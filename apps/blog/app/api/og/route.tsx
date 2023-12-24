@@ -48,7 +48,18 @@ export async function GET(request: Request) {
             </span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: 48 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'absolute',
+              left: 48,
+              top: 240,
+              maxWidth: 640,
+              wordBreak: 'keep-all',
+              gap: 24,
+            }}
+          >
             {hasTitle ? <span style={{ fontSize: 58 }}>{title}</span> : null}
             {hasDescription ? <span style={{ fontSize: 32 }}>{description}</span> : null}
           </div>
@@ -73,8 +84,8 @@ export async function GET(request: Request) {
                 fontSize: 32,
               }}
             >
-              <p>허균</p>
-              <p>Frontend Developer</p>
+              <span>허균</span>
+              <span>Developer</span>
             </div>
           </div>
         </div>

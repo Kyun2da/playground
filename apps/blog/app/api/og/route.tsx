@@ -65,7 +65,7 @@ export async function GET(request: Request) {
               }}
             >
               <p>허균</p>
-              <p>FrontendDeveloper</p>
+              <p>Frontend Developer</p>
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: 48 }}>

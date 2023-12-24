@@ -1039,10 +1039,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@resvg/resvg-wasm@npm:2.0.0-alpha.4":
-  version: 2.0.0-alpha.4
-  resolution: "@resvg/resvg-wasm@npm:2.0.0-alpha.4"
-  checksum: 5549b9e6bacf21f333d85f09118792e85178e01818f1e670bf0272e2ee26ecdf9ae3e4dcc6f925f01daf40e48e65462ce2377ad4be724d82ffc20d42c261753f
+"@resvg/resvg-wasm@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-wasm@npm:2.6.0"
+  checksum: 16433d78401f76b7da9aabf58396807ae867aa315e7c2a5d7965a57907aec5056791ed95e7fd4d383180aa1fa5e9b2788d654317b688ba2352b965cf815542cc
   languageName: node
   linkType: hard
 
@@ -1383,13 +1383,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yoga-layout@npm:1.9.2":
-  version: 1.9.2
-  resolution: "@types/yoga-layout@npm:1.9.2"
-  checksum: 3cbcab36d9e19d077cc2bc956d3182dc26f35f13f8fcf01648717bcba412be7ed3c4b6f43c4f8f201ea815160d0cb2b96e82698c4b43d4a179c5603a7725f34e
-  languageName: node
-  linkType: hard
-
 "@typescript-eslint/eslint-plugin@npm:^6.12.0":
   version: 6.12.0
   resolution: "@typescript-eslint/eslint-plugin@npm:6.12.0"
@@ -1528,14 +1521,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/og@npm:^0.0.21":
-  version: 0.0.21
-  resolution: "@vercel/og@npm:0.0.21"
+"@vercel/og@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@vercel/og@npm:0.6.1"
   dependencies:
-    "@resvg/resvg-wasm": "npm:2.0.0-alpha.4"
-    satori: "npm:0.0.44"
-    yoga-wasm-web: "npm:0.1.2"
-  checksum: 7218fd81d69537f394f0c16aebb82ec864c196c72d586947c15860bab34ae55167ba6c03c0550745d21a4ec721cd424024ca25e4c1b2caa03113b66bfef695c6
+    "@resvg/resvg-wasm": "npm:2.6.0"
+    satori: "npm:0.10.9"
+    yoga-wasm-web: "npm:0.3.3"
+  checksum: efd3a58fcd89b94aa512d5826fbe60ec94d306abdff5a1f6887d473c64982fb7334cbeff0fb2cf3a881396513252e797ecaa3f8934b4b2c45ac41f965272dfe0
   languageName: node
   linkType: hard
 
@@ -2008,6 +2001,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"base64-js@npm:0.0.8":
+  version: 0.0.8
+  resolution: "base64-js@npm:0.0.8"
+  checksum: ab7f7b09a5cd0ca51f5d37196ebf4be293732e26a27c4b3f970b7e0efca7215efb8ae6128c833581e7b3808fe006262a49fe3be538d84d6af617ac2dc1f0537e
+  languageName: node
+  linkType: hard
+
 "big-integer@npm:^1.6.44":
   version: 1.6.52
   resolution: "big-integer@npm:1.6.52"
@@ -2040,7 +2040,7 @@ __metadata:
     "@types/node": "npm:^17.0.12"
     "@types/react": "npm:^18.0.26"
     "@vercel/analytics": "npm:^0.1.6"
-    "@vercel/og": "npm:^0.0.21"
+    "@vercel/og": "npm:^0.6.1"
     "@vercel/speed-insights": "npm:^1.0.2"
     autoprefixer: "npm:^10.4.14"
     class-variance-authority: "npm:^0.6.1"
@@ -2619,7 +2619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:~1.1.4":
+"color-name@npm:^1.1.4, color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: b0445859521eb4021cd0fb0cc1a75cecf67fceecae89b63f62b201cca8d345baf8b952c966862a9d9a2632987d4f6581f0ec8d957dfacece86f0a7919316f610
@@ -3421,7 +3421,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escape-html@npm:~1.0.3":
+"escape-html@npm:^1.0.3, escape-html@npm:~1.0.3":
   version: 1.0.3
   resolution: "escape-html@npm:1.0.3"
   checksum: 6213ca9ae00d0ab8bccb6d8d4e0a98e76237b2410302cf7df70aaa6591d509a2a37ce8998008cbecae8fc8ffaadf3fb0229535e6a145f3ce0b211d060decbb24
@@ -4993,6 +4993,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hex-rgb@npm:^4.1.0":
+  version: 4.3.0
+  resolution: "hex-rgb@npm:4.3.0"
+  checksum: c0d59346b6e7c4523ef606154979b173d0e58be266e3a218d10d3298c1aa21bba124110604c8e4f9e9f76dac0196ced2bed04390879ba504d5ae412492f590cf
+  languageName: node
+  linkType: hard
+
 "homedir-polyfill@npm:^1.0.0":
   version: 1.0.3
   resolution: "homedir-polyfill@npm:1.0.3"
@@ -6027,6 +6034,16 @@ __metadata:
   version: 2.1.0
   resolution: "lilconfig@npm:2.1.0"
   checksum: b1314a2e55319013d5e7d7d08be39015829d2764a1eaee130129545d40388499d81b1c31b0f9b3417d4db12775a88008b72ec33dd06e0184cf7503b32ca7cc0b
+  languageName: node
+  linkType: hard
+
+"linebreak@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "linebreak@npm:1.1.0"
+  dependencies:
+    base64-js: "npm:0.0.8"
+    unicode-trie: "npm:^2.0.0"
+  checksum: f294fc9b34103b317eb58ee2e047b3041d82a915943b9b6a39bcc8f6f06982a904dad9a9783f61a84da64d06f2dca582b544e66fea7c1b304b58a653a7767bb9
   languageName: node
   linkType: hard
 
@@ -7930,12 +7947,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pako@npm:^0.2.5":
+  version: 0.2.9
+  resolution: "pako@npm:0.2.9"
+  checksum: 627c6842e90af0b3a9ee47345bd66485a589aff9514266f4fa9318557ad819c46fedf97510f2cef9b6224c57913777966a05cb46caf6a9b31177a5401a06fe15
+  languageName: node
+  linkType: hard
+
 "parent-module@npm:^1.0.0":
   version: 1.0.1
   resolution: "parent-module@npm:1.0.1"
   dependencies:
     callsites: "npm:^3.0.0"
   checksum: 6ba8b255145cae9470cf5551eb74be2d22281587af787a2626683a6c20fbb464978784661478dd2a3f1dad74d1e802d403e1b03c1a31fab310259eec8ac560ff
+  languageName: node
+  linkType: hard
+
+"parse-css-color@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "parse-css-color@npm:0.2.1"
+  dependencies:
+    color-name: "npm:^1.1.4"
+    hex-rgb: "npm:^4.1.0"
+  checksum: 319ff24afa6050b2fb1d87f52cf3a98760f20224c2ec38299f1619d9e5ae98375eda91c2ea2b15a9ff6c4693683679edd68208e186dec0a255391af291e1d5ee
   languageName: node
   linkType: hard
 
@@ -9081,18 +9115,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"satori@npm:0.0.44":
-  version: 0.0.44
-  resolution: "satori@npm:0.0.44"
+"satori@npm:0.10.9":
+  version: 0.10.9
+  resolution: "satori@npm:0.10.9"
   dependencies:
     "@shuding/opentype.js": "npm:1.4.0-beta.0"
     css-background-parser: "npm:^0.1.0"
     css-box-shadow: "npm:1.0.0-3"
     css-to-react-native: "npm:^3.0.0"
     emoji-regex: "npm:^10.2.1"
+    escape-html: "npm:^1.0.3"
+    linebreak: "npm:^1.1.0"
+    parse-css-color: "npm:^0.2.1"
     postcss-value-parser: "npm:^4.2.0"
-    yoga-layout-prebuilt: "npm:^1.10.0"
-  checksum: f93d158073bffd036f42decb38b2444145610c44ae28ff91bc978ba69818524c34d750442417dfc2e34facb785253d18336cc2a61b36e4f8b169a7d404020b20
+    yoga-wasm-web: "npm:^0.3.3"
+  checksum: 210b55f50f25cc7b00e670e2d20cdf805ebdd6be2e6bba09fd6244366abb9ebbd9456fd727ef2fd17c7bffee0563ac24373d7dbff90fa487f21e77d88b4c96d5
   languageName: node
   linkType: hard
 
@@ -9878,6 +9915,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tiny-inflate@npm:^1.0.0":
+  version: 1.0.3
+  resolution: "tiny-inflate@npm:1.0.3"
+  checksum: f620114fb51ea4a16ea7b4c62d6dd753f8faf41808a133c53d431ed4bf2ca377b21443653a0096894f2be22ca11bb327f148e7e5431f9246068917724ec01ffc
+  languageName: node
+  linkType: hard
+
 "titleize@npm:^3.0.0":
   version: 3.0.0
   resolution: "titleize@npm:3.0.0"
@@ -10254,6 +10298,16 @@ __metadata:
   version: 5.26.5
   resolution: "undici-types@npm:5.26.5"
   checksum: 0097779d94bc0fd26f0418b3a05472410408877279141ded2bd449167be1aed7ea5b76f756562cb3586a07f251b90799bab22d9019ceba49c037c76445f7cddd
+  languageName: node
+  linkType: hard
+
+"unicode-trie@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "unicode-trie@npm:2.0.0"
+  dependencies:
+    pako: "npm:^0.2.5"
+    tiny-inflate: "npm:^1.0.0"
+  checksum: 60404411dbd363bdcca9e81c9327fa80469f2e685737bac88ec693225ff20b9b545ac37ca2da13ec02f1552167dd010dfefd7c58b72a73d44a89fab1ca9c2479
   languageName: node
   linkType: hard
 
@@ -10947,19 +11001,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yoga-layout-prebuilt@npm:^1.10.0":
-  version: 1.10.0
-  resolution: "yoga-layout-prebuilt@npm:1.10.0"
-  dependencies:
-    "@types/yoga-layout": "npm:1.9.2"
-  checksum: fe36fadae9b30710083f76c73e87479c2eb291ff7c560c35a9e2b8eb78f43882ace63cc80cdaecae98ee2e4168e1bf84dc65b2f5ae1bfa31df37603c46683bd6
-  languageName: node
-  linkType: hard
-
-"yoga-wasm-web@npm:0.1.2":
-  version: 0.1.2
-  resolution: "yoga-wasm-web@npm:0.1.2"
-  checksum: 08bc12caed0921a205c4a62b2489b67bddebc32298a6b333ef1330ff3363d5cb1019141e845efdfe395e0c6258d23a35daeaaf5e4c07e8f0563eb3810712e436
+"yoga-wasm-web@npm:0.3.3, yoga-wasm-web@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "yoga-wasm-web@npm:0.3.3"
+  checksum: 7a60a7dbb6dc0383395f2b40c9fac6e4f7b322f934ebb07cefc92997baca597f3ef01f67fe37e5e61c128de917760aa7639980ed2f8d94c2dfbef83bd5f61e36
   languageName: node
   linkType: hard
 

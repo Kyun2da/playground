@@ -7,6 +7,19 @@ import Script from 'next/script';
 import * as gtag from 'utils/gtag';
 import '../styles/global.css';
 
+const title = '허균의 블로그';
+const description = '개발자 허균의 블로그입니다.';
+
+export const metadata = {
+  title,
+  description,
+  openGraph: {
+    title,
+    authors: ['Kyun2da'],
+    description,
+  },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -17,7 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
         <link rel="icon" href="favicon.ico" sizes="any" />
-        <meta property="og:image" content="https://www.kyun2da.dev/og" />
       </head>
       <body className={`${notoSansKR.className}  prose lg:prose-xl dark:prose-invert max-w-full`}>
         {/* Global Site Tag (gtag.js) - Google Analytics */}

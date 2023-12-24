@@ -31,7 +31,7 @@ export function getPostBySlug(slug: string, fields: string[] = [], directoryPath
 }
 
 export function getAllPosts(fields: string[] = [], type: 'draft' | 'published') {
-  const filePostfix = type === 'draft' ? '_posts' : '_drafts';
+  const filePostfix = type === 'draft' ? '_drafts' : '_posts';
   const directoryPath = join(process.cwd(), filePostfix);
   const slugs = fs.readdirSync(directoryPath);
 

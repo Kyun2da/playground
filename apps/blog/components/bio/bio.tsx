@@ -1,8 +1,14 @@
 import Image from 'next/image';
 
-export function Bio() {
+interface Props {
+  className?: string;
+}
+
+export function Bio({ className }: Props) {
   return (
-    <div className="border flex flex-col gap-4 px-4 py-8 bg-white shadow-lg rounded-2xl mb-16">
+    <div
+      className={`border flex flex-col gap-4 px-4 py-8 bg-white shadow-lg rounded-2xl ${className}`}
+    >
       <div className="flex flex-row">
         <Image
           className="rounded-full ml-4 mr-6 my-0 w-24 h-24 !mt-2 !mb-0"

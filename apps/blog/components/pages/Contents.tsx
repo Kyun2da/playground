@@ -49,7 +49,7 @@ export function Contents({ source, frontMatter }: ContentsProps) {
       <div className="not-prose mb-16">
         <MDXRemote {...source} components={MDXComponents} />
       </div>
-      <Bio />
+      <Bio className="mb-16" />
       <Comment />
     </div>
   );

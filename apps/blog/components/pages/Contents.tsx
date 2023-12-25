@@ -1,5 +1,6 @@
 'use client';
 
+import { Bio } from '@components/bio/bio';
 import { Comment } from '@components/comment/Comment';
 import { MDXComponents } from '@components/mdx-components/MDXComponent';
 import { ContentsProps } from 'app/posts/[...slug]/page';
@@ -48,6 +49,7 @@ export function Contents({ source, frontMatter }: ContentsProps) {
       <div className="not-prose mb-16">
         <MDXRemote {...source} components={MDXComponents} />
       </div>
+      <Bio />
       <Comment />
     </div>
   );

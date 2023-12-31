@@ -46,7 +46,7 @@ export function Contents({ source, frontMatter }: ContentsProps) {
           alt="coverImage"
         />
       </div>
-      <div className="not-prose mb-16">
+      <div className="not-prose mb-16 break-keep">
         <MDXRemote {...source} components={MDXComponents} />
       </div>
       <Bio className="mb-16" />

@@ -1,5 +1,3 @@
-'use client';
-
 import { Bio } from '@components/bio/bio';
 import Image from 'next/image';
 import { ReactNode } from 'react';
@@ -8,6 +6,20 @@ export function About() {
   return (
     <div className="flex flex-col max-w-3xl mx-auto justify-center px-4">
       <Bio className="my-8" />
+      <div className="flex flex-row">
+        <Image
+          src="https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/TossSecurities_Logo_Primary.png"
+          alt="tosssecurities_logo"
+          className="-ml-8 !my-0"
+          width={240}
+          height={240}
+        />
+        <p className="self-center">토스증권</p>
+      </div>
+      <LeftLineSection>
+        <Timeline title="WTS Silo" date="2024.02 ~" className="mt-0" />
+        <BulletPoint>WTS 기능 고도화</BulletPoint>
+      </LeftLineSection>
       <div className="flex flex-row">
         <Image
           src="https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/TossPayments_Logo_Primary.png"
@@ -19,7 +31,7 @@ export function About() {
         <p className="self-center">토스페이먼츠</p>
       </div>
       <LeftLineSection>
-        <Timeline title="Client Platform Team" date="2023.10 ~" className="mt-0" />
+        <Timeline title="Client Platform Team" date="2023.10 ~ 2024.01" className="mt-0" />
         <BulletPoint>프론트엔드 어드민 페이지 CSR canary 기능 추가</BulletPoint>
         <BulletPoint>프론트엔드 공용 라이브러리 슬랙 릴리즈 봇 붙이기</BulletPoint>
         <BulletPoint>프론트엔드 공용 라이브러리 스토리북 환경 구축</BulletPoint>

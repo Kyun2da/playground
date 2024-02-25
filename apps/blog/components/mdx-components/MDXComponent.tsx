@@ -2,14 +2,15 @@ import { CheckIcon } from '@components/icon/CheckIcon';
 import { CopyIcon } from '@components/icon/CopyIcon';
 import { useHover } from 'hooks/useHover';
 import { useState } from 'react';
+import { MDXHeader } from './components/header/MDXHeader';
 
 export const MDXComponents = {
-  h1: (props: any) => <h1 className="text-4xl font-bold my-12" {...props} />,
-  h2: (props: any) => <h2 className="text-2xl font-bold my-8" {...props} />,
-  h3: (props: any) => <h3 className="text-xl font-bold my-6" {...props} />,
-  h4: (props: any) => <h4 className="text-lg font-bold my-4" {...props} />,
-  h5: (props: any) => <h5 className="text-base font-bold m-2" {...props} />,
-  h6: (props: any) => <h6 className="text-sm font-bold" {...props} />,
+  h1: (props: any) => <MDXHeader type="h1" {...props} />,
+  h2: (props: any) => <MDXHeader type="h2" {...props} />,
+  h3: (props: any) => <MDXHeader type="h3" {...props} />,
+  h4: (props: any) => <MDXHeader type="h4" {...props} />,
+  h5: (props: any) => <MDXHeader type="h5" {...props} />,
+  h6: (props: any) => <MDXHeader type="h6" {...props} />,
   p: (props: any) => <p className="text-base/7" {...props} />,
   a: (props: any) => <a className="text-blue-500 hover:underline" {...props} />,
   ul: (props: any) => <ul className="list-disc list-inside my-4" {...props} />,

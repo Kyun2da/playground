@@ -9,7 +9,7 @@ const chokidar = require('chokidar');
 const wss = new WebSocketServer({ port: 3001 });
 const watchCallbacks = [];
 
-chokidar.watch('./public').on('all', event => {
+chokidar.watch('./_posts').on('all', event => {
   if (event === 'change') {
     watchCallbacks.forEach(cb => cb());
   }

@@ -432,17 +432,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@giscus/react", [\
-      ["npm:2.4.0", {\
-        "packageLocation": "../../../.yarn/berry/cache/@giscus-react-npm-2.4.0-be7f95f798-10c0.zip/node_modules/@giscus/react/",\
+      ["npm:3.0.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/@giscus-react-npm-3.0.0-d92f31fa98-10c0.zip/node_modules/@giscus/react/",\
         "packageDependencies": [\
-          ["@giscus/react", "npm:2.4.0"]\
+          ["@giscus/react", "npm:3.0.0"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:2.4.0", {\
-        "packageLocation": "./.yarn/__virtual__/@giscus-react-virtual-31475e4c14/4/.yarn/berry/cache/@giscus-react-npm-2.4.0-be7f95f798-10c0.zip/node_modules/@giscus/react/",\
+      ["virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:3.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/@giscus-react-virtual-8f8c607a14/4/.yarn/berry/cache/@giscus-react-npm-3.0.0-d92f31fa98-10c0.zip/node_modules/@giscus/react/",\
         "packageDependencies": [\
-          ["@giscus/react", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:2.4.0"],\
+          ["@giscus/react", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:3.0.0"],\
           ["@types/react", "npm:18.2.64"],\
           ["@types/react-dom", null],\
           ["giscus", "npm:1.5.0"],\
@@ -2393,7 +2393,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["blog", "workspace:apps/blog"],\
           ["@babel/core", "npm:7.24.0"],\
-          ["@giscus/react", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:2.4.0"],\
+          ["@giscus/react", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:3.0.0"],\
           ["@mapbox/rehype-prism", "npm:0.8.0"],\
           ["@mdx-js/loader", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:2.3.0"],\
           ["@mdx-js/react", "virtual:7836f047b155300edcaf9648fc68a167d9d998bc03643c2170ede8fa4c3d864ae790208a2d7aab6b9ac8752643a2ad0984ea51cf6e2b28ca3b5506fbcbef953f#npm:2.3.0"],\

@@ -28,9 +28,7 @@ export async function GET(request: Request) {
       image: ogImage,
     });
   } catch (error) {
-    if (error instanceof Error) {
-      console.error('Error fetching Open Graph data:', error.message);
-    }
+    console.error('Error fetching Open Graph data:', error);
 
     return NextResponse.json(
       {

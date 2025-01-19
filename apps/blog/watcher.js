@@ -1,6 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // @see https://github.com/gaearon/overreacted.io/pull/797
 
 const { WebSocketServer } = require('ws');

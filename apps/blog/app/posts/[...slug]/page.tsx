@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 async function getData({ params }: GetStaticPropsContext): Promise<{ props: ContentsProps }> {
-  const slug = params!.slug;
+  const { slug } = await params!;
 
   const [fileType, fileName] = slug as [DeployType, string];
 

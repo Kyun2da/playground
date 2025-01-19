@@ -28,7 +28,15 @@ export async function GET(request: Request) {
       image: ogImage,
     });
   } catch (error) {
-    console.error('Error fetching Open Graph data:', error);
-    return NextResponse.json({ error: 'Failed to fetch Open Graph data' }, { status: 500 });
+    if (error instanceof Error) {
+      console.error('Error fetching Open Graph data:', error.message);
+
+      return NextResponse.json(
+        {
+          error: error.message || 'Failed to fetch Open Graph data',
+        },
+        { status: 500 }
+      );
+    }
   }
 }

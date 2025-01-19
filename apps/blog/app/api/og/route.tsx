@@ -8,8 +8,10 @@ export async function GET(request: Request) {
 
     const hasTitle = searchParams.has('title');
     const hasImageUrl = searchParams.has('imageUrl');
-    const title = searchParams.get('title')?.slice(0, 100);
-    const imageUrl = hasImageUrl ? searchParams.get('imageUrl') : '/img/redpanda.png';
+    const title = searchParams.get('title')?.slice(0, 100) || 'Default Title';
+    const imageUrl = hasImageUrl
+      ? searchParams.get('imageUrl')
+      : new URL('/img/redpanda.png', request.url).toString();
 
     return new ImageResponse(
       (
@@ -21,7 +23,7 @@ export async function GET(request: Request) {
             alignItems: 'center',
             justifyContent: 'center',
             backgroundImage: 'linear-gradient(to bottom, #dbf4ff, #ffffff)',
-            fontFamily: 'Noto Sans KR',
+            fontFamily: '"Noto Sans KR", Arial, sans-serif',
           }}
         >
           <div
@@ -59,7 +61,13 @@ export async function GET(request: Request) {
             {hasTitle ? <span style={{ fontSize: 58 }}>{title}</span> : null}
           </div>
           <div style={{ display: 'flex', position: 'absolute', right: 48 }}>
-            <img src={imageUrl as string} width="360" height="360" style={{ borderRadius: 32 }} />
+            <img
+              src={imageUrl as string}
+              width="360"
+              height="360"
+              style={{ borderRadius: 32 }}
+              onError={e => (e.currentTarget.src = 'https://via.placeholder.com/360')}
+            />
           </div>
 
           <div style={{ display: 'flex', position: 'absolute', left: 42, bottom: 42 }}>
@@ -91,8 +99,10 @@ export async function GET(request: Request) {
       }
     );
   } catch (e: any) {
-    return new Response(`Failed to generate the image`, {
+    console.error('Error generating Open Graph image:', e.message);
+    return new Response(JSON.stringify({ error: 'Failed to generate the image' }), {
       status: 500,
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }

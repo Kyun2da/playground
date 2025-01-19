@@ -15,7 +15,7 @@ export function Bio({ className }: Props) {
         <Image
           className="rounded-full ml-4 mr-6 my-0 w-24 h-24 !mt-2 !mb-0"
           alt="Profile image"
-          src="https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A5%E1%84%80%E1%85%B2%E1%86%AB.jpeg"
+          src="/img/profile.jpeg"
           width={96}
           height={96}
         />

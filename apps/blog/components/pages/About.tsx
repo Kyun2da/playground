@@ -8,7 +8,7 @@ export function About() {
       <Bio className="my-8" />
       <div className="flex flex-row">
         <Image
-          src="https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/TossSecurities_Logo_Primary.png"
+          src="/img/TossSecurities_Logo_Primary.png"
           alt="tosssecurities_logo"
           className="-ml-8 !my-0"
           width={240}
@@ -22,7 +22,7 @@ export function About() {
       </LeftLineSection>
       <div className="flex flex-row">
         <Image
-          src="https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/TossPayments_Logo_Primary.png"
+          src="/img/TossPayments_Logo_Primary.png"
           alt="tosspayments_logo"
           className="-ml-8 !my-0"
           width={240}

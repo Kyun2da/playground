@@ -9,9 +9,7 @@ export async function GET(request: Request) {
     const hasTitle = searchParams.has('title');
     const hasImageUrl = searchParams.has('imageUrl');
     const title = searchParams.get('title')?.slice(0, 100);
-    const imageUrl = hasImageUrl
-      ? searchParams.get('imageUrl')
-      : 'https://kyun2da-blog.s3.ap-northeast-2.amazonaws.com/redpanda.png';
+    const imageUrl = hasImageUrl ? searchParams.get('imageUrl') : '/img/redpanda.png';
 
     return new ImageResponse(
       (

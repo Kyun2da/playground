@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { load } from 'cheerio';
 import { NextResponse } from 'next/server';
 
@@ -14,8 +13,13 @@ export async function GET(request: Request) {
 
   try {
     // URL의 HTML 콘텐츠 가져오기
-    const { data } = await axios.get(url, { timeout: 5000 });
-    const $ = load(data);
+    const response = await fetch(url, { method: 'GET', headers: { 'User-Agent': 'Mozilla/5.0' } });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.statusText}`);
+    }
+
+    const html = await response.text();
+    const $ = load(html);
 
     // Open Graph 태그 추출
     const ogTitle = $('meta[property="og:title"]').attr('content') || 'No Title';
@@ -29,12 +33,6 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error('Error fetching Open Graph data:', error);
-
-    return NextResponse.json(
-      {
-        error: 'Failed to fetch Open Graph data',
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch Open Graph data' }, { status: 500 });
   }
 }

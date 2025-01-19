@@ -1,5 +1,7 @@
 import { Bio } from '@components/bio/bio';
+import LinkPreview from '@components/link-preview/LinkPreview';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ReactNode } from 'react';
 
 export function About() {
@@ -17,8 +19,22 @@ export function About() {
         <p className="self-center">토스증권</p>
       </div>
       <LeftLineSection>
-        <Timeline title="WTS Silo" date="2024.02 ~" className="mt-0" />
-        <BulletPoint>WTS 기능 고도화</BulletPoint>
+        <Timeline title="Product Stability Team" date="2024.07 ~ Now" className="mt-0" />
+        <BulletPoint>오픈뱅킹, KYC등 MTS 시스템 고도화</BulletPoint>
+        <BulletPoint>내부 AML 시스템 구축</BulletPoint>
+        <BulletPoint>
+          토스증권 홈페이지 리뉴얼{' '}
+          <Link target="_blank" href="https://corp.tossinvest.com">
+            링크
+          </Link>
+        </BulletPoint>
+        <Timeline title="WTS Silo" date="2024.02 ~ 2024.07" className="mt-0" />
+        <BulletPoint>
+          WTS MVP 출시 및 기능 고도화{' '}
+          <Link target="_blank" href="https://tossinvest.com/">
+            링크
+          </Link>
+        </BulletPoint>
       </LeftLineSection>
       <div className="flex flex-row">
         <Image
@@ -65,6 +81,23 @@ export function About() {
           pc, mobile 환경에서 개발자들이 로깅을 쉽게 할 수 있도록 로깅 스키마 설계 및 DX 개선
         </BulletPoint>
       </LeftLineSection>
+      <div>
+        <h2 style={{ marginBottom: '20px', fontSize: '24px', fontWeight: 'bold' }}>인터뷰</h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', // 반응형 그리드
+            gap: '48px', // 카드 간격
+          }}
+        >
+          <LinkPreview
+            url={
+              'https://www.linkedin.com/posts/toss-payments_%ED%86%A0%EC%8A%A4%ED%8E%98%EC%9D%B4%EB%A8%BC%EC%B8%A0-%ED%86%A0%EC%8A%A4-tosspayments-activity-7051753884221931520-436Q?trk=public_profile_like_view'
+            }
+          />
+          <LinkPreview url="https://toss.im/career/article/2024_NEXTDEVELOPER_2" />
+        </div>
+      </div>
     </div>
   );
 }

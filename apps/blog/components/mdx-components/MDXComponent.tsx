@@ -13,9 +13,25 @@ export const MDXComponents = {
   h6: (props: any) => <MDXHeader type="h6" {...props} />,
   p: (props: any) => <p className="text-base/7" {...props} />,
   a: (props: any) => <a className="text-blue-500 hover:underline" {...props} />,
-  ul: (props: any) => <ul className="list-disc list-inside my-4" {...props} />,
-  ol: (props: any) => <ol className="list-decimal list-inside" {...props} />,
-  li: (props: any) => <li className="text-base/7" {...props} />,
+  ul: (props: any) => {
+    return (
+      <ul
+        className="list-disc list-inside space-y-1 [&>li>ol]:ml-6 [&>li>ol]:list-[lower-alpha] [&>li>ol]:mt-1 [&>li>ul]:ml-6 [&>li>ul]:list-[circle] [&>li>ul]:mt-1"
+        {...props}
+      />
+    );
+  },
+  ol: (props: any) => {
+    return (
+      <ol
+        className="list-decimal list-inside space-y-1 [&>li>ol]:ml-6 [&>li>ol]:list-[lower-alpha] [&>li>ol]:mt-1 [&>li>ul]:ml-6 [&>li>ul]:list-[circle] [&>li>ul]:mt-1"
+        {...props}
+      />
+    );
+  },
+  li: (props: any) => {
+    return <li className="text-base/7" {...props} />;
+  },
   blockquote: (props: any) => (
     <blockquote className="border-l-4 border-gray-300 pl-4 my-4" {...props} />
   ),

@@ -10,6 +10,7 @@ import rehypePrism from 'rehype-prism-plus';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import type { Metadata } from 'next';
+import { TableOfContents } from '@components/toc/table-of-contents';
 
 export interface ContentsProps {
   source: any;
@@ -77,7 +78,14 @@ export default async function PostPage({ params }: any) {
     props: { frontMatter, source },
   } = await getData({ params });
 
-  return <Contents source={source} frontMatter={frontMatter as any} />;
+  return (
+    <div className="relative max-w-screen-xl mx-auto px-4">
+      <div className="lg:pr-64">
+        <Contents source={source} frontMatter={frontMatter as any} />
+      </div>
+      <TableOfContents />
+    </div>
+  );
 }
 
 type DeployType = 'draft' | 'published';

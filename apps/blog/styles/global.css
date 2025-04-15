@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+code {
+  font-size: 14px;
+}
+
 .code-highlight {
   float: left; /* 1 */
   min-width: 100%; /* 2 */
@@ -43,7 +47,7 @@
   background: hsl(220, 13%, 10%);
   color: hsl(220, 14%, 71%);
   padding: 0.5em 1em;
-  border-radius: 0.3em 0.3em 0 0;
+  border-radius: 0.3em;
 }
 
 code[class*='language-'],
@@ -89,7 +93,7 @@ pre[class*='language-'] {
   padding: 0.5em 0em;
   margin: 0 0 0.5em 0;
   overflow: auto;
-  border-radius: 0 0 0.3em 0.3em;
+  border-radius: 0.3em;
 }
 
 /* Inline code */

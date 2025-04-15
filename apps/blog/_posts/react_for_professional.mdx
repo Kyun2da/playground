@@ -1,0 +1,334 @@
+---
+title: 전문가를 위한 리액트
+date: '2025-04-15'
+categories: ['books']
+time: 5
+draft: false
+excerpt: '전문가를 위한 리액트를 읽고'
+coverImage: '/img/react_for_professional.jpg'
+ogImage:
+  url: ''
+---
+
+
+## 들어가며
+
+최근 [전문가를 위한 리액트(React)](https://product.kyobobook.co.kr/detail/S000214977649) 책을 완독했다. 책의 내용과 함께 리액트 커뮤니티의 주요 기술 블로그 글들을 참고해봤다.
+
+## 책 개요
+
+'전문가를 위한 리액트'는 단순한 리액트 입문서가 아닌, 이미 리액트 기본기를 갖춘 개발자들이 더 깊은 이해와 고급 기술을 습득할 수 있도록 구성된 심화 교재다. 리액트의 내부 동작 원리부터 성능 최적화, 상태 관리 전략, 서버 사이드 렌더링까지 리액트 생태계의 핵심 주제들을 포괄적으로 다루고 있다.
+
+## 주요 내용 요약
+
+### 1. 리액트의 핵심 원리
+
+#### 가상 DOM과 재조정(Reconciliation) 심층 분석
+
+**가상 DOM의 개념과 필요성**
+
+가상 DOM은 실제 DOM의 가벼운 JavaScript 복사본이다. 리액트가 가상 DOM을 사용하는 이유는 다음과 같다:
+
+  - 직접적인 DOM 조작의 비효율성: 브라우저의 DOM 조작은 상대적으로 느리고 비용이 많이 든다. 레이아웃 계산, 리페인팅 등 많은 작업이 연쇄적으로 발생한다.
+  - 메모리 내 비교 작업의 효율성: JavaScript 객체 간의 비교는 실제 DOM 노드 비교보다 훨씬 빠르다.
+  - 일괄 업데이트 가능: 변경사항을 모아서 한 번에 실제 DOM에 적용할 수 있다.
+
+책에서는 가상 DOM이 단순히 성능을 위한 최적화가 아니라, 선언적 UI 프로그래밍을 가능하게 하는 패러다임이라는 점을 강조한다. 이를 통해 개발자는 "어떻게(How)" UI를 변경할지가 아니라 "무엇을(What)" 표시할지에 집중할 수 있다.
+
+#### 재조정(Reconciliation) 알고리즘의 동작 원리
+
+재조정은 가상 DOM 트리와 실제 DOM을 동기화하는 과정이다. 책에서는 이 과정을 상세히 설명한다:
+
+1. 상태 변경 감지: setState, props 변경, forceUpdate 호출 등으로 컴포넌트의 상태가 변경된다.
+2. 렌더 단계(Render Phase):
+  - 컴포넌트의 render 메서드 호출
+  - JSX가 React 엘리먼트 트리로 변환
+  - 이전 가상 DOM과 새로운 가상 DOM 비교
+3. 커밋 단계(Commit Phase):
+  - 실제 DOM 업데이트 실행
+  - 생명주기 메서드 및 useEffect 훅 실행
+
+재조정 과정에서 리액트는 두 가지 주요 가정을 기반으로 한다:
+  - 다른 타입의 엘리먼트는 다른 트리를 생성한다: 엘리먼트 타입이 div에서 span으로 변경되면, 전체 서브트리를 재생성한다.
+  - 개발자는 key 속성으로 안정적인 엘리먼트를 식별할 수 있다: key가 같으면 동일한 엘리먼트로 취급한다.
+
+> [네이버의 React 파이버 아키텍처 분석 글](https://d2.naver.com/helloworld/831311)에서는 "재조정 알고리즘이 업데이트를 두 단계로 나눔으로써 비동기 렌더링의 기초를 마련했다"고 설명하며, 이 분리가 React 16에서 도입된 Fiber 아키텍처의 핵심 혁신이라고 강조한다.
+
+#### 트리 비교(Diffing) 알고리즘 심층 분석
+
+리액트의 트리 비교는 이론적으로 O(n³) 복잡도를 가질 수 있는 작업을 O(n) 복잡도로 줄이기 위한 휴리스틱 알고리즘을 사용한다:
+
+1. 레벨별 비교: 두 트리를 루트 노드부터 동시에 순회하며 비교한다.
+2. 엘리먼트 타입 비교:
+  - 타입이 다르면: 이전 트리 언마운트 후 새 트리 생성
+  - 타입이 같으면: 동일 엘리먼트로 간주하고 속성만 업데이트
+3. 컴포넌트 인스턴스 처리:
+  - 클래스 컴포넌트는 인스턴스를 유지하고 속성만 업데이트
+  - 함수형 컴포넌트는 함수를 다시 호출하여 새 React 엘리먼트 트리 생성
+4. 자식 엘리먼트 재귀 처리:
+  - 리스트 항목은 key를 사용하여 식별
+  - key가 없으면 인덱스 기반으로 비교 (비효율적)
+
+책에서는 다음과 같은 실전 예제를 통해 트리 비교를 시각화한다:
+
+```tsx
+// 변경 전
+<div>
+  <Header />
+  <Content text="Old content" />
+</div>
+
+// 변경 후
+<div>
+  <Header />
+  <Content text="New content" />
+  <Footer />
+</div>
+```
+
+이 경우 리액트는:
+
+1. div 타입이 같으므로 유지하고 속성만 업데이트
+2. Header 컴포넌트 타입이 같으므로 유지 (props 변경 없음)
+3. Content 컴포넌트 타입이 같으므로 유지하고 text prop만 업데이트
+4. Footer 컴포넌트가 새로 추가되어 마운트
+
+#### key 속성의 중요성과 최적화
+
+책에서는 key 속성이 재조정 과정에서 얼마나 중요한지 실제 성능 측정을 통해 보여준다:
+
+```tsx
+// 비효율적인 방식 (key가 없거나 인덱스를 key로 사용)
+{items.map((item, index) => (
+  <ListItem key={index} data={item} />
+))}
+
+// 효율적인 방식 (고유 ID를 key로 사용)
+{items.map(item => (
+  <ListItem key={item.id} data={item} />
+))}
+```
+
+첫 번째 예제에서 배열의 첫 항목이 제거되면 리액트는 모든 컴포넌트의 key가 변경되었다고 판단하여 전체 리스트를 재렌더링한다. 반면, 두 번째 예제에서는 제거된 컴포넌트만 언마운트하고 나머지는 그대로 유지한다.
+
+책에서는 다음과 같은 상황에서 잘못된 key 사용이 심각한 성능 문제나 버그를 일으킨다고 설명한다:
+
+  - 폼 상태가 예상치 못하게 리셋되는 현상
+  - 애니메이션이 올바르게 작동하지 않는 문제
+  - 컴포넌트의 생명주기 메서드가 예상과 다르게 호출되는 문제
+
+특히 리스트 항목의 순서가 자주 변경되거나 필터링되는 경우, 올바른 key 사용이 결정적인 성능 차이를 만든다는 점을 사례 연구와 함께 보여준다.
+
+#### Fiber 아키텍처의 혁신
+
+React 16부터 도입된 Fiber 아키텍처는 재조정 과정의 가장 큰 변화였다. 책에서는 Fiber의 핵심 개념을 다음과 같이 설명한다:
+
+  - 작업 단위 분할: 렌더링 작업을 작은 단위(fiber)로 나누어 처리
+  - 우선순위 지정: 작업에 우선순위를 부여하여 중요한 업데이트 먼저 처리
+  - 작업 일시 중단 및 재개: 브라우저의 메인 스레드를 차단하지 않도록 렌더링 작업을 일시 중단하고 나중에 재개 가능
+  - 이중 버퍼링: 화면에 커밋된 fiber 트리와 작업 중인 fiber 트리를 분리하여 일관성 유지
+
+네이버의 기술 블로그에서는 Fiber 아키텍처를 다음과 같이 정의한다:
+
+"Fiber는 React의 새로운 재조정 엔진이다. Fiber의 주요 목표는 React의 애니메이션, 레이아웃, 제스처, 중단과 재사용 기능 등의 렌더링 능력을 향상시키는 것이다. 가장 중요한 특징은 점진적 렌더링으로, UI를 여러 부분으로 나누어 렌더링하고 여러 프레임에 분산시킬 수 있는 능력이다."
+
+#### React 파이버 아키텍처 분석
+
+Fiber 아키텍처를 통해 가능해진 동시성 모드(Concurrent Mode)는 다음과 같은 이점을 제공한다:
+
+  - 사용자 입력 반응성 향상: 높은 우선순위의 사용자 입력(키보드, 마우스 클릭 등)에 빠르게 반응
+  - 백그라운드 작업 처리: 화면 밖 컴포넌트 렌더링은 낮은 우선순위로 처리
+  - 지능적인 로딩 상태: Suspense와 결합하여 더 나은 로딩 경험 제공
+
+책에서는 Fiber 노드가 실제로 어떻게 구성되는지 코드 수준에서 분석한다:
+
+```tsx
+// 단순화된 Fiber 노드 구조
+{
+  type: 'div', // 또는 함수/클래스 컴포넌트
+  key: null,
+  stateNode: domNode, // 실제 DOM 연결
+  
+  // 트리 구조
+  return: parentFiber,
+  child: childFiber,
+  sibling: siblingFiber,
+  
+  // 효과
+  effectTag: 'PLACEMENT',
+  nextEffect: nextFiberWithEffect,
+  
+  // 작업 상태
+  pendingProps: newProps,
+  memoizedProps: oldProps,
+  memoizedState: oldState,
+  
+  // 기타
+  alternate: workInProgressFiber
+}
+```
+
+실제 예제를 통해 Fiber가 작업을 어떻게 분할하는지 시각화한다:
+
+```tsx
+function App() {
+  return (
+    <div>
+      <Header />
+      <main>
+        <LeftNav />
+        <Content>
+          <ExpensiveList items={items} />
+        </Content>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+```
+
+위 구조에서 사용자가 입력을 하는 동안 `ExpensiveList`의 렌더링이 필요하다면, Fiber는 작업을 여러 프레임에 분산시켜 사용자 입력 처리를 방해하지 않는다. 이는 기존의 스택 기반 재조정에서는 불가능했던 기능이다.
+
+### 2. 성능 최적화 전략
+
+책에서는 리액트 애플리케이션의 성능을 최적화하기 위한 다양한 전략을 다음과 같이 설명한다:
+
+  - 불필요한 리렌더링 방지: React.memo, useMemo, useCallback을 사용하여 컴포넌트와 값의 불필요한 재계산 방지
+  - 코드 분할(Code Splitting): React.lazy와 Suspense를 사용하여 필요할 때만 코드 로드
+  - 가상화 기법: 대량의 데이터 렌더링 시 화면에 보이는 항목만 렌더링
+  - 메모이제이션 최적화: 계산 비용이 높은 연산 결과 캐싱
+
+> Kent C. Dodds의 useMemo와 useCallback 설명에서는 "이러한 훅들이 항상 성능 향상을 가져오는 것은 아니며, 잘못 사용하면 오히려 성능을 저하시킬 수 있다"고 경고한다. 그는 "메모이제이션 자체도 비용이 들며, 이 비용이 절약되는 비용보다 클 수 있다"고 설명한다.
+
+### 3. useMemo, useCallback, React.memo 올바르게 사용하기
+
+다음은 책과 Kent C. Dodds의 글을 바탕으로 정리한 메모이제이션 훅 사용 결정 프로세스다:
+
+1. 계산 비용이 높은가?
+  - 복잡한 계산이나 변환이 필요한 경우 → useMemo 사용 고려
+  - 단순 계산이나 객체 생성의 경우 → 메모이제이션 불필요
+
+2. 참조 동일성이 중요한가?
+  - 자식 컴포넌트에 prop으로 전달되는 함수 → useCallback 고려
+  - 자식 컴포넌트에 prop으로 전달되는 객체/배열 → useMemo 고려
+  - 의존성 배열에 사용되는 객체/함수 → 메모이제이션 필요
+
+3. 컴포넌트가 자주 리렌더링되는가?
+  - 빈번한 리렌더링을 겪는 무거운 컴포넌트 → React.memo 고려
+  - 트리의 상위에 위치한 컴포넌트 → React.memo 고려
+
+4. 실제 성능 측정을 했는가?
+  - 성능 이슈가 확인된 경우에만 최적화 적용
+  - React.Profiler나 Chrome DevTools로 실제 병목 지점 확인 후 최적화
+
+```tsx
+// 적절한 useMemo 사용 예
+// 비용이 높은 계산에 적용
+const memoizedValue = useMemo(() => {
+  return expensiveCalculation(a, b);
+}, [a, b]);
+
+// 적절한 useCallback 사용 예
+// 자식 컴포넌트에 전달되는 이벤트 핸들러
+const memoizedCallback = useCallback(() => {
+  doSomethingWith(a, b);
+}, [a, b]);
+
+// 적절한 React.memo 사용 예
+// 자주 리렌더링되지만 props가 자주 변경되지 않는 컴포넌트
+const MemoizedComponent = React.memo(function MyComponent(props) {
+  // 렌더링 로직
+});
+```
+
+책에서는 메모이제이션의 오용 사례도 다음과 같이 설명한다:
+
+```tsx
+// 불필요한 useMemo (계산이 단순함)
+const value = useMemo(() => a + b, [a, b]);  // 단순 덧셈은 메모이제이션 불필요
+
+// 불필요한 useCallback (의존성이 너무 자주 변경됨)
+const callback = useCallback(() => {
+  console.log(date.now(), obj.value); // 매번 새로운 값으로 인해 매번 새 함수 생성
+}, [date.now(), obj.value]); 
+
+// 불필요한 React.memo (props가 자주 변경됨)
+const MemoizedComponent = React.memo(function FrequentlyChangingComponent({ data }) {
+  // data가 매번 새 객체라면 메모이제이션이 효과 없음
+});
+```
+
+Kent C. Dodds의 글에서 강조하는 중요한 점은 "성능 최적화는 복잡성을 증가시키므로, 실제로 필요할 때만 적용해야 한다"는 것이다. 그는 다음과 같은 경험적 규칙을 제시한다:
+
+"성능 문제가 있다고 생각되면, 프로파일링을 먼저 수행하라. 그리고 측정 결과를 바탕으로 최적화하라. 가정에 의존하지 말라."
+
+### 4. 서버 사이드 렌더링과 리액트 서버 컴포넌트
+
+#### 서버 사이드 렌더링의 진화
+
+책에서는 리액트 생태계가 클라이언트 렌더링에서 서버 사이드 렌더링으로 진화한 이유를 다음과 같이 설명한다:
+
+**초기 로딩 성능 향상:**
+
+  - 클라이언트 렌더링: 빈 HTML → JS 다운로드 → 실행 → 데이터 요청 → 렌더링
+  - 서버 렌더링: 완성된 HTML 즉시 표시 → JS 다운로드(하이드레이션)
+
+**검색 엔진 최적화(SEO):**
+
+  - 검색 엔진 크롤러가 완전히 렌더링된 콘텐츠를 인덱싱할 수 있음
+  - 소셜 미디어 공유 시 메타데이터 즉시 제공
+
+**사용자 경험 개선:**
+
+  - First Contentful Paint(FCP) 시간 단축
+  - Time To Interactive(TTI) 개선
+  - Cumulative Layout Shift(CLS) 감소
+
+**네트워크 성능 최적화:**
+
+  - 여러 API 호출을 서버에서 통합하여 클라이언트-서버 통신 감소
+  - Edge 네트워크를 활용한 글로벌 배포 가능
+
+서버 사이드 렌더링의 진화 과정은 다음과 같다:
+
+  - 1세대: 전통적인 서버 렌더링 (PHP, Ruby on Rails 등)
+  - 2세대: 클라이언트 사이드 렌더링 (SPA - Single Page Applications)
+  - 3세대: 하이브리드 접근법 (Next.js, Gatsby 등) - 서버에서 초기 렌더링 후 클라이언트에서 하이드레이션
+  - 4세대: 부분적 하이드레이션과 스트리밍 SSR (React 18의 Suspense for SSR)
+  - 5세대: 리액트 서버 컴포넌트 (RSC) - 클라이언트와 서버 컴포넌트의 혼합
+
+#### 리액트 서버 컴포넌트 심층 이해
+
+리액트 서버 컴포넌트(RSC)는 리액트 팀에서 개발한 새로운 아키텍처로, 서버와 클라이언트 렌더링의 장점을 결합한 혁신적인 접근법이다.
+
+**기존 SSR과 RSC의 주요 차이점:**
+
+| 전통적인 SSR | 리액트 서버 컴포넌트 |
+|-------------|-------------------|
+| 전체 페이지를 서버에서 렌더링 | 컴포넌트 수준에서 서버/클라이언트 결정 |
+| 클라이언트에서 전체 JS 번들 다운로드 | 클라이언트 컴포넌트만 JS 번들에 포함 |
+| 전체 앱 하이드레이션 필요 | 부분적 하이드레이션 가능 |
+| 데이터 fetching은 getServerSideProps 등 별도 함수 | 컴포넌트 내에서 직접 데이터 접근 |
+| 완전히 정적이거나 완전히 동적인 페이지 | 정적/동적 컴포넌트 혼합 가능 |
+
+**리액트 서버 컴포넌트의 주요 특징:**
+
+  - 제로 번들 크기: 서버 컴포넌트는 클라이언트로 JS 코드를 전송하지 않으며, 결과 UI만 전송한다. 이로 인해 번들 크기가 크게 감소한다.
+  - 직접적인 백엔드 리소스 접근: 서버 컴포넌트는 데이터베이스, 파일 시스템 등 백엔드 리소스에 직접 접근할 수 있다.
+
+> Vercel : https://vercel.com/blog/understanding-react-server-components
+
+### 마치며
+
+이외에도 개인적으로 좋은 부분들이 생각보다 꽤 많아서 리액트를 오랜만에 복습하는데 도움이 많이 됐던 책이 되었다.
+어떻게 리액트가 렌더링 되는지, 가상 DOM의 원리, 리액트 동시성, 프레임워크 종류, 리액트 대체제 등 다양한 전반적인 리액트 동향을 소개해주고 있어서 좋았다.
+프론트엔드 개발자라면 리액트 복습겸 읽어보면 좋을 것 같다는 생각이 들었다.
+
+### 참고 자료
+
+- [react 공식문서](https://react.dev/learn/react-server-components)
+- [kent.c.dodds](https://kentcdodds.com/blog/usememo-and-usecallback)
+- [naver d2 - React 파이버 아키텍처 분석](https://d2.naver.com/helloworld/831311)
+- [vercel - 리액트 서버 컴포넌트 이해](https://vercel.com/blog/understanding-react-server-components)
+- [spiess.dev - 리액트 스케줄링](https://spiess.dev/blog/scheduling-in-react)
+- [dan abramov - A complete guide to useEffect](https://overreacted.io/a-complete-guide-to-useeffect/)

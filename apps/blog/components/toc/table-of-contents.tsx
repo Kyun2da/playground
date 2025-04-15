@@ -14,7 +14,7 @@ export function TableOfContents() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const elements = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+      const elements = Array.from(document.querySelectorAll('h1, h2, h3'))
         .filter(element => element.id)
         .map(element => ({
           id: element.id,

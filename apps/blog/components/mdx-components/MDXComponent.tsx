@@ -11,12 +11,12 @@ export const MDXComponents = {
   h4: (props: any) => <MDXHeader type="h4" {...props} />,
   h5: (props: any) => <MDXHeader type="h5" {...props} />,
   h6: (props: any) => <MDXHeader type="h6" {...props} />,
-  p: (props: any) => <p className="text-base/7" {...props} />,
+  p: (props: any) => <p className="text-base/7 my-4" {...props} />,
   a: (props: any) => <a className="text-blue-500 hover:underline" {...props} />,
   ul: (props: any) => {
     return (
       <ul
-        className="list-disc list-inside space-y-1 [&>li>ol]:ml-6 [&>li>ol]:list-[lower-alpha] [&>li>ol]:mt-1 [&>li>ul]:ml-6 [&>li>ul]:list-[circle] [&>li>ul]:mt-1"
+        className="list-disc list-outside pl-5 space-y-1 [&>li>ol]:ml-6 [&>li>ol]:list-[lower-alpha] [&>li>ol]:mt-1 [&>li>ul]:ml-6 [&>li>ul]:list-[circle] [&>li>ul]:mt-1 [p+&]:ml-6 [ol+&]:ml-6"
         {...props}
       />
     );
@@ -24,7 +24,7 @@ export const MDXComponents = {
   ol: (props: any) => {
     return (
       <ol
-        className="list-decimal list-inside space-y-1 [&>li>ol]:ml-6 [&>li>ol]:list-[lower-alpha] [&>li>ol]:mt-1 [&>li>ul]:ml-6 [&>li>ul]:list-[circle] [&>li>ul]:mt-1"
+        className="list-decimal list-outside pl-5 space-y-1 [&>li>ol]:ml-6 [&>li>ol]:list-[lower-alpha] [&>li>ol]:mt-1 [&>li>ul]:ml-6 [&>li>ul]:list-[circle] [&>li>ul]:mt-1"
         {...props}
       />
     );
@@ -36,11 +36,11 @@ export const MDXComponents = {
     <blockquote className="border-l-4 border-gray-300 pl-4 my-4" {...props} />
   ),
   hr: (props: any) => <hr className="border-gray-300" {...props} />,
-  table: (props: any) => <table className="table-auto" {...props} />,
+  table: (props: any) => <table className="table-auto text-sm" {...props} />,
   th: (props: any) => <th className="border border-gray-300 px-4 py-2" {...props} />,
   td: (props: any) => <td className="border border-gray-300 px-4 py-2" {...props} />,
   inlineCode: (props: any) => <code className="text-sm bg-gray-100 px-1 rounded" {...props} />,
-  pre: (props: any) => <pre className="text-base/7" {...props} />,
+  pre: (props: any) => <pre {...props} />,
   code: (props: any) => <Code {...props} />,
   img: (props: any) => <img className="rounded" {...props} />,
   strong: (props: any) => <strong className="font-bold" {...props} />,
@@ -49,26 +49,24 @@ export const MDXComponents = {
 };
 
 function Code(props: any) {
-  const [ref, isHover] = useHover<HTMLDivElement>();
+  const [ref] = useHover<HTMLDivElement>();
   const [copied, setCopied] = useState(false);
 
   return (
     <div className="relative" ref={ref}>
-      <pre {...props} className={`text-base ${props?.className}`} />
-      {isHover ? (
-        <button
-          className={`absolute top-2 right-4`}
-          onClick={() => {
-            setCopied(true);
-            navigator.clipboard.writeText(ref.current?.textContent ?? '');
-            setTimeout(() => {
-              setCopied(false);
-            }, 2000);
-          }}
-        >
-          {copied ? <CheckIcon /> : <CopyIcon />}
-        </button>
-      ) : null}
+      <pre {...props} className={`text-sm rounded-lg ${props?.className}`} />
+      <button
+        className={`absolute top-2 right-4 opacity-50 hover:opacity-100 transition-opacity`}
+        onClick={() => {
+          setCopied(true);
+          navigator.clipboard.writeText(ref.current?.textContent ?? '');
+          setTimeout(() => {
+            setCopied(false);
+          }, 2000);
+        }}
+      >
+        {copied ? <CheckIcon /> : <CopyIcon />}
+      </button>
     </div>
   );
 }

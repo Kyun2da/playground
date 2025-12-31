@@ -1,0 +1,58 @@
+---
+---
+
+<div class="visitor-counter inline-flex items-center gap-2 px-3 py-1.5 bg-black rounded border-2 border-gray-600 font-mono">
+  <span class="text-green-400 text-xs">VISITORS</span>
+  <div class="flex gap-0.5">
+    <span class="counter-digit bg-gray-900 text-green-400 px-1 rounded text-sm border border-gray-700">0</span>
+    <span class="counter-digit bg-gray-900 text-green-400 px-1 rounded text-sm border border-gray-700">0</span>
+    <span class="counter-digit bg-gray-900 text-green-400 px-1 rounded text-sm border border-gray-700">0</span>
+    <span class="counter-digit bg-gray-900 text-green-400 px-1 rounded text-sm border border-gray-700">0</span>
+    <span class="counter-digit bg-gray-900 text-green-400 px-1 rounded text-sm border border-gray-700">0</span>
+  </div>
+  <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+</div>
+
+<script is:inline>
+  (function() {
+    function initVisitorCounter() {
+      const counter = document.querySelector('.visitor-counter');
+      if (!counter) return;
+
+      // Get or increment visitor count from localStorage
+      const COUNTER_KEY = 'total-visitors';
+      const VISITOR_ID_KEY = 'visitor-id';
+
+      let count = parseInt(localStorage.getItem(COUNTER_KEY) || '1000', 10);
+
+      // Only increment if this is a new visitor (no visitor ID)
+      if (!localStorage.getItem(VISITOR_ID_KEY)) {
+        localStorage.setItem(VISITOR_ID_KEY, Date.now().toString());
+        count++;
+        localStorage.setItem(COUNTER_KEY, count.toString());
+      }
+
+      // Animate the counter
+      const digits = counter.querySelectorAll('.counter-digit');
+      const countStr = count.toString().padStart(5, '0');
+
+      digits.forEach((digit, i) => {
+        const targetNum = parseInt(countStr[i], 10);
+        let currentNum = 0;
+
+        const animate = () => {
+          if (currentNum <= targetNum) {
+            digit.textContent = currentNum.toString();
+            currentNum++;
+            setTimeout(animate, 50 + i * 30);
+          }
+        };
+
+        setTimeout(animate, i * 100);
+      });
+    }
+
+    initVisitorCounter();
+    document.addEventListener('astro:after-swap', initVisitorCounter);
+  })();
+</script>

@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../config/site';
+import Search from './Search.astro';
 ---
 
 <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -8,38 +9,59 @@ import { siteConfig } from '../config/site';
       <span class="font-bold text-xl">{siteConfig.name}</span>
     </a>
 
-    <nav class="flex items-center gap-6">
+    <nav class="flex items-center gap-4">
       {siteConfig.navItems.map((item) => (
         <a
           href={item.href}
-          class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors no-underline"
+          class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors no-underline hidden sm:block"
         >
           {item.label}
         </a>
       ))}
 
+      <!-- Search -->
+      <Search />
+
       <!-- Dark Mode Toggle -->
       <button
         id="theme-toggle"
-        class="p-2 rounded-lg hover:bg-accent transition-colors"
+        class="relative p-2 rounded-lg hover:bg-accent transition-colors overflow-hidden"
         aria-label="Toggle dark mode"
       >
-        <!-- Sun icon (shown in dark mode) -->
-        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <!-- Moon icon (shown in light mode) -->
-        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
+        <div class="theme-icon-wrapper relative w-5 h-5">
+          <!-- Sun icon (shown in dark mode) -->
+          <svg class="theme-icon sun-icon w-5 h-5 absolute inset-0 opacity-0 dark:opacity-100 rotate-90 dark:rotate-0 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <!-- Moon icon (shown in light mode) -->
+          <svg class="theme-icon moon-icon w-5 h-5 absolute inset-0 opacity-100 dark:opacity-0 rotate-0 dark:-rotate-90 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </div>
       </button>
     </nav>
   </div>
 </header>
 
 <script is:inline>
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  });
+  function initThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+
+    toggle.onclick = () => {
+      // Add transition class
+      document.documentElement.classList.add('theme-transitioning');
+
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+      // Remove transition class after animation
+      setTimeout(() => {
+        document.documentElement.classList.remove('theme-transitioning');
+      }, 300);
+    };
+  }
+
+  initThemeToggle();
+  document.addEventListener('astro:after-swap', initThemeToggle);
 </script>

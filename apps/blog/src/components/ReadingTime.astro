@@ -1,0 +1,20 @@
+---
+interface Props {
+  minutes: number;
+  showText?: boolean;
+}
+
+const { minutes, showText = true } = Astro.props;
+
+// 5분당 커피 1잔 (최소 1잔, 최대 5잔)
+const coffeeCount = Math.min(5, Math.max(1, Math.ceil(minutes / 5)));
+---
+
+<span class="inline-flex items-center gap-1.5" title={`약 ${minutes}분 소요`}>
+  <span class="flex">
+    {Array.from({ length: coffeeCount }).map(() => (
+      <span class="text-base">☕</span>
+    ))}
+  </span>
+  {showText && <span class="text-sm text-muted-foreground">{minutes}분</span>}
+</span>

@@ -1,9 +1,12 @@
 ---
+import VisitorCounter from './VisitorCounter.astro';
+
 const thisYear = 2026;
 ---
 
 <footer class="border-t bg-muted/50">
   <div class="container py-8 flex flex-col items-center justify-center gap-4">
+    <VisitorCounter />
     <p class="text-sm text-muted-foreground">
       All rights reserved &copy; Kyun2da {thisYear}
     </p>

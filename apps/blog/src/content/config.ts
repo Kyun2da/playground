@@ -13,6 +13,10 @@ const posts = defineCollection({
     ogImage: z.object({
       url: z.string()
     }).optional(),
+    series: z.object({
+      name: z.string(),
+      order: z.number(),
+    }).optional(),
   }),
 });
 

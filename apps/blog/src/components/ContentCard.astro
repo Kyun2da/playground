@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import ReadingTime from './ReadingTime.astro';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -42,9 +43,9 @@ function formatDate(dateStr: string): string {
           </span>
         ))}
       </div>
-      <div class="flex justify-between text-sm text-muted-foreground mt-4">
+      <div class="flex justify-between items-center text-sm text-muted-foreground mt-4">
         <span>{formatDate(date)}</span>
-        <span>{time} min read</span>
+        <ReadingTime minutes={time} />
       </div>
     </div>
   </a>

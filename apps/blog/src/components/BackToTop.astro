@@ -1,0 +1,39 @@
+---
+---
+
+<button
+  id="back-to-top"
+  class="fixed bottom-8 right-8 p-3 rounded-full bg-blue-500 text-white shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-blue-600 hover:scale-110 z-50"
+  aria-label="맨 위로"
+>
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+  </svg>
+</button>
+
+<script is:inline>
+  function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    function toggleVisibility() {
+      if (window.scrollY > 500) {
+        btn.classList.remove('opacity-0', 'invisible');
+        btn.classList.add('opacity-100', 'visible');
+      } else {
+        btn.classList.add('opacity-0', 'invisible');
+        btn.classList.remove('opacity-100', 'visible');
+      }
+    }
+
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    toggleVisibility();
+
+    btn.onclick = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  }
+
+  initBackToTop();
+  document.addEventListener('astro:after-swap', initBackToTop);
+</script>

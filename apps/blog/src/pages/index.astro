@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContentCard from '../components/ContentCard.astro';
+import QuoteWidget from '../components/QuoteWidget.astro';
 
 const posts = await getCollection('posts', ({ data }) => !data.draft);
 const sortedPosts = posts.sort((a, b) =>
@@ -15,6 +16,9 @@ const sortedPosts = posts.sort((a, b) =>
       {sortedPosts.map((post) => (
         <ContentCard post={post} />
       ))}
+
+      <!-- Quote Widget -->
+      <QuoteWidget />
     </section>
   </div>
 </BaseLayout>

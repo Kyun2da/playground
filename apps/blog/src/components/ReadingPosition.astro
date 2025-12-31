@@ -1,0 +1,98 @@
+---
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<div id="reading-position-toast" class="fixed bottom-8 left-8 z-50 hidden" data-slug={slug}>
+  <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border p-4 max-w-xs animate-slide-up">
+    <p class="text-sm text-foreground mb-2">이전에 읽던 위치가 있어요</p>
+    <div class="flex gap-2">
+      <button id="resume-reading" class="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+        이어읽기
+      </button>
+      <button id="dismiss-reading" class="px-3 py-1.5 text-sm bg-muted text-muted-foreground rounded-lg hover:bg-accent transition-colors">
+        처음부터
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+</style>
+
+<script is:inline>
+  function initReadingPosition() {
+    const toast = document.getElementById('reading-position-toast');
+    if (!toast) return;
+
+    const slug = toast.getAttribute('data-slug');
+    const storageKey = `reading-position-${slug}`;
+
+    // Save position on scroll
+    let saveTimeout;
+    function savePosition() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        if (scrollPercent > 5 && scrollPercent < 95) {
+          localStorage.setItem(storageKey, JSON.stringify({
+            y: window.scrollY,
+            percent: scrollPercent,
+            timestamp: Date.now()
+          }));
+        }
+      }, 500);
+    }
+
+    window.addEventListener('scroll', savePosition, { passive: true });
+
+    // Check for saved position
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      const { y, percent, timestamp } = JSON.parse(saved);
+      const hoursSince = (Date.now() - timestamp) / (1000 * 60 * 60);
+
+      // Show toast if position > 10% and within 7 days
+      if (percent > 10 && hoursSince < 168) {
+        toast.classList.remove('hidden');
+
+        document.getElementById('resume-reading').onclick = () => {
+          window.scrollTo({ top: y, behavior: 'smooth' });
+          toast.classList.add('hidden');
+        };
+
+        document.getElementById('dismiss-reading').onclick = () => {
+          localStorage.removeItem(storageKey);
+          toast.classList.add('hidden');
+        };
+      }
+    }
+
+    // Clear position when reaching end
+    window.addEventListener('scroll', () => {
+      const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      if (scrollPercent > 95) {
+        localStorage.removeItem(storageKey);
+      }
+    }, { passive: true });
+  }
+
+  initReadingPosition();
+  document.addEventListener('astro:after-swap', initReadingPosition);
+</script>

@@ -1,0 +1,156 @@
+---
+---
+
+<div class="relative">
+  <button
+    id="search-button"
+    class="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground bg-muted rounded-lg hover:bg-accent transition-colors"
+    aria-label="Search"
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <span class="hidden sm:inline">검색</span>
+    <kbd class="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-xs bg-background rounded border">
+      <span class="text-xs">⌘</span>K
+    </kbd>
+  </button>
+</div>
+
+<!-- Search Modal -->
+<div id="search-modal" class="fixed inset-0 z-[100] hidden">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" id="search-backdrop"></div>
+  <div class="fixed inset-x-4 top-20 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-xl">
+    <div class="bg-background rounded-xl shadow-2xl border overflow-hidden">
+      <div class="flex items-center gap-3 px-4 border-b">
+        <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="포스트 검색..."
+          class="flex-1 py-4 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
+          autocomplete="off"
+        />
+        <kbd class="px-2 py-1 text-xs bg-muted rounded">ESC</kbd>
+      </div>
+      <div id="search-results" class="max-h-80 overflow-y-auto p-2">
+        <p class="text-center text-muted-foreground py-8">검색어를 입력하세요</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    let posts = [];
+    let isLoaded = false;
+
+    async function loadSearchData() {
+      if (isLoaded) return;
+      const res = await fetch('/search.json');
+      posts = await res.json();
+      isLoaded = true;
+    }
+
+    function search(query) {
+      if (!query.trim()) return [];
+      const q = query.toLowerCase();
+      return posts.filter((post) =>
+        post.title.toLowerCase().includes(q) ||
+        post.excerpt.toLowerCase().includes(q) ||
+        post.categories.some((cat) => cat.toLowerCase().includes(q))
+      ).slice(0, 5);
+    }
+
+    function renderResults(results, query) {
+      const container = document.getElementById('search-results');
+      if (!container) return;
+
+      if (!query.trim()) {
+        container.innerHTML = '<p class="text-center text-muted-foreground py-8">검색어를 입력하세요</p>';
+        return;
+      }
+
+      if (results.length === 0) {
+        container.innerHTML = '<p class="text-center text-muted-foreground py-8">검색 결과가 없습니다</p>';
+        return;
+      }
+
+      container.innerHTML = results.map((post) => `
+        <a href="/posts/${post.slug}" class="block p-3 rounded-lg hover:bg-accent transition-colors no-underline group">
+          <h3 class="font-medium text-foreground group-hover:text-blue-500 transition-colors">${highlightMatch(post.title, query)}</h3>
+          <p class="text-sm text-muted-foreground line-clamp-1 mt-1">${highlightMatch(post.excerpt, query)}</p>
+          <div class="flex gap-2 mt-2">
+            ${post.categories.map((cat) => `<span class="text-xs px-2 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full">${cat}</span>`).join('')}
+          </div>
+        </a>
+      `).join('');
+    }
+
+    function highlightMatch(text, query) {
+      if (!query.trim()) return text;
+      const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-800 rounded px-0.5">$1</mark>');
+    }
+
+    function openModal() {
+      loadSearchData();
+      const modal = document.getElementById('search-modal');
+      const input = document.getElementById('search-input');
+      if (modal) modal.classList.remove('hidden');
+      if (input) input.focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('search-modal');
+      const input = document.getElementById('search-input');
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      if (input) input.value = '';
+      renderResults([], '');
+    }
+
+    function initSearch() {
+      const searchButton = document.getElementById('search-button');
+      const searchBackdrop = document.getElementById('search-backdrop');
+      const searchInput = document.getElementById('search-input');
+
+      if (searchButton) {
+        searchButton.onclick = openModal;
+      }
+
+      if (searchBackdrop) {
+        searchBackdrop.onclick = closeModal;
+      }
+
+      if (searchInput) {
+        searchInput.oninput = (e) => {
+          const query = e.target.value;
+          const results = search(query);
+          renderResults(results, query);
+        };
+      }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openModal();
+      }
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Init
+    initSearch();
+    document.addEventListener('astro:after-swap', () => {
+      isLoaded = false;
+      initSearch();
+    });
+  })();
+</script>

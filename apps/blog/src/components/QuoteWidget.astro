@@ -1,0 +1,61 @@
+---
+const quotes = [
+  { text: '단순함은 궁극의 정교함이다.', author: '레오나르도 다빈치' },
+  { text: '좋은 코드는 최고의 문서다.', author: '스티브 맥코넬' },
+  { text: '먼저 동작하게 만들고, 그 다음에 빠르게 만들어라.', author: '켄트 벡' },
+  { text: '완벽함이란 더 이상 더할 것이 없는 상태가 아니라, 더 이상 뺄 것이 없는 상태다.', author: '앙투안 드 생텍쥐페리' },
+  { text: '프로그래밍은 생각하는 것이지 타이핑하는 것이 아니다.', author: '케이시 파튼' },
+  { text: '코드는 사람이 읽기 위해 쓰여지고, 기계가 실행할 수 있는 것은 부수적이다.', author: '해롤드 아벨슨' },
+  { text: '버그를 두려워하지 마라. 버그는 당신이 무언가를 배웠다는 증거다.', author: '익명' },
+  { text: '가장 좋은 에러 메시지는 절대 나타나지 않는 것이다.', author: '토마스 푸크스' },
+  { text: '진짜 문제를 해결하라. 문제가 있다고 가정하지 마라.', author: '켄트 벡' },
+  { text: '복잡성을 다루는 유일한 방법은 그것을 피하는 것이다.', author: '다익스트라' },
+  { text: '측정할 수 없으면, 개선할 수 없다.', author: '피터 드러커' },
+  { text: '오늘 할 수 있는 일을 내일로 미루지 말라.', author: '벤자민 프랭클린' },
+];
+
+// Pick a random quote (changes on each build/page load)
+const randomIndex = Math.floor(Math.random() * quotes.length);
+const quote = quotes[randomIndex];
+---
+
+<div class="quote-widget bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+  <div class="flex gap-3">
+    <span class="text-4xl text-blue-500 opacity-50">"</span>
+    <div>
+      <p class="text-lg font-medium text-foreground italic mb-3">{quote.text}</p>
+      <p class="text-sm text-muted-foreground">— {quote.author}</p>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  function initQuoteWidget() {
+    const quotes = [
+      { text: '단순함은 궁극의 정교함이다.', author: '레오나르도 다빈치' },
+      { text: '좋은 코드는 최고의 문서다.', author: '스티브 맥코넬' },
+      { text: '먼저 동작하게 만들고, 그 다음에 빠르게 만들어라.', author: '켄트 벡' },
+      { text: '완벽함이란 더 이상 더할 것이 없는 상태가 아니라, 더 이상 뺄 것이 없는 상태다.', author: '앙투안 드 생텍쥐페리' },
+      { text: '프로그래밍은 생각하는 것이지 타이핑하는 것이 아니다.', author: '케이시 파튼' },
+      { text: '코드는 사람이 읽기 위해 쓰여지고, 기계가 실행할 수 있는 것은 부수적이다.', author: '해롤드 아벨슨' },
+      { text: '버그를 두려워하지 마라. 버그는 당신이 무언가를 배웠다는 증거다.', author: '익명' },
+      { text: '가장 좋은 에러 메시지는 절대 나타나지 않는 것이다.', author: '토마스 푸크스' },
+      { text: '진짜 문제를 해결하라. 문제가 있다고 가정하지 마라.', author: '켄트 벡' },
+      { text: '복잡성을 다루는 유일한 방법은 그것을 피하는 것이다.', author: '다익스트라' },
+      { text: '측정할 수 없으면, 개선할 수 없다.', author: '피터 드러커' },
+      { text: '오늘 할 수 있는 일을 내일로 미루지 말라.', author: '벤자민 프랭클린' },
+    ];
+
+    const widget = document.querySelector('.quote-widget');
+    if (!widget) return;
+
+    // Randomize on client-side for View Transitions
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    const textEl = widget.querySelector('p:first-of-type');
+    const authorEl = widget.querySelector('p:last-of-type');
+    if (textEl) textEl.textContent = quote.text;
+    if (authorEl) authorEl.textContent = '— ' + quote.author;
+  }
+
+  document.addEventListener('astro:after-swap', initQuoteWidget);
+</script>

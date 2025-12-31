@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Bio from '../components/Bio.astro';
+import LinkPreviewCard from '../components/LinkPreviewCard.astro';
+---
+
+<BaseLayout title="About">
+  <div class="container py-8">
+    <div class="max-w-3xl mx-auto">
+      <Bio class="my-8" />
+
+      <!-- 토스증권 -->
+      <div class="flex flex-row items-center mb-4">
+        <img
+          src="/img/TossSecurities_Logo_Primary.png"
+          alt="tosssecurities_logo"
+          class="-ml-8 my-0"
+          width="240"
+          height="240"
+        />
+        <p class="self-center font-semibold text-lg m-0">토스증권</p>
+      </div>
+
+      <div class="pl-4 mb-10 border-l-8 border-gray-300 dark:border-gray-600">
+        <div class="flex flex-row gap-4 mb-2 items-center">
+          <span class="font-bold text-lg">Product Stability Team</span>
+          <span class="text-sm text-muted-foreground">2024.07 ~ Now</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1 mb-4">
+          <li>오픈뱅킹, KYC등 MTS 시스템 고도화</li>
+          <li>내부 AML 시스템 구축</li>
+          <li>토스증권 홈페이지 리뉴얼 <a href="https://corp.tossinvest.com" target="_blank" class="text-blue-500 hover:underline">링크</a></li>
+        </ul>
+
+        <div class="flex flex-row gap-4 mb-2 items-center">
+          <span class="font-bold text-lg">WTS Silo</span>
+          <span class="text-sm text-muted-foreground">2024.02 ~ 2024.07</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1">
+          <li>WTS MVP 출시 및 기능 고도화 <a href="https://tossinvest.com/" target="_blank" class="text-blue-500 hover:underline">링크</a></li>
+        </ul>
+      </div>
+
+      <!-- 토스페이먼츠 -->
+      <div class="flex flex-row items-center mb-4">
+        <img
+          src="/img/TossPayments_Logo_Primary.png"
+          alt="tosspayments_logo"
+          class="-ml-8 my-0"
+          width="240"
+          height="240"
+        />
+        <p class="self-center font-semibold text-lg m-0">토스페이먼츠</p>
+      </div>
+
+      <div class="pl-4 mb-10 border-l-8 border-gray-300 dark:border-gray-600">
+        <div class="flex flex-row gap-4 mb-2 items-center">
+          <span class="font-bold text-lg">Client Platform Team</span>
+          <span class="text-sm text-muted-foreground">2023.10 ~ 2024.01</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1 mb-4">
+          <li>프론트엔드 어드민 페이지 CSR canary 기능 추가</li>
+          <li>프론트엔드 공용 라이브러리 슬랙 릴리즈 봇 붙이기</li>
+          <li>프론트엔드 공용 라이브러리 스토리북 환경 구축</li>
+        </ul>
+
+        <div class="flex flex-row gap-4 mb-2 mt-4 items-center">
+          <span class="font-bold text-lg">BizApp Platform Team</span>
+          <span class="text-sm text-muted-foreground">2023.07 ~ 2023.09</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1 mb-4">
+          <li>React Native를 통한 애니메이션 고도화</li>
+          <li>약관 api 공통화</li>
+          <li>자주묻는 질문 공통 컴포넌트화</li>
+          <li>매출내역 및 정산내역 고도화</li>
+          <li>api 응답 구조 개선을 통해 성능 최적화, FlashList를 사용하여 리스트 성능 향상</li>
+          <li>앱스플라이어를 통한 레퍼럴 정책 수립 및 개발</li>
+        </ul>
+
+        <div class="flex flex-row gap-4 mb-2 mt-4 items-center">
+          <span class="font-bold text-lg">SalesReport Silo, CA Team</span>
+          <span class="text-sm text-muted-foreground">2022.09 ~ 2023.06</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1 mb-4">
+          <li>토스 비즈니스앱 출시 (React Native)</li>
+          <li>리액트 네이티브 공통 컴포넌트 만들기</li>
+          <li>날짜 피커 만들기</li>
+          <li>금액이 바뀌는 애니메이션 컴포넌트 생성</li>
+        </ul>
+
+        <div class="flex flex-row gap-4 mb-2 mt-4 items-center">
+          <span class="font-bold text-lg">Moneyflow Silo</span>
+          <span class="text-sm text-muted-foreground">2022.02 ~ 2022.08</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1 mb-4">
+          <li>로그인 퍼널 고도화</li>
+          <li>프론트, 서버, 스크래핑 간의 통신 프로토콜 수립 및 고도화</li>
+          <li>스크래핑 확장프로그램 시스템 구축</li>
+        </ul>
+
+        <div class="flex flex-row gap-4 mb-2 mt-4 items-center">
+          <span class="font-bold text-lg">Dashboard Silo</span>
+          <span class="text-sm text-muted-foreground">2021.09 ~ 2022.01</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1 mb-4">
+          <li>토스페이먼츠 사용자들을 위한 대시보드 시스템 고도화 (Next.js)</li>
+        </ul>
+
+        <div class="flex flex-row gap-4 mb-2 mt-4 items-center">
+          <span class="font-bold text-lg">로깅 표준화 길드</span>
+          <span class="text-sm text-muted-foreground">2022.03~</span>
+        </div>
+        <ul class="list-disc list-inside text-sm space-y-1">
+          <li>pc, mobile 환경에서 개발자들이 로깅을 쉽게 할 수 있도록 로깅 스키마 설계 및 DX 개선</li>
+        </ul>
+      </div>
+
+      <!-- 인터뷰 -->
+      <div class="mb-10">
+        <h2 class="text-2xl font-bold mb-5">인터뷰</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <LinkPreviewCard
+            url="https://www.linkedin.com/posts/toss-payments_%ED%86%A0%EC%8A%A4%ED%8E%98%EC%9D%B4%EB%A8%BC%EC%B8%A0-%ED%86%A0%EC%8A%A4-tosspayments-activity-7051753884221931520-436Q"
+            title="토스페이먼츠 LinkedIn"
+            description="토스페이먼츠 인터뷰"
+          />
+          <LinkPreviewCard
+            url="https://toss.im/career/article/2024_NEXTDEVELOPER_2"
+            title="NEXT DEVELOPER 2024"
+            description="토스 커리어 아티클"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

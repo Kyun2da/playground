@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentCard from '../../components/ContentCard.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const allTags = [...new Set(posts.flatMap((post) => post.data.categories))].sort();
+
+  return allTags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      allTags,
+      posts: posts
+        .filter((post) => post.data.categories.includes(tag))
+        .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()),
+    },
+  }));
+}
+
+const { tag, allTags, posts } = Astro.props;
+
+function getPostCountByTag(targetTag: string): number {
+  return posts.length;
+}
+---
+
+<BaseLayout title={`Tag: ${tag}`}>
+  <div class="container py-8">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-3xl font-bold mb-6 text-center">Tags</h1>
+
+      <!-- 태그 목록 -->
+      <div class="flex flex-wrap justify-center gap-3 mb-8">
+        {allTags.map((t) => (
+          <a
+            href={`/tags/${t}`}
+            class:list={[
+              "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium ring-1 ring-inset no-underline transition-colors",
+              t === tag
+                ? "bg-blue-500 text-white ring-blue-500"
+                : "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 ring-blue-700/10 dark:ring-blue-300/20 hover:bg-blue-100 dark:hover:bg-blue-900/50"
+            ]}
+          >
+            {t}
+          </a>
+        ))}
+      </div>
+
+      <!-- 선택된 태그 정보 -->
+      <div class="text-center mb-8">
+        <p class="text-muted-foreground">#{tag} · {posts.length}개의 포스트</p>
+      </div>
+
+      <!-- 포스트 목록 -->
+      <section class="space-y-8">
+        {posts.map((post) => (
+          <ContentCard post={post} />
+        ))}
+      </section>
+    </div>
+  </div>
+</BaseLayout>

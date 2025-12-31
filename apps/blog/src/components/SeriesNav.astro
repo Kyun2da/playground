@@ -1,0 +1,100 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentPost: CollectionEntry<'posts'>;
+}
+
+const { currentPost } = Astro.props;
+const series = currentPost.data.series;
+
+let seriesPosts: CollectionEntry<'posts'>[] = [];
+
+if (series) {
+  const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+  seriesPosts = allPosts
+    .filter((post) => post.data.series?.name === series.name)
+    .sort((a, b) => (a.data.series?.order ?? 0) - (b.data.series?.order ?? 0));
+}
+
+const currentIndex = seriesPosts.findIndex((p) => p.slug === currentPost.slug);
+const prevPost = currentIndex > 0 ? seriesPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < seriesPosts.length - 1 ? seriesPosts[currentIndex + 1] : null;
+---
+
+{series && seriesPosts.length > 1 && (
+  <div class="my-8 p-4 bg-muted/50 rounded-xl border">
+    <div class="flex items-center justify-between mb-3">
+      <h4 class="font-semibold text-sm text-muted-foreground">
+        📚 {series.name} 시리즈
+      </h4>
+      <span class="text-xs text-muted-foreground">
+        {series.order} / {seriesPosts.length}
+      </span>
+    </div>
+
+    <!-- Series Progress -->
+    <div class="flex gap-1 mb-4">
+      {seriesPosts.map((post, index) => (
+        <a
+          href={`/posts/${post.slug}`}
+          class:list={[
+            "flex-1 h-2 rounded-full transition-colors",
+            index < series.order
+              ? "bg-blue-500"
+              : index === series.order - 1
+              ? "bg-blue-500"
+              : "bg-muted-foreground/20"
+          ]}
+          title={post.data.title}
+        />
+      ))}
+    </div>
+
+    <!-- Expandable List -->
+    <details class="group">
+      <summary class="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors list-none flex items-center gap-1">
+        <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        목록 보기
+      </summary>
+      <ol class="mt-3 space-y-2 text-sm list-decimal list-inside">
+        {seriesPosts.map((post) => (
+          <li class:list={[
+            post.slug === currentPost.slug ? "font-medium text-blue-500" : "text-muted-foreground"
+          ]}>
+            {post.slug === currentPost.slug ? (
+              <span>{post.data.title}</span>
+            ) : (
+              <a href={`/posts/${post.slug}`} class="hover:text-foreground transition-colors no-underline">
+                {post.data.title}
+              </a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </details>
+
+    <!-- Prev/Next Navigation -->
+    <div class="flex justify-between mt-4 pt-4 border-t gap-4">
+      {prevPost ? (
+        <a href={`/posts/${prevPost.slug}`} class="flex-1 group no-underline">
+          <span class="text-xs text-muted-foreground">이전</span>
+          <p class="text-sm font-medium group-hover:text-blue-500 transition-colors m-0 truncate">
+            ← {prevPost.data.title}
+          </p>
+        </a>
+      ) : <div class="flex-1" />}
+      {nextPost ? (
+        <a href={`/posts/${nextPost.slug}`} class="flex-1 text-right group no-underline">
+          <span class="text-xs text-muted-foreground">다음</span>
+          <p class="text-sm font-medium group-hover:text-blue-500 transition-colors m-0 truncate">
+            {nextPost.data.title} →
+          </p>
+        </a>
+      ) : <div class="flex-1" />}
+    </div>
+  </div>
+)}

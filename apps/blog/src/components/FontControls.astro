@@ -1,0 +1,101 @@
+---
+---
+
+<div class="font-controls fixed bottom-8 left-8 z-40 hidden lg:flex flex-col gap-2">
+  <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border p-2 flex flex-col gap-1">
+    <button
+      id="font-increase"
+      class="p-2 hover:bg-accent rounded-lg transition-colors"
+      title="글자 크게"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+      </svg>
+    </button>
+    <button
+      id="font-decrease"
+      class="p-2 hover:bg-accent rounded-lg transition-colors"
+      title="글자 작게"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+      </svg>
+    </button>
+    <div class="w-full h-px bg-border"></div>
+    <button
+      id="font-toggle"
+      class="p-2 hover:bg-accent rounded-lg transition-colors font-serif"
+      title="글꼴 전환"
+    >
+      Aa
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  function initFontControls() {
+    const increaseBtn = document.getElementById('font-increase');
+    const decreaseBtn = document.getElementById('font-decrease');
+    const toggleBtn = document.getElementById('font-toggle');
+
+    const sizes = ['prose-sm', 'prose-base', 'prose-lg', 'prose-xl'];
+
+    function getCurrentSize() {
+      const prose = document.querySelector('.prose');
+      if (!prose) return 1;
+      const idx = sizes.findIndex(s => prose.classList.contains(s));
+      return idx === -1 ? 1 : idx;
+    }
+
+    function setSize(index) {
+      const prose = document.querySelector('.prose');
+      if (!prose) return;
+
+      sizes.forEach(s => prose.classList.remove(s));
+      prose.classList.add(sizes[index]);
+      localStorage.setItem('prose-size', sizes[index]);
+    }
+
+    if (increaseBtn) {
+      increaseBtn.onclick = () => {
+        const current = getCurrentSize();
+        if (current < sizes.length - 1) setSize(current + 1);
+      };
+    }
+
+    if (decreaseBtn) {
+      decreaseBtn.onclick = () => {
+        const current = getCurrentSize();
+        if (current > 0) setSize(current - 1);
+      };
+    }
+
+    if (toggleBtn) {
+      toggleBtn.onclick = () => {
+        document.documentElement.classList.toggle('font-serif');
+        const isSerif = document.documentElement.classList.contains('font-serif');
+        localStorage.setItem('font-family', isSerif ? 'serif' : 'sans');
+        toggleBtn.classList.toggle('font-sans', isSerif);
+      };
+    }
+
+    // Apply saved settings
+    const savedSize = localStorage.getItem('prose-size');
+    if (savedSize && sizes.includes(savedSize)) {
+      const prose = document.querySelector('.prose');
+      if (prose) {
+        sizes.forEach(s => prose.classList.remove(s));
+        prose.classList.add(savedSize);
+      }
+    }
+
+    const savedFont = localStorage.getItem('font-family');
+    if (savedFont === 'serif') {
+      document.documentElement.classList.add('font-serif');
+      if (toggleBtn) toggleBtn.classList.add('font-sans');
+    }
+  }
+
+  initFontControls();
+  document.addEventListener('astro:after-swap', initFontControls);
+</script>

@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentPost: CollectionEntry<'posts'>;
+  limit?: number;
+}
+
+const { currentPost, limit = 3 } = Astro.props;
+const currentCategories = currentPost.data.categories;
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+
+// Find related posts by matching categories
+const relatedPosts = allPosts
+  .filter((post) => post.slug !== currentPost.slug)
+  .map((post) => {
+    const matchingCategories = post.data.categories.filter((cat) =>
+      currentCategories.includes(cat)
+    );
+    return { post, score: matchingCategories.length };
+  })
+  .filter(({ score }) => score > 0)
+  .sort((a, b) => b.score - a.score)
+  .slice(0, limit)
+  .map(({ post }) => post);
+---
+
+{relatedPosts.length > 0 && (
+  <div class="my-12">
+    <h3 class="text-xl font-bold mb-6">관련 포스트</h3>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {relatedPosts.map((post) => (
+        <a
+          href={`/posts/${post.slug}`}
+          class="group block p-4 rounded-xl border bg-white dark:bg-slate-800 hover:shadow-lg transition-all duration-200 no-underline"
+        >
+          <div class="aspect-video rounded-lg overflow-hidden mb-3">
+            <img
+              src={post.data.coverImage}
+              alt={post.data.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+            />
+          </div>
+          <h4 class="font-medium text-foreground group-hover:text-blue-500 transition-colors line-clamp-2 m-0">
+            {post.data.title}
+          </h4>
+          <div class="flex flex-wrap gap-1 mt-2">
+            {post.data.categories.slice(0, 2).map((cat) => (
+              <span class="text-xs px-2 py-0.5 bg-muted rounded-full text-muted-foreground">
+                {cat}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+)}

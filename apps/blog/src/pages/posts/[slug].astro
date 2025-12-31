@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Bio from '../../components/Bio.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import Giscus from '../../components/Giscus.astro';
+import ReadingProgress from '../../components/ReadingProgress.astro';
+import SeriesNav from '../../components/SeriesNav.astro';
+import ReadingTime from '../../components/ReadingTime.astro';
+import CodeCopy from '../../components/CodeCopy.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
+import ShareButtons from '../../components/ShareButtons.astro';
+import ReadingPosition from '../../components/ReadingPosition.astro';
+import JsonLD from '../../components/JsonLD.astro';
+import FontControls from '../../components/FontControls.astro';
+import Newsletter from '../../components/Newsletter.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+const { title, excerpt, coverImage, date, time, categories } = post.data;
+const postUrl = `https://kyun2da.dev/posts/${post.slug}`;
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<BaseLayout title={title} description={excerpt}>
+  <JsonLD
+    type="article"
+    title={title}
+    description={excerpt}
+    url={postUrl}
+    image={coverImage}
+    datePublished={date}
+  />
+  <ReadingProgress />
+  <ReadingPosition slug={post.slug} />
+  <div class="relative max-w-screen-xl mx-auto px-4 py-8">
+    <div class="lg:pr-72">
+      <article class="max-w-3xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
+          {excerpt && (
+            <p class="text-muted-foreground text-lg mb-4">{excerpt}</p>
+          )}
+
+          <div class="flex flex-wrap justify-center gap-2 mb-4">
+            {categories.map((category) => (
+              <a
+                href={`/tags/${category}`}
+                class="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-900/30 px-3 py-1 text-sm font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-300/20 no-underline hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+              >
+                {category}
+              </a>
+            ))}
+          </div>
+
+          <div class="text-sm text-muted-foreground flex items-center justify-center gap-2">
+            <span>{formatDate(date)}</span>
+            <span>·</span>
+            <ReadingTime minutes={time} />
+          </div>
+        </header>
+
+        <!-- Cover Image -->
+        <div class="flex justify-center mb-8">
+          <img
+            src={coverImage}
+            alt={title}
+            width="300"
+            height="300"
+            class="rounded-xl"
+          />
+        </div>
+
+        <!-- Series Navigation -->
+        <SeriesNav currentPost={post} />
+
+        <!-- Content -->
+        <div class="prose prose-lg dark:prose-invert max-w-none mb-8 prose-headings:scroll-mt-20">
+          <Content />
+        </div>
+
+        <!-- Share Buttons -->
+        <div class="flex justify-center py-6 border-t border-b mb-8">
+          <ShareButtons title={title} url={postUrl} />
+        </div>
+
+        <!-- Related Posts -->
+        <RelatedPosts currentPost={post} />
+
+        <!-- Newsletter -->
+        <Newsletter />
+
+        <!-- Bio -->
+        <Bio class="mb-16" />
+
+        <!-- Comments -->
+        <Giscus />
+      </article>
+    </div>
+
+    <!-- Table of Contents -->
+    <TableOfContents headings={headings} />
+  </div>
+  <CodeCopy />
+  <FontControls />
+</BaseLayout>

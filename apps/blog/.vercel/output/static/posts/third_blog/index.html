@@ -1,0 +1,1131 @@
+<!DOCTYPE html><html lang="ko" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>3번째 블로그를 만들다. | Kyun2da Blog</title><meta name="description" content="3번째를 만들게 된 이유와 앞으로 블로그 개발 방향에 대해 적어보기"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#3b82f6"><link rel="apple-touch-icon" href="/icon-192.png"><!-- KaTeX CSS --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><!-- Open Graph --><meta property="og:title" content="3번째 블로그를 만들다."><meta property="og:description" content="3번째를 만들게 된 이유와 앞으로 블로그 개발 방향에 대해 적어보기"><meta property="og:type" content="website"><!-- View Transitions --><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.QW52Ox2j.js"></script><!-- Dark Mode Script (persists across View Transitions) --><script>
+      function applyTheme() {
+        const theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      }
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+      document.addEventListener('astro:before-swap', (e) => {
+        const isDark = document.documentElement.classList.contains('dark');
+        e.newDocument.documentElement.classList.toggle('dark', isDark);
+      });
+    </script><link rel="stylesheet" href="/_astro/about.BQXI32tt.css">
+<style>@keyframes slide-up{0%{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.animate-slide-up[data-astro-cid-3pca6f6e]{animation:slide-up .3s ease-out}
+</style></head> <body class="bg-background text-foreground min-h-screen flex flex-col"> <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"> <div class="container flex h-16 items-center justify-between"> <a href="/" class="flex items-center space-x-2 no-underline"> <span class="font-bold text-xl">Kyun2da.dev</span> </a> <nav class="flex items-center gap-4"> <a href="/" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors no-underline hidden sm:block"> Home </a><a href="/tags" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors no-underline hidden sm:block"> Tags </a><a href="/about" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors no-underline hidden sm:block"> About </a> <!-- Search --> <div class="relative"> <button id="search-button" class="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground bg-muted rounded-lg hover:bg-accent transition-colors" aria-label="Search"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path> </svg> <span class="hidden sm:inline">검색</span> <kbd class="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-xs bg-background rounded border"> <span class="text-xs">⌘</span>K
+</kbd> </button> </div> <script>
+  // Search button now opens command palette
+  function initSearchButton() {
+    const btn = document.getElementById('search-button');
+    if (btn) {
+      btn.onclick = () => {
+        const cmdPalette = document.getElementById('command-palette');
+        const cmdInput = document.getElementById('cmd-input');
+        if (cmdPalette) {
+          cmdPalette.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+          if (cmdInput) cmdInput.focus();
+        }
+      };
+    }
+  }
+  initSearchButton();
+  document.addEventListener('astro:after-swap', initSearchButton);
+</script> <!-- Search Modal --> <div id="search-modal" class="fixed inset-0 z-[100] hidden"> <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" id="search-backdrop"></div> <div class="fixed inset-x-4 top-20 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-xl"> <div class="bg-background rounded-xl shadow-2xl border overflow-hidden"> <div class="flex items-center gap-3 px-4 border-b"> <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path> </svg> <input id="search-input" type="text" placeholder="포스트 검색..." class="flex-1 py-4 bg-transparent outline-none text-foreground placeholder:text-muted-foreground" autocomplete="off"> <kbd class="px-2 py-1 text-xs bg-muted rounded">ESC</kbd> </div> <div id="search-results" class="max-h-80 overflow-y-auto p-2"> <p class="text-center text-muted-foreground py-8">검색어를 입력하세요</p> </div> </div> </div> </div> <script>
+  (function() {
+    let posts = [];
+    let isLoaded = false;
+
+    async function loadSearchData() {
+      if (isLoaded) return;
+      const res = await fetch('/search.json');
+      posts = await res.json();
+      isLoaded = true;
+    }
+
+    function search(query) {
+      if (!query.trim()) return [];
+      const q = query.toLowerCase();
+      return posts.filter((post) =>
+        post.title.toLowerCase().includes(q) ||
+        post.excerpt.toLowerCase().includes(q) ||
+        post.categories.some((cat) => cat.toLowerCase().includes(q))
+      ).slice(0, 5);
+    }
+
+    function renderResults(results, query) {
+      const container = document.getElementById('search-results');
+      if (!container) return;
+
+      if (!query.trim()) {
+        container.innerHTML = '<p class="text-center text-muted-foreground py-8">검색어를 입력하세요</p>';
+        return;
+      }
+
+      if (results.length === 0) {
+        container.innerHTML = '<p class="text-center text-muted-foreground py-8">검색 결과가 없습니다</p>';
+        return;
+      }
+
+      container.innerHTML = results.map((post) => `
+        <a href="/posts/${post.slug}" class="block p-3 rounded-lg hover:bg-accent transition-colors no-underline group">
+          <h3 class="font-medium text-foreground group-hover:text-blue-500 transition-colors">${highlightMatch(post.title, query)}</h3>
+          <p class="text-sm text-muted-foreground line-clamp-1 mt-1">${highlightMatch(post.excerpt, query)}</p>
+          <div class="flex gap-2 mt-2">
+            ${post.categories.map((cat) => `<span class="text-xs px-2 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full">${cat}</span>`).join('')}
+          </div>
+        </a>
+      `).join('');
+    }
+
+    function highlightMatch(text, query) {
+      if (!query.trim()) return text;
+      const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-800 rounded px-0.5">$1</mark>');
+    }
+
+    function openModal() {
+      loadSearchData();
+      const modal = document.getElementById('search-modal');
+      const input = document.getElementById('search-input');
+      if (modal) modal.classList.remove('hidden');
+      if (input) input.focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('search-modal');
+      const input = document.getElementById('search-input');
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      if (input) input.value = '';
+      renderResults([], '');
+    }
+
+    function initSearch() {
+      const searchButton = document.getElementById('search-button');
+      const searchBackdrop = document.getElementById('search-backdrop');
+      const searchInput = document.getElementById('search-input');
+
+      if (searchButton) {
+        searchButton.onclick = openModal;
+      }
+
+      if (searchBackdrop) {
+        searchBackdrop.onclick = closeModal;
+      }
+
+      if (searchInput) {
+        searchInput.oninput = (e) => {
+          const query = e.target.value;
+          const results = search(query);
+          renderResults(results, query);
+        };
+      }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openModal();
+      }
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Init
+    initSearch();
+    document.addEventListener('astro:after-swap', () => {
+      isLoaded = false;
+      initSearch();
+    });
+  })();
+</script> <!-- Dark Mode Toggle --> <button id="theme-toggle" class="relative p-2 rounded-lg hover:bg-accent transition-colors overflow-hidden" aria-label="Toggle dark mode"> <div class="theme-icon-wrapper relative w-5 h-5"> <!-- Sun icon (shown in dark mode) --> <svg class="theme-icon sun-icon w-5 h-5 absolute inset-0 opacity-0 dark:opacity-100 rotate-90 dark:rotate-0 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path> </svg> <!-- Moon icon (shown in light mode) --> <svg class="theme-icon moon-icon w-5 h-5 absolute inset-0 opacity-100 dark:opacity-0 rotate-0 dark:-rotate-90 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path> </svg> </div> </button> </nav> </div> </header> <script>
+  function initThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+
+    toggle.onclick = () => {
+      // Add transition class
+      document.documentElement.classList.add('theme-transitioning');
+
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+      // Remove transition class after animation
+      setTimeout(() => {
+        document.documentElement.classList.remove('theme-transitioning');
+      }, 300);
+    };
+  }
+
+  initThemeToggle();
+  document.addEventListener('astro:after-swap', initThemeToggle);
+</script> <main class="flex-1">  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"3번째 블로그를 만들다.","description":"3번째를 만들게 된 이유와 앞으로 블로그 개발 방향에 대해 적어보기","url":"https://kyun2da.dev/posts/third_blog","image":"/img/make_blog.png","datePublished":"2022-01-01","dateModified":"2022-01-01","author":{"@type":"Person","name":"허균","url":"https://kyun2da.dev/about"},"publisher":{"@type":"Person","name":"허균","url":"https://kyun2da.dev"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://kyun2da.dev/posts/third_blog"}}</script> <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 z-[60] transition-all duration-150" style="width: 0%"></div> <script type="module">function o(){const e=document.getElementById("reading-progress");if(!e)return;function t(){const s=window.scrollY,n=document.documentElement.scrollHeight-window.innerHeight,r=n>0?s/n*100:0;e.style.width=`${Math.min(100,Math.max(0,r))}%`}window.addEventListener("scroll",t,{passive:!0}),t()}o();document.addEventListener("astro:after-swap",o);</script> <div id="reading-position-toast" class="fixed bottom-8 left-8 z-50 hidden" data-slug="third_blog" data-astro-cid-3pca6f6e> <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border p-4 max-w-xs animate-slide-up" data-astro-cid-3pca6f6e> <p class="text-sm text-foreground mb-2" data-astro-cid-3pca6f6e>이전에 읽던 위치가 있어요</p> <div class="flex gap-2" data-astro-cid-3pca6f6e> <button id="resume-reading" class="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors" data-astro-cid-3pca6f6e>
+이어읽기
+</button> <button id="dismiss-reading" class="px-3 py-1.5 text-sm bg-muted text-muted-foreground rounded-lg hover:bg-accent transition-colors" data-astro-cid-3pca6f6e>
+처음부터
+</button> </div> </div> </div>  <script>
+  function initReadingPosition() {
+    const toast = document.getElementById('reading-position-toast');
+    if (!toast) return;
+
+    const slug = toast.getAttribute('data-slug');
+    const storageKey = `reading-position-${slug}`;
+
+    // Save position on scroll
+    let saveTimeout;
+    function savePosition() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        if (scrollPercent > 5 && scrollPercent < 95) {
+          localStorage.setItem(storageKey, JSON.stringify({
+            y: window.scrollY,
+            percent: scrollPercent,
+            timestamp: Date.now()
+          }));
+        }
+      }, 500);
+    }
+
+    window.addEventListener('scroll', savePosition, { passive: true });
+
+    // Check for saved position
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      const { y, percent, timestamp } = JSON.parse(saved);
+      const hoursSince = (Date.now() - timestamp) / (1000 * 60 * 60);
+
+      // Show toast if position > 10% and within 7 days
+      if (percent > 10 && hoursSince < 168) {
+        toast.classList.remove('hidden');
+
+        document.getElementById('resume-reading').onclick = () => {
+          window.scrollTo({ top: y, behavior: 'smooth' });
+          toast.classList.add('hidden');
+        };
+
+        document.getElementById('dismiss-reading').onclick = () => {
+          localStorage.removeItem(storageKey);
+          toast.classList.add('hidden');
+        };
+      }
+    }
+
+    // Clear position when reaching end
+    window.addEventListener('scroll', () => {
+      const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      if (scrollPercent > 95) {
+        localStorage.removeItem(storageKey);
+      }
+    }, { passive: true });
+  }
+
+  initReadingPosition();
+  document.addEventListener('astro:after-swap', initReadingPosition);
+</script> <div class="relative max-w-screen-xl mx-auto px-4 py-8"> <div class="lg:pr-72"> <article class="max-w-3xl mx-auto"> <!-- Header --> <header class="text-center mb-8"> <h1 class="text-3xl md:text-4xl font-bold mb-4">3번째 블로그를 만들다.</h1> <p class="text-muted-foreground text-lg mb-4">3번째를 만들게 된 이유와 앞으로 블로그 개발 방향에 대해 적어보기</p> <div class="flex flex-wrap justify-center gap-2 mb-4"> <a href="/tags/essay" class="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-900/30 px-3 py-1 text-sm font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-300/20 no-underline hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"> essay </a> </div> <div class="text-sm text-muted-foreground flex items-center justify-center gap-2"> <span>2022년 1월 1일</span> <span>·</span> <span class="inline-flex items-center gap-1.5" title="약 1분 소요"> <span class="flex"> <span class="text-base">☕</span> </span> <span class="text-sm text-muted-foreground">1분</span> </span> </div> </header> <!-- Cover Image --> <div class="flex justify-center mb-8"> <img src="/img/make_blog.png" alt="3번째 블로그를 만들다." width="300" height="300" class="rounded-xl"> </div> <!-- Series Navigation -->  <!-- Content --> <div class="prose prose-lg dark:prose-invert max-w-none mb-8 prose-headings:scroll-mt-20"> <h2 id="3번째-블로그를-만들게-된-이유">3번째 블로그를 만들게 된 이유</h2>
+<p>Jekyll -&gt; Gatsby -&gt; Next.js의 테크로 블로그가 진화하게 되었다.</p>
+<p>그동안 미리 만들어진 테마를 사용하곤 했었는데, 그러다보니 커스텀을 하기까지 너무 많은 시간이 걸렸다.</p>
+<p>그리고 이제는, 회사를 다니는 입장이다보니, 개인 프로젝트를 하면서도 회사에서 사용하는 기술을 사용한다면, 좀더 커리어 발전 방향에 좋지 않을까 싶기도 했다.</p>
+<p>앞으로 할 일에 대해 정리해보고 꾸준히 블로그 업데이트해보자.</p>
+<h2 id="블로그-todo-list">블로그 TODO List</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled/> url 이전하기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 타이틀 만들기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> OG Image</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 구글 애널리틱스 붙이기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 구글 서치콘솔 붙이기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 푸터 고도화 하기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 홈 추가하기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 헤딩 link 추가</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> About 페이지 추가</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 리소스 저장소 s3로 이전하기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 에러페이지 추가</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 콘텐츠 하단 공유기능 만들기</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 콘텐츠 하단 프로필 만들기</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 카테고리 기능</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 검색 기능</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 태그 만들기 - 태그 리스트들을 쭉 나열하고 해당 태그를 클릭하면 태그목록을 가진 리스트 페이지로 이동하기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 방명록 만들기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 모바일웹 만들기</li>
+<li class="task-list-item"><input type="checkbox" checked disabled/> 블로그 댓글 슬랙 알림 만들기</li>
+<li class="task-list-item"><input type="checkbox" disabled/> next ui v2 올라가면 nextjs13, react18 버전업</li>
+</ul>
+<p>고도화 과제</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> 콘텐츠와 블로그 OG 이미지 다이나믹 타이틀로 변경</li>
+<li class="task-list-item"><input type="checkbox" disabled/> 블로그 댓글의 댓글 달면 인식하도록 수정</li>
+</ul> </div> <!-- Share Buttons --> <div class="flex justify-center py-6 border-t border-b mb-8"> <div class="flex items-center gap-2"> <span class="text-sm text-muted-foreground">공유하기</span> <!-- Twitter --> <a href="https://twitter.com/intent/tweet?text=3%EB%B2%88%EC%A7%B8%20%EB%B8%94%EB%A1%9C%EA%B7%B8%EB%A5%BC%20%EB%A7%8C%EB%93%A4%EB%8B%A4.&url=https%3A%2F%2Fkyun2da.dev%2Fposts%2Fthird_blog" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg hover:bg-accent transition-colors group" title="Twitter에 공유"> <svg class="w-5 h-5 text-muted-foreground group-hover:text-[#1DA1F2]" fill="currentColor" viewBox="0 0 24 24"> <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path> </svg> </a> <!-- LinkedIn --> <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fkyun2da.dev%2Fposts%2Fthird_blog" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg hover:bg-accent transition-colors group" title="LinkedIn에 공유"> <svg class="w-5 h-5 text-muted-foreground group-hover:text-[#0A66C2]" fill="currentColor" viewBox="0 0 24 24"> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path> </svg> </a> <!-- Copy Link --> <button class="copy-link-btn p-2 rounded-lg hover:bg-accent transition-colors group" data-url="https://kyun2da.dev/posts/third_blog" title="링크 복사"> <svg class="w-5 h-5 text-muted-foreground group-hover:text-green-500 link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path> </svg> <svg class="w-5 h-5 text-green-500 check-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path> </svg> </button> </div> <script>
+  function initShareButtons() {
+    document.querySelectorAll('.copy-link-btn').forEach((btn) => {
+      btn.onclick = async () => {
+        const url = btn.getAttribute('data-url');
+        try {
+          await navigator.clipboard.writeText(url);
+          btn.querySelector('.link-icon').classList.add('hidden');
+          btn.querySelector('.check-icon').classList.remove('hidden');
+          setTimeout(() => {
+            btn.querySelector('.link-icon').classList.remove('hidden');
+            btn.querySelector('.check-icon').classList.add('hidden');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      };
+    });
+  }
+  initShareButtons();
+  document.addEventListener('astro:after-swap', initShareButtons);
+</script> </div> <!-- Related Posts --> <div class="my-12"><h3 class="text-xl font-bold mb-6">관련 포스트</h3><div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"><a href="/posts/programmer_passionate" class="group block p-4 rounded-xl border bg-white dark:bg-slate-800 hover:shadow-lg transition-all duration-200 no-underline"><div class="aspect-video rounded-lg overflow-hidden mb-3"><img src="/img/passionate-programmer.jpg" alt="프로그래머 열정을 말하다" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"></div><h4 class="font-medium text-foreground group-hover:text-blue-500 transition-colors line-clamp-2 m-0">프로그래머 열정을 말하다</h4><div class="flex flex-wrap gap-1 mt-2"><span class="text-xs px-2 py-0.5 bg-muted rounded-full text-muted-foreground">essay</span></div></a><a href="/posts/prospective2023" class="group block p-4 rounded-xl border bg-white dark:bg-slate-800 hover:shadow-lg transition-all duration-200 no-underline"><div class="aspect-video rounded-lg overflow-hidden mb-3"><img src="/img/prospective.jpeg" alt="2023년 회고" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"></div><h4 class="font-medium text-foreground group-hover:text-blue-500 transition-colors line-clamp-2 m-0">2023년 회고</h4><div class="flex flex-wrap gap-1 mt-2"><span class="text-xs px-2 py-0.5 bg-muted rounded-full text-muted-foreground">essay</span></div></a><a href="/posts/prospective2022" class="group block p-4 rounded-xl border bg-white dark:bg-slate-800 hover:shadow-lg transition-all duration-200 no-underline"><div class="aspect-video rounded-lg overflow-hidden mb-3"><img src="/img/retrospect_2022.png" alt="2022년 회고" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"></div><h4 class="font-medium text-foreground group-hover:text-blue-500 transition-colors line-clamp-2 m-0">2022년 회고</h4><div class="flex flex-wrap gap-1 mt-2"><span class="text-xs px-2 py-0.5 bg-muted rounded-full text-muted-foreground">essay</span></div></a></div></div> <!-- Newsletter --> <div class="newsletter-widget bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-xl p-6 border"> <div class="text-center mb-4"> <h3 class="text-lg font-bold mb-2">뉴스레터 구독</h3> <p class="text-sm text-muted-foreground">새 글이 올라오면 이메일로 알려드려요</p> </div> <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2"> <input type="email" id="newsletter-email" placeholder="이메일 주소" required class="flex-1 px-4 py-2 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-blue-500"> <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium whitespace-nowrap">
+구독하기
+</button> </form> <div id="newsletter-message" class="hidden mt-3 text-center text-sm"></div> <p class="text-xs text-muted-foreground text-center mt-3">
+스팸 없이, 언제든 구독 취소 가능
+</p> </div> <script>
+  function initNewsletter() {
+    const form = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('newsletter-email');
+    const messageEl = document.getElementById('newsletter-message');
+
+    if (!form) return;
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+
+      const email = emailInput.value;
+      const button = form.querySelector('button');
+      const originalText = button.textContent;
+
+      button.textContent = '처리 중...';
+      button.disabled = true;
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('구독해주셔서 감사합니다! 🎉', 'success');
+          emailInput.value = '';
+        } else {
+          showMessage(data.error || '오류가 발생했습니다', 'warning');
+        }
+      } catch (error) {
+        showMessage('네트워크 오류가 발생했습니다', 'error');
+      }
+
+      button.textContent = originalText;
+      button.disabled = false;
+    };
+
+    function showMessage(text, type) {
+      messageEl.textContent = text;
+      messageEl.classList.remove('hidden', 'text-green-600', 'text-yellow-600', 'text-red-600');
+
+      if (type === 'success') messageEl.classList.add('text-green-600');
+      else if (type === 'warning') messageEl.classList.add('text-yellow-600');
+      else messageEl.classList.add('text-red-600');
+
+      setTimeout(() => messageEl.classList.add('hidden'), 5000);
+    }
+  }
+
+  initNewsletter();
+  document.addEventListener('astro:after-swap', initNewsletter);
+</script> <!-- Bio --> <div class="border flex flex-col gap-4 px-4 py-8 bg-white dark:bg-slate-800 shadow-lg rounded-2xl mb-16"> <div class="flex flex-row"> <img class="rounded-full ml-4 mr-6 my-0 w-24 h-24" alt="Profile image" src="/img/profile.jpeg" width="96" height="96"> <div class="flex flex-col space-y-0.5 md:text-left"> <h3 class="tracking-tight text-lg font-bold m-0">Kyun2da</h3> <p class="text-sm text-gray-500 dark:text-gray-400 m-0">Frontend Developer</p> <p class="text-sm pt-4 m-0">개발자 허균의 블로그</p> </div> </div> <div class="space-y-4"> <div class="pl-4 flex flex-row gap-2 items-center justify-center md:justify-start flex-wrap"> <a href="https://www.github.com/kyun2da/" target="_blank" rel="noopener noreferrer" class="mb-2 flex rounded px-4 py-2.5 text-xs font-medium leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg no-underline" style="background-color: #333"> <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+Github
+</a> <a href="https://twitter.com/kyun2da" target="_blank" rel="noopener noreferrer" class="mb-2 flex rounded px-4 py-2.5 text-xs font-medium leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg no-underline" style="background-color: #1da1f2"> <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path> </svg>
+Twitter
+</a> <a href="https://www.linkedin.com/in/kyun2da/" target="_blank" rel="noopener noreferrer" class="mb-2 flex rounded px-4 py-2.5 text-xs font-medium leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg no-underline" style="background-color: #0077b5"> <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"></path> </svg>
+LinkedIn
+</a> <a href="mailto:kyun2dot@gmail.com" class="mb-2 flex rounded px-4 py-2.5 text-xs font-medium leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg no-underline" style="background-color: #ea4335"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 h-5 w-5"> <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"></path> </svg>
+Email
+</a> </div> </div> </div> <!-- Comments --> <div id="giscus-container" class="giscus mt-8"></div> <script>(function(){const repo = "kyun2da/playground";
+const repoId = "R_kgDOHbjrmw";
+const category = "General";
+const categoryId = "DIC_kwDOHbjrm84CRXte";
+
+  function loadGiscus() {
+    const container = document.getElementById('giscus-container');
+    if (!container) return;
+
+    // Clear existing content
+    container.innerHTML = '';
+
+    const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', repo);
+    script.setAttribute('data-repo-id', repoId);
+    script.setAttribute('data-category', category);
+    script.setAttribute('data-category-id', categoryId);
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', theme);
+    script.setAttribute('data-lang', 'ko');
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+
+    container.appendChild(script);
+  }
+
+  // Load Giscus on page load
+  loadGiscus();
+
+  // Update theme when dark mode changes
+  const observer = new MutationObserver(() => {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (iframe) {
+      const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      iframe.contentWindow?.postMessage(
+        { giscus: { setConfig: { theme } } },
+        'https://giscus.app'
+      );
+    }
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+})();</script> </article> </div> <!-- Table of Contents --> <nav id="toc" class="hidden lg:block w-64 fixed right-8 top-24 max-h-[calc(100vh-8rem)] overflow-auto"><h4 class="text-sm font-semibold mb-4 text-muted-foreground">목차</h4><ul class="space-y-2 text-sm list-none p-0 m-0"><li style="padding-left: 1rem"><a href="#3번째-블로그를-만들게-된-이유" data-slug="3번째-블로그를-만들게-된-이유" class="toc-link block py-1 text-muted-foreground hover:text-foreground transition-colors no-underline border-l-2 border-transparent pl-2 -ml-2">3번째 블로그를 만들게 된 이유</a></li><li style="padding-left: 1rem"><a href="#블로그-todo-list" data-slug="블로그-todo-list" class="toc-link block py-1 text-muted-foreground hover:text-foreground transition-colors no-underline border-l-2 border-transparent pl-2 -ml-2">블로그 TODO List</a></li></ul></nav><script type="module">function i(){const s=document.querySelectorAll(".toc-link");if(s.length===0)return;const r=Array.from(s).map(e=>{const n=e.getAttribute("data-slug");return document.getElementById(n)}).filter(Boolean);if(r.length===0)return;let t=null;const d=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){const l=n.target.id,o=document.querySelector(`.toc-link[data-slug="${l}"]`);t&&(t.classList.remove("text-blue-500","font-medium","border-blue-500"),t.classList.add("text-muted-foreground","border-transparent")),o&&(o.classList.remove("text-muted-foreground","border-transparent"),o.classList.add("text-blue-500","font-medium","border-blue-500"),t=o)}})},{rootMargin:"-80px 0px -70% 0px",threshold:0});if(r.forEach(e=>d.observe(e)),r[0]){const e=document.querySelector(`.toc-link[data-slug="${r[0].id}"]`);e&&(e.classList.remove("text-muted-foreground","border-transparent"),e.classList.add("text-blue-500","font-medium","border-blue-500"),t=e)}}i();document.addEventListener("astro:after-swap",i);</script> </div> <script>
+  function initCodeCopy() {
+    document.querySelectorAll('pre').forEach((pre) => {
+      // Skip if already has copy button
+      if (pre.querySelector('.copy-button')) return;
+
+      // Create wrapper
+      const wrapper = document.createElement('div');
+      wrapper.className = 'relative group';
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      // Create copy button
+      const button = document.createElement('button');
+      button.className = 'copy-button absolute top-2 right-2 p-2 rounded-lg bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-200';
+      button.innerHTML = `
+        <svg class="w-4 h-4 copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg>
+        <svg class="w-4 h-4 check-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      `;
+      button.title = '복사';
+      wrapper.appendChild(button);
+
+      button.addEventListener('click', async () => {
+        const code = pre.querySelector('code');
+        const text = code ? code.textContent : pre.textContent;
+
+        try {
+          await navigator.clipboard.writeText(text);
+
+          // Show check icon
+          button.querySelector('.copy-icon').classList.add('hidden');
+          button.querySelector('.check-icon').classList.remove('hidden');
+          button.classList.add('bg-green-600', 'hover:bg-green-600');
+
+          setTimeout(() => {
+            button.querySelector('.copy-icon').classList.remove('hidden');
+            button.querySelector('.check-icon').classList.add('hidden');
+            button.classList.remove('bg-green-600', 'hover:bg-green-600');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  }
+
+  initCodeCopy();
+  document.addEventListener('astro:after-swap', initCodeCopy);
+</script> <div class="font-controls fixed bottom-8 left-8 z-40 hidden lg:flex flex-col gap-2"> <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border p-2 flex flex-col gap-1"> <button id="font-increase" class="p-2 hover:bg-accent rounded-lg transition-colors" title="글자 크게"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path> </svg> </button> <button id="font-decrease" class="p-2 hover:bg-accent rounded-lg transition-colors" title="글자 작게"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path> </svg> </button> <div class="w-full h-px bg-border"></div> <button id="font-toggle" class="p-2 hover:bg-accent rounded-lg transition-colors font-serif" title="글꼴 전환">
+Aa
+</button> </div> </div> <script>
+  function initFontControls() {
+    const increaseBtn = document.getElementById('font-increase');
+    const decreaseBtn = document.getElementById('font-decrease');
+    const toggleBtn = document.getElementById('font-toggle');
+
+    const sizes = ['prose-sm', 'prose-base', 'prose-lg', 'prose-xl'];
+
+    function getCurrentSize() {
+      const prose = document.querySelector('.prose');
+      if (!prose) return 1;
+      const idx = sizes.findIndex(s => prose.classList.contains(s));
+      return idx === -1 ? 1 : idx;
+    }
+
+    function setSize(index) {
+      const prose = document.querySelector('.prose');
+      if (!prose) return;
+
+      sizes.forEach(s => prose.classList.remove(s));
+      prose.classList.add(sizes[index]);
+      localStorage.setItem('prose-size', sizes[index]);
+    }
+
+    if (increaseBtn) {
+      increaseBtn.onclick = () => {
+        const current = getCurrentSize();
+        if (current < sizes.length - 1) setSize(current + 1);
+      };
+    }
+
+    if (decreaseBtn) {
+      decreaseBtn.onclick = () => {
+        const current = getCurrentSize();
+        if (current > 0) setSize(current - 1);
+      };
+    }
+
+    if (toggleBtn) {
+      toggleBtn.onclick = () => {
+        document.documentElement.classList.toggle('font-serif');
+        const isSerif = document.documentElement.classList.contains('font-serif');
+        localStorage.setItem('font-family', isSerif ? 'serif' : 'sans');
+        toggleBtn.classList.toggle('font-sans', isSerif);
+      };
+    }
+
+    // Apply saved settings
+    const savedSize = localStorage.getItem('prose-size');
+    if (savedSize && sizes.includes(savedSize)) {
+      const prose = document.querySelector('.prose');
+      if (prose) {
+        sizes.forEach(s => prose.classList.remove(s));
+        prose.classList.add(savedSize);
+      }
+    }
+
+    const savedFont = localStorage.getItem('font-family');
+    if (savedFont === 'serif') {
+      document.documentElement.classList.add('font-serif');
+      if (toggleBtn) toggleBtn.classList.add('font-sans');
+    }
+  }
+
+  initFontControls();
+  document.addEventListener('astro:after-swap', initFontControls);
+</script>  </main> <footer class="border-t bg-muted/50"> <div class="container py-8 flex flex-col items-center justify-center gap-4"> <p class="text-sm text-muted-foreground">
+All rights reserved &copy; Kyun2da 2026 </p> </div> </footer> <!-- Global Components --> <button id="back-to-top" class="fixed bottom-8 right-8 p-3 rounded-full bg-blue-500 text-white shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-blue-600 hover:scale-110 z-50" aria-label="맨 위로"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path> </svg> </button> <script>
+  function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    function toggleVisibility() {
+      if (window.scrollY > 500) {
+        btn.classList.remove('opacity-0', 'invisible');
+        btn.classList.add('opacity-100', 'visible');
+      } else {
+        btn.classList.add('opacity-0', 'invisible');
+        btn.classList.remove('opacity-100', 'visible');
+      }
+    }
+
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    toggleVisibility();
+
+    btn.onclick = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  }
+
+  initBackToTop();
+  document.addEventListener('astro:after-swap', initBackToTop);
+</script> <div id="reading-streak" class="hidden fixed bottom-8 left-1/2 -translate-x-1/2 z-50" data-astro-cid-3wooyymi> <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-bounce-in" data-astro-cid-3wooyymi> <span class="text-2xl" data-astro-cid-3wooyymi>🔥</span> <div data-astro-cid-3wooyymi> <div class="font-bold text-sm streak-count" data-astro-cid-3wooyymi>3일 연속 방문!</div> <div class="text-xs opacity-90" data-astro-cid-3wooyymi>꾸준히 읽고 계시네요!</div> </div> </div> </div>  <script>
+  (function() {
+    const STREAK_KEY = 'reading-streak';
+    const LAST_VISIT_KEY = 'last-visit-date';
+
+    function getToday() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function checkStreak() {
+      const today = getToday();
+      const lastVisit = localStorage.getItem(LAST_VISIT_KEY);
+      let streak = parseInt(localStorage.getItem(STREAK_KEY) || '0', 10);
+
+      if (!lastVisit) {
+        // First visit
+        streak = 1;
+      } else if (lastVisit === today) {
+        // Already visited today
+        return streak;
+      } else {
+        const lastDate = new Date(lastVisit);
+        const todayDate = new Date(today);
+        const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 1) {
+          // Consecutive day
+          streak++;
+        } else {
+          // Streak broken
+          streak = 1;
+        }
+      }
+
+      localStorage.setItem(STREAK_KEY, streak.toString());
+      localStorage.setItem(LAST_VISIT_KEY, today);
+
+      return streak;
+    }
+
+    function showStreakNotification(streak) {
+      if (streak < 2) return;
+
+      const container = document.getElementById('reading-streak');
+      if (!container) return;
+
+      const countEl = container.querySelector('.streak-count');
+      if (countEl) {
+        const messages = {
+          2: '2일 연속 방문!',
+          3: '3일 연속 방문! 🔥',
+          7: '일주일 연속! 대단해요! 🌟',
+          14: '2주 연속! 열정 가득! 💪',
+          30: '한 달 연속! 진정한 독자! 👑',
+        };
+
+        let message = `${streak}일 연속 방문!`;
+        for (const [days, msg] of Object.entries(messages)) {
+          if (streak >= parseInt(days)) message = msg;
+        }
+        countEl.textContent = message;
+      }
+
+      container.classList.remove('hidden');
+
+      setTimeout(() => {
+        container.classList.add('hidden');
+      }, 5000);
+    }
+
+    const streak = checkStreak();
+    // Only show notification for streaks of 2+ days, and only once per session
+    const shownThisSession = sessionStorage.getItem('streak-shown');
+    if (streak >= 2 && !shownThisSession) {
+      setTimeout(() => showStreakNotification(streak), 2000);
+      sessionStorage.setItem('streak-shown', 'true');
+    }
+  })();
+</script> <script>
+  (function() {
+    const styles = [
+      'color: #3b82f6',
+      'font-size: 20px',
+      'font-weight: bold',
+      'text-shadow: 2px 2px 0 #1e40af'
+    ].join(';');
+
+    const artStyles = [
+      'color: #8b5cf6',
+      'font-size: 12px',
+      'font-family: monospace'
+    ].join(';');
+
+    console.log('%c🚀 Kyun2da Blog', styles);
+    console.log('%c', artStyles,
+`
+    ██╗  ██╗██╗   ██╗██╗   ██╗███╗   ██╗
+    ██║ ██╔╝╚██╗ ██╔╝██║   ██║████╗  ██║
+    █████╔╝  ╚████╔╝ ██║   ██║██╔██╗ ██║
+    ██╔═██╗   ╚██╔╝  ██║   ██║██║╚██╗██║
+    ██║  ██╗   ██║   ╚██████╔╝██║ ╚████║
+    ╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝
+`);
+    console.log('%c👋 안녕하세요! 콘솔까지 열어보시다니 개발자시군요!', 'color: #10b981; font-size: 14px;');
+    console.log('%c💼 채용 문의: https://github.com/kyun2da', 'color: #6366f1; font-size: 12px;');
+    console.log('%c⭐ 블로그가 마음에 드셨다면 GitHub 스타 부탁드려요!', 'color: #f59e0b; font-size: 12px;');
+
+    // Konami code easter egg
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+          konamiIndex = 0;
+          activateKonami();
+        }
+      } else {
+        konamiIndex = 0;
+      }
+    });
+
+    function activateKonami() {
+      // Create confetti
+      const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'];
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+          position: fixed;
+          width: 10px;
+          height: 10px;
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          left: ${Math.random() * 100}vw;
+          top: -10px;
+          z-index: 9999;
+          border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+          pointer-events: none;
+        `;
+        document.body.appendChild(confetti);
+
+        confetti.animate([
+          { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+          { transform: `translateY(100vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+        ], {
+          duration: 2000 + Math.random() * 2000,
+          easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        }).onfinish = () => confetti.remove();
+      }
+
+      console.log('%c🎮 코나미 코드 발동! 🎉', 'color: #ec4899; font-size: 24px; font-weight: bold;');
+    }
+  })();
+</script> <div id="command-palette" class="fixed inset-0 z-[200] hidden"> <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" id="cmd-backdrop"></div> <div class="fixed inset-x-4 top-24 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl"> <div class="bg-background rounded-xl shadow-2xl border overflow-hidden"> <!-- Search Input --> <div class="flex items-center gap-3 px-4 border-b"> <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path> </svg> <input id="cmd-input" type="text" placeholder="검색하거나 명령어 입력..." class="flex-1 py-4 bg-transparent outline-none text-foreground placeholder:text-muted-foreground" autocomplete="off"> <kbd class="px-2 py-1 text-xs bg-muted rounded">ESC</kbd> </div> <!-- Results --> <div id="cmd-results" class="max-h-96 overflow-y-auto p-2"> <!-- Commands Section --> <div class="cmd-section" data-section="commands"> <div class="px-3 py-2 text-xs font-medium text-muted-foreground uppercase">명령어</div> <div class="space-y-1"> <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="toggle-theme"> <span class="text-lg">🌓</span> <span class="flex-1">다크모드 전환</span> <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">T</kbd> </button> <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="increase-font"> <span class="text-lg">🔍</span> <span class="flex-1">글자 크게</span> <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">+</kbd> </button> <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="decrease-font"> <span class="text-lg">🔎</span> <span class="flex-1">글자 작게</span> <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">-</kbd> </button> <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="toggle-font"> <span class="text-lg">📝</span> <span class="flex-1">글꼴 전환 (Serif/Sans)</span> <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">F</kbd> </button> <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="print"> <span class="text-lg">🖨️</span> <span class="flex-1">인쇄하기</span> <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">P</kbd> </button> </div> </div> <!-- Navigation Section --> <div class="cmd-section mt-4" data-section="navigation"> <div class="px-3 py-2 text-xs font-medium text-muted-foreground uppercase">페이지 이동</div> <div class="space-y-1"> <a href="/" class="cmd-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors no-underline"> <span class="text-lg">🏠</span> <span class="flex-1 text-foreground">홈</span> </a> <a href="/tags" class="cmd-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors no-underline"> <span class="text-lg">🏷️</span> <span class="flex-1 text-foreground">태그</span> </a> <a href="/about" class="cmd-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors no-underline"> <span class="text-lg">👤</span> <span class="flex-1 text-foreground">소개</span> </a> </div> </div> <!-- Posts Section (populated by JS) --> <div class="cmd-section mt-4" data-section="posts"> <div class="px-3 py-2 text-xs font-medium text-muted-foreground uppercase">포스트</div> <div id="cmd-posts" class="space-y-1"></div> </div> </div> <!-- Footer --> <div class="px-4 py-2 border-t bg-muted/30 flex items-center justify-between text-xs text-muted-foreground"> <div class="flex items-center gap-4"> <span><kbd class="px-1 bg-muted rounded">↑↓</kbd> 이동</span> <span><kbd class="px-1 bg-muted rounded">↵</kbd> 선택</span> </div> <span>⌘K로 열기</span> </div> </div> </div> </div> <script>
+  (function() {
+    let posts = [];
+    let selectedIndex = 0;
+    let visibleItems = [];
+
+    async function loadPosts() {
+      try {
+        const res = await fetch('/search.json');
+        posts = await res.json();
+        renderPosts(posts.slice(0, 5));
+      } catch (e) {
+        console.error('Failed to load posts:', e);
+      }
+    }
+
+    function renderPosts(items) {
+      const container = document.getElementById('cmd-posts');
+      if (!container) return;
+
+      container.innerHTML = items.map(post => `
+        <a href="/posts/${post.slug}" class="cmd-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors no-underline">
+          <span class="text-lg">📄</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-foreground truncate">${post.title}</div>
+            <div class="text-xs text-muted-foreground truncate">${post.excerpt}</div>
+          </div>
+        </a>
+      `).join('');
+
+      updateVisibleItems();
+    }
+
+    function updateVisibleItems() {
+      visibleItems = Array.from(document.querySelectorAll('.cmd-item:not([style*="display: none"])'));
+      selectedIndex = 0;
+      updateSelection();
+    }
+
+    function updateSelection() {
+      visibleItems.forEach((item, i) => {
+        if (i === selectedIndex) {
+          item.classList.add('bg-accent');
+        } else {
+          item.classList.remove('bg-accent');
+        }
+      });
+
+      // Scroll into view
+      if (visibleItems[selectedIndex]) {
+        visibleItems[selectedIndex].scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    function filterItems(query) {
+      const q = query.toLowerCase();
+      const sections = document.querySelectorAll('.cmd-section');
+
+      sections.forEach(section => {
+        const items = section.querySelectorAll('.cmd-item');
+        let hasVisible = false;
+
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(q) || !q) {
+            item.style.display = '';
+            hasVisible = true;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        section.style.display = hasVisible ? '' : 'none';
+      });
+
+      // Also filter posts
+      if (q) {
+        const filtered = posts.filter(p =>
+          p.title.toLowerCase().includes(q) ||
+          p.excerpt.toLowerCase().includes(q) ||
+          p.categories.some(c => c.toLowerCase().includes(q))
+        );
+        renderPosts(filtered.slice(0, 5));
+      } else {
+        renderPosts(posts.slice(0, 5));
+      }
+
+      updateVisibleItems();
+    }
+
+    function executeAction(action) {
+      switch (action) {
+        case 'toggle-theme':
+          document.documentElement.classList.add('theme-transitioning');
+          const isDark = document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+          setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 300);
+          break;
+        case 'increase-font':
+          adjustFontSize(1);
+          break;
+        case 'decrease-font':
+          adjustFontSize(-1);
+          break;
+        case 'toggle-font':
+          toggleFontFamily();
+          break;
+        case 'print':
+          window.print();
+          break;
+      }
+      closeModal();
+    }
+
+    function adjustFontSize(delta) {
+      const sizes = ['text-sm', 'text-base', 'text-lg', 'text-xl'];
+      const prose = document.querySelector('.prose');
+      if (!prose) return;
+
+      let current = sizes.findIndex(s => prose.classList.contains(s.replace('text-', 'prose-')));
+      if (current === -1) current = 1;
+
+      const newIndex = Math.max(0, Math.min(sizes.length - 1, current + delta));
+      sizes.forEach(s => prose.classList.remove(s.replace('text-', 'prose-')));
+      prose.classList.add(sizes[newIndex].replace('text-', 'prose-'));
+      localStorage.setItem('font-size', sizes[newIndex]);
+    }
+
+    function toggleFontFamily() {
+      document.documentElement.classList.toggle('font-serif');
+      const isSerif = document.documentElement.classList.contains('font-serif');
+      localStorage.setItem('font-family', isSerif ? 'serif' : 'sans');
+    }
+
+    function openModal() {
+      loadPosts();
+      const modal = document.getElementById('command-palette');
+      const input = document.getElementById('cmd-input');
+      if (modal) modal.classList.remove('hidden');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      document.body.style.overflow = 'hidden';
+      filterItems('');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('command-palette');
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function initCommandPalette() {
+      const backdrop = document.getElementById('cmd-backdrop');
+      const input = document.getElementById('cmd-input');
+
+      if (backdrop) {
+        backdrop.onclick = closeModal;
+      }
+
+      if (input) {
+        input.oninput = (e) => filterItems(e.target.value);
+      }
+
+      // Click handlers for action buttons
+      document.querySelectorAll('.cmd-item[data-action]').forEach(btn => {
+        btn.onclick = () => executeAction(btn.dataset.action);
+      });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('command-palette');
+      const isOpen = modal && !modal.classList.contains('hidden');
+
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (isOpen) closeModal();
+        else openModal();
+        return;
+      }
+
+      if (!isOpen) return;
+
+      switch (e.key) {
+        case 'Escape':
+          closeModal();
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          selectedIndex = Math.min(selectedIndex + 1, visibleItems.length - 1);
+          updateSelection();
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          selectedIndex = Math.max(selectedIndex - 1, 0);
+          updateSelection();
+          break;
+        case 'Enter':
+          e.preventDefault();
+          if (visibleItems[selectedIndex]) {
+            const action = visibleItems[selectedIndex].dataset.action;
+            if (action) {
+              executeAction(action);
+            } else if (visibleItems[selectedIndex].href) {
+              window.location.href = visibleItems[selectedIndex].href;
+            }
+          }
+          break;
+      }
+    });
+
+    // Apply saved preferences
+    function applyPreferences() {
+      const fontFamily = localStorage.getItem('font-family');
+      if (fontFamily === 'serif') {
+        document.documentElement.classList.add('font-serif');
+      }
+    }
+
+    applyPreferences();
+    initCommandPalette();
+    document.addEventListener('astro:after-swap', () => {
+      applyPreferences();
+      initCommandPalette();
+    });
+  })();
+</script> <div id="lightbox" class="fixed inset-0 z-[150] hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"> <button id="lightbox-close" class="absolute top-4 right-4 p-2 text-white/70 hover:text-white transition-colors"> <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path> </svg> </button> <button id="lightbox-prev" class="absolute left-4 p-2 text-white/70 hover:text-white transition-colors"> <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path> </svg> </button> <button id="lightbox-next" class="absolute right-4 p-2 text-white/70 hover:text-white transition-colors"> <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path> </svg> </button> <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl"> <div id="lightbox-caption" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 px-4 py-2 rounded-full"></div> </div> <script>
+  function initLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const closeBtn = document.getElementById('lightbox-close');
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+
+    if (!lightbox) return;
+
+    let images = [];
+    let currentIndex = 0;
+
+    function collectImages() {
+      images = Array.from(document.querySelectorAll('.prose img, article img'));
+    }
+
+    function openLightbox(index) {
+      if (!images[index]) return;
+      currentIndex = index;
+      lightboxImg.src = images[index].src;
+      lightboxCaption.textContent = images[index].alt || '';
+      lightbox.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      updateNavButtons();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function showPrev() {
+      if (currentIndex > 0) {
+        openLightbox(currentIndex - 1);
+      }
+    }
+
+    function showNext() {
+      if (currentIndex < images.length - 1) {
+        openLightbox(currentIndex + 1);
+      }
+    }
+
+    function updateNavButtons() {
+      prevBtn.style.display = currentIndex > 0 ? '' : 'none';
+      nextBtn.style.display = currentIndex < images.length - 1 ? '' : 'none';
+    }
+
+    // Collect and setup images
+    collectImages();
+    images.forEach((img, index) => {
+      img.style.cursor = 'zoom-in';
+      img.onclick = () => openLightbox(index);
+    });
+
+    // Event listeners
+    closeBtn.onclick = closeLightbox;
+    prevBtn.onclick = showPrev;
+    nextBtn.onclick = showNext;
+
+    lightbox.onclick = (e) => {
+      if (e.target === lightbox) closeLightbox();
+    };
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.classList.contains('hidden')) return;
+
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowLeft':
+          showPrev();
+          break;
+        case 'ArrowRight':
+          showNext();
+          break;
+      }
+    });
+  }
+
+  initLightbox();
+  document.addEventListener('astro:after-swap', initLightbox);
+</script> <div id="highlight-tooltip" class="fixed z-50 hidden" data-astro-cid-crpgb6ry> <div class="flex items-center gap-1 bg-slate-900 text-white rounded-lg shadow-xl p-1 animate-fade-in" data-astro-cid-crpgb6ry> <button id="highlight-twitter" class="p-2 hover:bg-slate-700 rounded transition-colors" title="Twitter에 공유" data-astro-cid-crpgb6ry> <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" data-astro-cid-crpgb6ry> <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" data-astro-cid-crpgb6ry></path> </svg> </button> <button id="highlight-copy" class="p-2 hover:bg-slate-700 rounded transition-colors" title="복사" data-astro-cid-crpgb6ry> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-crpgb6ry> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" data-astro-cid-crpgb6ry></path> </svg> </button> <div class="w-px h-6 bg-slate-700" data-astro-cid-crpgb6ry></div> <button id="highlight-close" class="p-2 hover:bg-slate-700 rounded transition-colors" title="닫기" data-astro-cid-crpgb6ry> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-crpgb6ry> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" data-astro-cid-crpgb6ry></path> </svg> </button> </div> </div>  <script>
+  function initTextHighlightShare() {
+    const tooltip = document.getElementById('highlight-tooltip');
+    const twitterBtn = document.getElementById('highlight-twitter');
+    const copyBtn = document.getElementById('highlight-copy');
+    const closeBtn = document.getElementById('highlight-close');
+
+    if (!tooltip) return;
+
+    let selectedText = '';
+
+    function hideTooltip() {
+      tooltip.classList.add('hidden');
+    }
+
+    function showTooltip(x, y) {
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y}px`;
+      tooltip.classList.remove('hidden');
+    }
+
+    // Listen for text selection in prose content
+    document.addEventListener('mouseup', (e) => {
+      const selection = window.getSelection();
+      const text = selection.toString().trim();
+
+      // Only show in article/prose content
+      const isInContent = e.target.closest('.prose, article');
+
+      if (text.length > 10 && isInContent) {
+        selectedText = text;
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+
+        // Position tooltip above the selection
+        const x = rect.left + rect.width / 2 - 60;
+        const y = rect.top + window.scrollY - 50;
+
+        showTooltip(Math.max(10, x), y);
+      } else if (!e.target.closest('#highlight-tooltip')) {
+        hideTooltip();
+      }
+    });
+
+    // Twitter share
+    twitterBtn.onclick = () => {
+      const url = window.location.href;
+      const tweetText = `"${selectedText.slice(0, 200)}${selectedText.length > 200 ? '...' : ''}"`;
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(url)}`;
+      window.open(tweetUrl, '_blank', 'width=550,height=420');
+      hideTooltip();
+    };
+
+    // Copy to clipboard
+    copyBtn.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(selectedText);
+        copyBtn.innerHTML = `
+          <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        `;
+        setTimeout(() => {
+          copyBtn.innerHTML = `
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          `;
+          hideTooltip();
+        }, 1000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    };
+
+    // Close button
+    closeBtn.onclick = hideTooltip;
+
+    // Hide on scroll
+    window.addEventListener('scroll', hideTooltip, { passive: true });
+  }
+
+  initTextHighlightShare();
+  document.addEventListener('astro:after-swap', initTextHighlightShare);
+</script> <div id="footnote-preview" class="fixed z-50 hidden max-w-sm"> <div class="bg-white dark:bg-slate-800 rounded-xl shadow-xl border p-4 text-sm"> <div id="footnote-content"></div> </div> </div> <script>
+  function initFootnotePreview() {
+    const preview = document.getElementById('footnote-preview');
+    const content = document.getElementById('footnote-content');
+    if (!preview || !content) return;
+
+    // Find all footnote references
+    const footnoteRefs = document.querySelectorAll('a[href^="#fn"], a[href^="#user-content-fn"]');
+
+    footnoteRefs.forEach(ref => {
+      ref.addEventListener('mouseenter', (e) => {
+        const href = ref.getAttribute('href');
+        const footnote = document.querySelector(href);
+
+        if (footnote) {
+          const footnoteText = footnote.textContent.replace(/↩$/, '').trim();
+          content.textContent = footnoteText;
+
+          const rect = ref.getBoundingClientRect();
+          preview.style.left = `${Math.min(rect.left, window.innerWidth - 320)}px`;
+          preview.style.top = `${rect.bottom + window.scrollY + 8}px`;
+          preview.classList.remove('hidden');
+        }
+      });
+
+      ref.addEventListener('mouseleave', () => {
+        preview.classList.add('hidden');
+      });
+    });
+  }
+
+  initFootnotePreview();
+  document.addEventListener('astro:after-swap', initFootnotePreview);
+</script> <!-- Vercel Analytics (production only) --> <script type="module">var c="@vercel/analytics",s="1.6.1",u=()=>{window.va||(window.va=function(...n){(window.vaq=window.vaq||[]).push(n)})};function r(){return typeof window<"u"}function d(){try{const e="production"}catch{}return"production"}function f(e="auto"){if(e==="auto"){window.vam=d();return}window.vam=e}function l(){return(r()?window.vam:d())||"production"}function a(){return l()==="development"}function v(e){return e.scriptSrc?e.scriptSrc:a()?"https://va.vercel-scripts.com/v1/script.debug.js":e.basePath?`${e.basePath}/insights/script.js`:"/_vercel/insights/script.js"}function w(e={debug:!0}){var n;if(!r())return;f(e.mode),u(),e.beforeSend&&((n=window.va)==null||n.call(window,"beforeSend",e.beforeSend));const i=v(e);if(document.head.querySelector(`script[src*="${i}"]`))return;const t=document.createElement("script");t.src=i,t.defer=!0,t.dataset.sdkn=c+(e.framework?`/${e.framework}`:""),t.dataset.sdkv=s,e.disableAutoTrack&&(t.dataset.disableAutoTrack="1"),e.endpoint?t.dataset.endpoint=e.endpoint:e.basePath&&(t.dataset.endpoint=`${e.basePath}/insights`),e.dsn&&(t.dataset.dsn=e.dsn),t.onerror=()=>{const o=a()?"Please check if any ad blockers are enabled and try again.":"Be sure to enable Web Analytics for your project and deploy again. See https://vercel.com/docs/analytics/quickstart for more information.";console.log(`[Vercel Web Analytics] Failed to load script from ${i}. ${o}`)},a()&&e.debug===!1&&(t.dataset.debug="false"),document.head.appendChild(t)}w();</script> </body> </html>

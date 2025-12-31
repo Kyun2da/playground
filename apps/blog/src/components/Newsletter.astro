@@ -48,16 +48,23 @@
       button.textContent = '처리 중...';
       button.disabled = true;
 
-      // Store subscription locally (for demo - in production, connect to email service)
-      const subscribers = JSON.parse(localStorage.getItem('newsletter-subscribers') || '[]');
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
 
-      if (subscribers.includes(email)) {
-        showMessage('이미 구독 중인 이메일입니다', 'warning');
-      } else {
-        subscribers.push(email);
-        localStorage.setItem('newsletter-subscribers', JSON.stringify(subscribers));
-        showMessage('구독해주셔서 감사합니다! 🎉', 'success');
-        emailInput.value = '';
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('구독해주셔서 감사합니다! 🎉', 'success');
+          emailInput.value = '';
+        } else {
+          showMessage(data.error || '오류가 발생했습니다', 'warning');
+        }
+      } catch (error) {
+        showMessage('네트워크 오류가 발생했습니다', 'error');
       }
 
       button.textContent = originalText;

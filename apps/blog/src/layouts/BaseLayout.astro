@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -29,6 +30,9 @@ const { title, description = '허균의 블로그', ogImage } = Astro.props;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <!-- View Transitions -->
+    <ViewTransitions />
 
     <!-- Dark Mode Script -->
     <script is:inline>

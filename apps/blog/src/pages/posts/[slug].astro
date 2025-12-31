@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Bio from '../../components/Bio.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import Giscus from '../../components/Giscus.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+const { title, excerpt, coverImage, date, time, categories } = post.data;
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<BaseLayout title={title} description={excerpt}>
+  <div class="relative max-w-screen-xl mx-auto px-4 py-8">
+    <div class="lg:pr-72">
+      <article class="max-w-3xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
+          {excerpt && (
+            <p class="text-muted-foreground text-lg mb-4">{excerpt}</p>
+          )}
+
+          <div class="flex flex-wrap justify-center gap-2 mb-4">
+            {categories.map((category) => (
+              <a
+                href={`/tags/${category}`}
+                class="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-900/30 px-3 py-1 text-sm font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-300/20 no-underline hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+              >
+                {category}
+              </a>
+            ))}
+          </div>
+
+          <div class="text-sm text-muted-foreground">
+            {formatDate(date)} · {time} min read
+          </div>
+        </header>
+
+        <!-- Cover Image -->
+        <div class="flex justify-center mb-8">
+          <img
+            src={coverImage}
+            alt={title}
+            width="300"
+            height="300"
+            class="rounded-xl"
+          />
+        </div>
+
+        <!-- Content -->
+        <div class="prose prose-lg dark:prose-invert max-w-none mb-16 prose-headings:scroll-mt-20">
+          <Content />
+        </div>
+
+        <!-- Bio -->
+        <Bio class="mb-16" />
+
+        <!-- Comments -->
+        <Giscus />
+      </article>
+    </div>
+
+    <!-- Table of Contents -->
+    <TableOfContents headings={headings} />
+  </div>
+</BaseLayout>

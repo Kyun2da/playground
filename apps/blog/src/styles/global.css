@@ -1,0 +1,298 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+code {
+  font-size: 14px;
+}
+
+.code-highlight {
+  float: left;
+  min-width: 100%;
+}
+
+.code-line {
+  display: block;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-left: 4px solid rgba(0, 0, 0, 0);
+}
+
+.code-line.inserted {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+.code-line.deleted {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.highlight-line {
+  background-color: rgba(55, 65, 81, 0.5);
+  border-left: 4px solid rgb(59, 130, 246);
+}
+
+.line-number::before {
+  display: inline-block;
+  width: 1rem;
+  text-align: right;
+  margin-right: 16px;
+  margin-left: -8px;
+  color: rgb(156, 163, 175);
+  content: attr(line);
+}
+
+.rehype-code-title {
+  font-size: 1rem;
+  background: hsl(220, 13%, 10%);
+  color: hsl(220, 14%, 71%);
+  padding: 0.5em 1em;
+  border-radius: 0.3em;
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  background: hsl(220, 13%, 18%);
+  color: hsl(220, 14%, 71%);
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  font-family: 'Fira Code', 'Fira Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+code[class*='language-']::-moz-selection,
+code[class*='language-'] *::-moz-selection,
+pre[class*='language-'] *::-moz-selection {
+  background: hsl(220, 13%, 28%);
+  color: inherit;
+  text-shadow: none;
+}
+
+code[class*='language-']::selection,
+code[class*='language-'] *::selection,
+pre[class*='language-'] *::selection {
+  background: hsl(220, 13%, 28%);
+  color: inherit;
+  text-shadow: none;
+}
+
+pre[class*='language-'] {
+  padding: 0.5em 0em;
+  margin: 0 0 0.5em 0;
+  overflow: auto;
+  border-radius: 0.3em;
+}
+
+:not(pre) > code[class*='language-'] {
+  padding: 0.2em 0.3em;
+  border-radius: 0.3em;
+  white-space: normal;
+}
+
+@media print {
+  code[class*='language-'],
+  pre[class*='language-'] {
+    text-shadow: none;
+  }
+}
+
+.token.comment,
+.token.prolog,
+.token.cdata {
+  color: hsl(220, 10%, 40%);
+}
+
+.token.doctype,
+.token.punctuation,
+.token.entity {
+  color: hsl(220, 14%, 71%);
+}
+
+.token.attr-name,
+.token.class-name,
+.token.boolean,
+.token.constant,
+.token.number,
+.token.atrule {
+  color: hsl(29, 54%, 61%);
+}
+
+.token.keyword {
+  color: hsl(286, 60%, 67%);
+}
+
+.token.property,
+.token.tag,
+.token.symbol,
+.token.deleted,
+.token.important {
+  color: hsl(355, 65%, 65%);
+}
+
+.token.selector,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted,
+.token.regex,
+.token.attr-value,
+.token.attr-value > .token.punctuation {
+  color: hsl(95, 38%, 62%);
+}
+
+.token.variable,
+.token.operator,
+.token.function {
+  color: hsl(207, 82%, 66%);
+}
+
+.token.url {
+  color: hsl(187, 47%, 55%);
+}
+
+.token.attr-value > .token.punctuation.attr-equals,
+.token.special-attr > .token.attr-value > .token.value.css {
+  color: hsl(220, 14%, 71%);
+}
+
+.language-css .token.selector {
+  color: hsl(355, 65%, 65%);
+}
+
+.language-css .token.property {
+  color: hsl(220, 14%, 71%);
+}
+
+.language-css .token.function,
+.language-css .token.url > .token.function {
+  color: hsl(187, 47%, 55%);
+}
+
+.language-css .token.url > .token.string.url {
+  color: hsl(95, 38%, 62%);
+}
+
+.language-css .token.important,
+.language-css .token.atrule .token.rule {
+  color: hsl(286, 60%, 67%);
+}
+
+.language-javascript .token.operator {
+  color: hsl(286, 60%, 67%);
+}
+
+.language-javascript
+  .token.template-string
+  > .token.interpolation
+  > .token.interpolation-punctuation.punctuation {
+  color: hsl(5, 48%, 51%);
+}
+
+.language-json .token.operator {
+  color: hsl(220, 14%, 71%);
+}
+
+.language-json .token.null.keyword {
+  color: hsl(29, 54%, 61%);
+}
+
+.language-markdown .token.url,
+.language-markdown .token.url > .token.operator,
+.language-markdown .token.url-reference.url > .token.string {
+  color: hsl(220, 14%, 71%);
+}
+
+.language-markdown .token.url > .token.content {
+  color: hsl(207, 82%, 66%);
+}
+
+.language-markdown .token.url > .token.url,
+.language-markdown .token.url-reference.url {
+  color: hsl(187, 47%, 55%);
+}
+
+.language-markdown .token.blockquote.punctuation,
+.language-markdown .token.hr.punctuation {
+  color: hsl(220, 10%, 40%);
+  font-style: italic;
+}
+
+.language-markdown .token.code-snippet {
+  color: hsl(95, 38%, 62%);
+}
+
+.language-markdown .token.bold .token.content {
+  color: hsl(29, 54%, 61%);
+}
+
+.language-markdown .token.italic .token.content {
+  color: hsl(286, 60%, 67%);
+}
+
+.language-markdown .token.strike .token.content,
+.language-markdown .token.strike .token.punctuation,
+.language-markdown .token.list.punctuation,
+.language-markdown .token.title.important > .token.punctuation {
+  color: hsl(355, 65%, 65%);
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.comment,
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.namespace {
+  opacity: 0.8;
+}

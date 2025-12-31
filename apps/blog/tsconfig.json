@@ -1,44 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".next"
-  ],
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@layouts/*": [
-        "layouts/*"
-      ],
-      "@utils/*": [
-        "utils/*"
-      ],
-      "@components/*": [
-        "components/*"
-      ],
-      "@pages/*": [
-        "components/pages/*"
-      ],
-      "@interfaces/*": [
-        "interfaces/*"
-      ]
-    },
-    "noEmit": true,
-    "incremental": true,
-    "types": [
-      "@types/gtag.js"
-    ],
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "strictNullChecks": true
+      "@/*": ["src/*"]
+    }
   }
 }

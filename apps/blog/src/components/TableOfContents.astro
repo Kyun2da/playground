@@ -1,0 +1,93 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const filteredHeadings = headings.filter((h) => h.depth <= 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <nav id="toc" class="hidden lg:block w-64 fixed right-8 top-24 max-h-[calc(100vh-8rem)] overflow-auto">
+    <h4 class="text-sm font-semibold mb-4 text-muted-foreground">목차</h4>
+    <ul class="space-y-2 text-sm list-none p-0 m-0">
+      {filteredHeadings.map((heading) => (
+        <li style={`padding-left: ${(heading.depth - 1) * 1}rem`}>
+          <a
+            href={`#${heading.slug}`}
+            data-slug={heading.slug}
+            class="toc-link block py-1 text-muted-foreground hover:text-foreground transition-colors no-underline border-l-2 border-transparent pl-2 -ml-2"
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  function initTOC() {
+    const tocLinks = document.querySelectorAll('.toc-link');
+    if (tocLinks.length === 0) return;
+
+    const headingElements = Array.from(tocLinks).map((link) => {
+      const slug = link.getAttribute('data-slug');
+      return document.getElementById(slug!);
+    }).filter(Boolean) as HTMLElement[];
+
+    if (headingElements.length === 0) return;
+
+    let activeLink: Element | null = null;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const link = document.querySelector(`.toc-link[data-slug="${id}"]`);
+
+            if (activeLink) {
+              activeLink.classList.remove('text-blue-500', 'font-medium', 'border-blue-500');
+              activeLink.classList.add('text-muted-foreground', 'border-transparent');
+            }
+
+            if (link) {
+              link.classList.remove('text-muted-foreground', 'border-transparent');
+              link.classList.add('text-blue-500', 'font-medium', 'border-blue-500');
+              activeLink = link;
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -70% 0px',
+        threshold: 0,
+      }
+    );
+
+    headingElements.forEach((el) => observer.observe(el));
+
+    // Set initial active state
+    if (headingElements[0]) {
+      const firstLink = document.querySelector(`.toc-link[data-slug="${headingElements[0].id}"]`);
+      if (firstLink) {
+        firstLink.classList.remove('text-muted-foreground', 'border-transparent');
+        firstLink.classList.add('text-blue-500', 'font-medium', 'border-blue-500');
+        activeLink = firstLink;
+      }
+    }
+  }
+
+  // Run on page load
+  initTOC();
+
+  // Re-run on view transitions (for Astro)
+  document.addEventListener('astro:after-swap', initTOC);
+</script>

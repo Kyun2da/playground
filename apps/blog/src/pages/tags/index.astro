@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const allTags = [...new Set(posts.flatMap((post) => post.data.categories))].sort();
+
+function getPostCountByTag(tag: string): number {
+  return posts.filter((post) => post.data.categories.includes(tag)).length;
+}
+---
+
+<BaseLayout title="Tags">
+  <div class="container py-8">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-3xl font-bold mb-8 text-center">Tags</h1>
+
+      <div class="flex flex-wrap justify-center gap-4">
+        {allTags.map((tag) => (
+          <a
+            href={`/tags/${tag}`}
+            class="inline-flex items-center gap-2 rounded-full bg-blue-50 dark:bg-blue-900/30 px-4 py-2 text-sm font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-300/20 no-underline hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+          >
+            {tag}
+            <span class="bg-blue-200 dark:bg-blue-800 rounded-full px-2 py-0.5 text-xs">
+              {getPostCountByTag(tag)}
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

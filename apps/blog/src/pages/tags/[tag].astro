@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentCard from '../../components/ContentCard.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const allTags = [...new Set(posts.flatMap((post) => post.data.categories))];
+
+  return allTags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((post) => post.data.categories.includes(tag))
+        .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`Tag: ${tag}`}>
+  <div class="container py-8">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold mb-2">#{tag}</h1>
+        <p class="text-muted-foreground">{posts.length}개의 포스트</p>
+      </div>
+
+      <section class="space-y-8">
+        {posts.map((post) => (
+          <ContentCard post={post} />
+        ))}
+      </section>
+    </div>
+  </div>
+</BaseLayout>

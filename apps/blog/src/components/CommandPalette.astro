@@ -1,0 +1,323 @@
+---
+---
+
+<div id="command-palette" class="fixed inset-0 z-[200] hidden">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" id="cmd-backdrop"></div>
+  <div class="fixed inset-x-4 top-24 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl">
+    <div class="bg-background rounded-xl shadow-2xl border overflow-hidden">
+      <!-- Search Input -->
+      <div class="flex items-center gap-3 px-4 border-b">
+        <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          id="cmd-input"
+          type="text"
+          placeholder="검색하거나 명령어 입력..."
+          class="flex-1 py-4 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
+          autocomplete="off"
+        />
+        <kbd class="px-2 py-1 text-xs bg-muted rounded">ESC</kbd>
+      </div>
+
+      <!-- Results -->
+      <div id="cmd-results" class="max-h-96 overflow-y-auto p-2">
+        <!-- Commands Section -->
+        <div class="cmd-section" data-section="commands">
+          <div class="px-3 py-2 text-xs font-medium text-muted-foreground uppercase">명령어</div>
+          <div class="space-y-1">
+            <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="toggle-theme">
+              <span class="text-lg">🌓</span>
+              <span class="flex-1">다크모드 전환</span>
+              <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">T</kbd>
+            </button>
+            <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="increase-font">
+              <span class="text-lg">🔍</span>
+              <span class="flex-1">글자 크게</span>
+              <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">+</kbd>
+            </button>
+            <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="decrease-font">
+              <span class="text-lg">🔎</span>
+              <span class="flex-1">글자 작게</span>
+              <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">-</kbd>
+            </button>
+            <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="toggle-font">
+              <span class="text-lg">📝</span>
+              <span class="flex-1">글꼴 전환 (Serif/Sans)</span>
+              <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">F</kbd>
+            </button>
+            <button class="cmd-item w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-left" data-action="print">
+              <span class="text-lg">🖨️</span>
+              <span class="flex-1">인쇄하기</span>
+              <kbd class="text-xs px-1.5 py-0.5 bg-muted rounded">P</kbd>
+            </button>
+          </div>
+        </div>
+
+        <!-- Navigation Section -->
+        <div class="cmd-section mt-4" data-section="navigation">
+          <div class="px-3 py-2 text-xs font-medium text-muted-foreground uppercase">페이지 이동</div>
+          <div class="space-y-1">
+            <a href="/" class="cmd-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors no-underline">
+              <span class="text-lg">🏠</span>
+              <span class="flex-1 text-foreground">홈</span>
+            </a>
+            <a href="/tags" class="cmd-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors no-underline">
+              <span class="text-lg">🏷️</span>
+              <span class="flex-1 text-foreground">태그</span>
+            </a>
+            <a href="/about" class="cmd-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors no-underline">
+              <span class="text-lg">👤</span>
+              <span class="flex-1 text-foreground">소개</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Posts Section (populated by JS) -->
+        <div class="cmd-section mt-4" data-section="posts">
+          <div class="px-3 py-2 text-xs font-medium text-muted-foreground uppercase">포스트</div>
+          <div id="cmd-posts" class="space-y-1"></div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-4 py-2 border-t bg-muted/30 flex items-center justify-between text-xs text-muted-foreground">
+        <div class="flex items-center gap-4">
+          <span><kbd class="px-1 bg-muted rounded">↑↓</kbd> 이동</span>
+          <span><kbd class="px-1 bg-muted rounded">↵</kbd> 선택</span>
+        </div>
+        <span>⌘K로 열기</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    let posts = [];
+    let selectedIndex = 0;
+    let visibleItems = [];
+
+    async function loadPosts() {
+      try {
+        const res = await fetch('/search.json');
+        posts = await res.json();
+        renderPosts(posts.slice(0, 5));
+      } catch (e) {
+        console.error('Failed to load posts:', e);
+      }
+    }
+
+    function renderPosts(items) {
+      const container = document.getElementById('cmd-posts');
+      if (!container) return;
+
+      container.innerHTML = items.map(post => `
+        <a href="/posts/${post.slug}" class="cmd-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors no-underline">
+          <span class="text-lg">📄</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-foreground truncate">${post.title}</div>
+            <div class="text-xs text-muted-foreground truncate">${post.excerpt}</div>
+          </div>
+        </a>
+      `).join('');
+
+      updateVisibleItems();
+    }
+
+    function updateVisibleItems() {
+      visibleItems = Array.from(document.querySelectorAll('.cmd-item:not([style*="display: none"])'));
+      selectedIndex = 0;
+      updateSelection();
+    }
+
+    function updateSelection() {
+      visibleItems.forEach((item, i) => {
+        if (i === selectedIndex) {
+          item.classList.add('bg-accent');
+        } else {
+          item.classList.remove('bg-accent');
+        }
+      });
+
+      // Scroll into view
+      if (visibleItems[selectedIndex]) {
+        visibleItems[selectedIndex].scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    function filterItems(query) {
+      const q = query.toLowerCase();
+      const sections = document.querySelectorAll('.cmd-section');
+
+      sections.forEach(section => {
+        const items = section.querySelectorAll('.cmd-item');
+        let hasVisible = false;
+
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(q) || !q) {
+            item.style.display = '';
+            hasVisible = true;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        section.style.display = hasVisible ? '' : 'none';
+      });
+
+      // Also filter posts
+      if (q) {
+        const filtered = posts.filter(p =>
+          p.title.toLowerCase().includes(q) ||
+          p.excerpt.toLowerCase().includes(q) ||
+          p.categories.some(c => c.toLowerCase().includes(q))
+        );
+        renderPosts(filtered.slice(0, 5));
+      } else {
+        renderPosts(posts.slice(0, 5));
+      }
+
+      updateVisibleItems();
+    }
+
+    function executeAction(action) {
+      switch (action) {
+        case 'toggle-theme':
+          document.documentElement.classList.add('theme-transitioning');
+          const isDark = document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+          setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 300);
+          break;
+        case 'increase-font':
+          adjustFontSize(1);
+          break;
+        case 'decrease-font':
+          adjustFontSize(-1);
+          break;
+        case 'toggle-font':
+          toggleFontFamily();
+          break;
+        case 'print':
+          window.print();
+          break;
+      }
+      closeModal();
+    }
+
+    function adjustFontSize(delta) {
+      const sizes = ['text-sm', 'text-base', 'text-lg', 'text-xl'];
+      const prose = document.querySelector('.prose');
+      if (!prose) return;
+
+      let current = sizes.findIndex(s => prose.classList.contains(s.replace('text-', 'prose-')));
+      if (current === -1) current = 1;
+
+      const newIndex = Math.max(0, Math.min(sizes.length - 1, current + delta));
+      sizes.forEach(s => prose.classList.remove(s.replace('text-', 'prose-')));
+      prose.classList.add(sizes[newIndex].replace('text-', 'prose-'));
+      localStorage.setItem('font-size', sizes[newIndex]);
+    }
+
+    function toggleFontFamily() {
+      document.documentElement.classList.toggle('font-serif');
+      const isSerif = document.documentElement.classList.contains('font-serif');
+      localStorage.setItem('font-family', isSerif ? 'serif' : 'sans');
+    }
+
+    function openModal() {
+      loadPosts();
+      const modal = document.getElementById('command-palette');
+      const input = document.getElementById('cmd-input');
+      if (modal) modal.classList.remove('hidden');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      document.body.style.overflow = 'hidden';
+      filterItems('');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('command-palette');
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function initCommandPalette() {
+      const backdrop = document.getElementById('cmd-backdrop');
+      const input = document.getElementById('cmd-input');
+
+      if (backdrop) {
+        backdrop.onclick = closeModal;
+      }
+
+      if (input) {
+        input.oninput = (e) => filterItems(e.target.value);
+      }
+
+      // Click handlers for action buttons
+      document.querySelectorAll('.cmd-item[data-action]').forEach(btn => {
+        btn.onclick = () => executeAction(btn.dataset.action);
+      });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('command-palette');
+      const isOpen = modal && !modal.classList.contains('hidden');
+
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (isOpen) closeModal();
+        else openModal();
+        return;
+      }
+
+      if (!isOpen) return;
+
+      switch (e.key) {
+        case 'Escape':
+          closeModal();
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          selectedIndex = Math.min(selectedIndex + 1, visibleItems.length - 1);
+          updateSelection();
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          selectedIndex = Math.max(selectedIndex - 1, 0);
+          updateSelection();
+          break;
+        case 'Enter':
+          e.preventDefault();
+          if (visibleItems[selectedIndex]) {
+            const action = visibleItems[selectedIndex].dataset.action;
+            if (action) {
+              executeAction(action);
+            } else if (visibleItems[selectedIndex].href) {
+              window.location.href = visibleItems[selectedIndex].href;
+            }
+          }
+          break;
+      }
+    });
+
+    // Apply saved preferences
+    function applyPreferences() {
+      const fontFamily = localStorage.getItem('font-family');
+      if (fontFamily === 'serif') {
+        document.documentElement.classList.add('font-serif');
+      }
+    }
+
+    applyPreferences();
+    initCommandPalette();
+    document.addEventListener('astro:after-swap', () => {
+      applyPreferences();
+      initCommandPalette();
+    });
+  })();
+</script>

@@ -1,0 +1,43 @@
+---
+---
+
+<div id="footnote-preview" class="fixed z-50 hidden max-w-sm">
+  <div class="bg-white dark:bg-slate-800 rounded-xl shadow-xl border p-4 text-sm">
+    <div id="footnote-content"></div>
+  </div>
+</div>
+
+<script is:inline>
+  function initFootnotePreview() {
+    const preview = document.getElementById('footnote-preview');
+    const content = document.getElementById('footnote-content');
+    if (!preview || !content) return;
+
+    // Find all footnote references
+    const footnoteRefs = document.querySelectorAll('a[href^="#fn"], a[href^="#user-content-fn"]');
+
+    footnoteRefs.forEach(ref => {
+      ref.addEventListener('mouseenter', (e) => {
+        const href = ref.getAttribute('href');
+        const footnote = document.querySelector(href);
+
+        if (footnote) {
+          const footnoteText = footnote.textContent.replace(/↩$/, '').trim();
+          content.textContent = footnoteText;
+
+          const rect = ref.getBoundingClientRect();
+          preview.style.left = `${Math.min(rect.left, window.innerWidth - 320)}px`;
+          preview.style.top = `${rect.bottom + window.scrollY + 8}px`;
+          preview.classList.remove('hidden');
+        }
+      });
+
+      ref.addEventListener('mouseleave', () => {
+        preview.classList.add('hidden');
+      });
+    });
+  }
+
+  initFootnotePreview();
+  document.addEventListener('astro:after-swap', initFootnotePreview);
+</script>

@@ -6,6 +6,10 @@ import Footer from '../components/Footer.astro';
 import BackToTop from '../components/BackToTop.astro';
 import EasterEgg from '../components/EasterEgg.astro';
 import ReadingStreak from '../components/ReadingStreak.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import ImageLightbox from '../components/ImageLightbox.astro';
+import TextHighlightShare from '../components/TextHighlightShare.astro';
+import FootnotePreview from '../components/FootnotePreview.astro';
 
 interface Props {
   title: string;
@@ -59,6 +63,10 @@ const isProd = import.meta.env.PROD;
     <BackToTop />
     <ReadingStreak />
     <EasterEgg />
+    <CommandPalette />
+    <ImageLightbox />
+    <TextHighlightShare />
+    <FootnotePreview />
 
     <!-- Vercel Analytics (production only) -->
     {isProd && (

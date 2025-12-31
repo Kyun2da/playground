@@ -17,6 +17,26 @@
   </button>
 </div>
 
+<script is:inline>
+  // Search button now opens command palette
+  function initSearchButton() {
+    const btn = document.getElementById('search-button');
+    if (btn) {
+      btn.onclick = () => {
+        const cmdPalette = document.getElementById('command-palette');
+        const cmdInput = document.getElementById('cmd-input');
+        if (cmdPalette) {
+          cmdPalette.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+          if (cmdInput) cmdInput.focus();
+        }
+      };
+    }
+  }
+  initSearchButton();
+  document.addEventListener('astro:after-swap', initSearchButton);
+</script>
+
 <!-- Search Modal -->
 <div id="search-modal" class="fixed inset-0 z-[100] hidden">
   <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" id="search-backdrop"></div>

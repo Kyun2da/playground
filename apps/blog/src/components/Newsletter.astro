@@ -1,0 +1,81 @@
+---
+---
+
+<div class="newsletter-widget bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-xl p-6 border">
+  <div class="text-center mb-4">
+    <h3 class="text-lg font-bold mb-2">뉴스레터 구독</h3>
+    <p class="text-sm text-muted-foreground">새 글이 올라오면 이메일로 알려드려요</p>
+  </div>
+
+  <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2">
+    <input
+      type="email"
+      id="newsletter-email"
+      placeholder="이메일 주소"
+      required
+      class="flex-1 px-4 py-2 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button
+      type="submit"
+      class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium whitespace-nowrap"
+    >
+      구독하기
+    </button>
+  </form>
+
+  <div id="newsletter-message" class="hidden mt-3 text-center text-sm"></div>
+
+  <p class="text-xs text-muted-foreground text-center mt-3">
+    스팸 없이, 언제든 구독 취소 가능
+  </p>
+</div>
+
+<script is:inline>
+  function initNewsletter() {
+    const form = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('newsletter-email');
+    const messageEl = document.getElementById('newsletter-message');
+
+    if (!form) return;
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+
+      const email = emailInput.value;
+      const button = form.querySelector('button');
+      const originalText = button.textContent;
+
+      button.textContent = '처리 중...';
+      button.disabled = true;
+
+      // Store subscription locally (for demo - in production, connect to email service)
+      const subscribers = JSON.parse(localStorage.getItem('newsletter-subscribers') || '[]');
+
+      if (subscribers.includes(email)) {
+        showMessage('이미 구독 중인 이메일입니다', 'warning');
+      } else {
+        subscribers.push(email);
+        localStorage.setItem('newsletter-subscribers', JSON.stringify(subscribers));
+        showMessage('구독해주셔서 감사합니다! 🎉', 'success');
+        emailInput.value = '';
+      }
+
+      button.textContent = originalText;
+      button.disabled = false;
+    };
+
+    function showMessage(text, type) {
+      messageEl.textContent = text;
+      messageEl.classList.remove('hidden', 'text-green-600', 'text-yellow-600', 'text-red-600');
+
+      if (type === 'success') messageEl.classList.add('text-green-600');
+      else if (type === 'warning') messageEl.classList.add('text-yellow-600');
+      else messageEl.classList.add('text-red-600');
+
+      setTimeout(() => messageEl.classList.add('hidden'), 5000);
+    }
+  }
+
+  initNewsletter();
+  document.addEventListener('astro:after-swap', initNewsletter);
+</script>

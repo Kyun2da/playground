@@ -1,0 +1,119 @@
+---
+---
+
+<div id="highlight-tooltip" class="fixed z-50 hidden">
+  <div class="flex items-center gap-1 bg-slate-900 text-white rounded-lg shadow-xl p-1 animate-fade-in">
+    <button id="highlight-twitter" class="p-2 hover:bg-slate-700 rounded transition-colors" title="Twitter에 공유">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    </button>
+    <button id="highlight-copy" class="p-2 hover:bg-slate-700 rounded transition-colors" title="복사">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      </svg>
+    </button>
+    <div class="w-px h-6 bg-slate-700"></div>
+    <button id="highlight-close" class="p-2 hover:bg-slate-700 rounded transition-colors" title="닫기">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.15s ease-out;
+  }
+</style>
+
+<script is:inline>
+  function initTextHighlightShare() {
+    const tooltip = document.getElementById('highlight-tooltip');
+    const twitterBtn = document.getElementById('highlight-twitter');
+    const copyBtn = document.getElementById('highlight-copy');
+    const closeBtn = document.getElementById('highlight-close');
+
+    if (!tooltip) return;
+
+    let selectedText = '';
+
+    function hideTooltip() {
+      tooltip.classList.add('hidden');
+    }
+
+    function showTooltip(x, y) {
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y}px`;
+      tooltip.classList.remove('hidden');
+    }
+
+    // Listen for text selection in prose content
+    document.addEventListener('mouseup', (e) => {
+      const selection = window.getSelection();
+      const text = selection.toString().trim();
+
+      // Only show in article/prose content
+      const isInContent = e.target.closest('.prose, article');
+
+      if (text.length > 10 && isInContent) {
+        selectedText = text;
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+
+        // Position tooltip above the selection
+        const x = rect.left + rect.width / 2 - 60;
+        const y = rect.top + window.scrollY - 50;
+
+        showTooltip(Math.max(10, x), y);
+      } else if (!e.target.closest('#highlight-tooltip')) {
+        hideTooltip();
+      }
+    });
+
+    // Twitter share
+    twitterBtn.onclick = () => {
+      const url = window.location.href;
+      const tweetText = `"${selectedText.slice(0, 200)}${selectedText.length > 200 ? '...' : ''}"`;
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(url)}`;
+      window.open(tweetUrl, '_blank', 'width=550,height=420');
+      hideTooltip();
+    };
+
+    // Copy to clipboard
+    copyBtn.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(selectedText);
+        copyBtn.innerHTML = `
+          <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        `;
+        setTimeout(() => {
+          copyBtn.innerHTML = `
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          `;
+          hideTooltip();
+        }, 1000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    };
+
+    // Close button
+    closeBtn.onclick = hideTooltip;
+
+    // Hide on scroll
+    window.addEventListener('scroll', hideTooltip, { passive: true });
+  }
+
+  initTextHighlightShare();
+  document.addEventListener('astro:after-swap', initTextHighlightShare);
+</script>

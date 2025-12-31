@@ -1,0 +1,110 @@
+---
+---
+
+<div id="lightbox" class="fixed inset-0 z-[150] hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+  <button id="lightbox-close" class="absolute top-4 right-4 p-2 text-white/70 hover:text-white transition-colors">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  <button id="lightbox-prev" class="absolute left-4 p-2 text-white/70 hover:text-white transition-colors">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+  <button id="lightbox-next" class="absolute right-4 p-2 text-white/70 hover:text-white transition-colors">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+  <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl" />
+  <div id="lightbox-caption" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 px-4 py-2 rounded-full"></div>
+</div>
+
+<script is:inline>
+  function initLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const closeBtn = document.getElementById('lightbox-close');
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+
+    if (!lightbox) return;
+
+    let images = [];
+    let currentIndex = 0;
+
+    function collectImages() {
+      images = Array.from(document.querySelectorAll('.prose img, article img'));
+    }
+
+    function openLightbox(index) {
+      if (!images[index]) return;
+      currentIndex = index;
+      lightboxImg.src = images[index].src;
+      lightboxCaption.textContent = images[index].alt || '';
+      lightbox.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      updateNavButtons();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function showPrev() {
+      if (currentIndex > 0) {
+        openLightbox(currentIndex - 1);
+      }
+    }
+
+    function showNext() {
+      if (currentIndex < images.length - 1) {
+        openLightbox(currentIndex + 1);
+      }
+    }
+
+    function updateNavButtons() {
+      prevBtn.style.display = currentIndex > 0 ? '' : 'none';
+      nextBtn.style.display = currentIndex < images.length - 1 ? '' : 'none';
+    }
+
+    // Collect and setup images
+    collectImages();
+    images.forEach((img, index) => {
+      img.style.cursor = 'zoom-in';
+      img.onclick = () => openLightbox(index);
+    });
+
+    // Event listeners
+    closeBtn.onclick = closeLightbox;
+    prevBtn.onclick = showPrev;
+    nextBtn.onclick = showNext;
+
+    lightbox.onclick = (e) => {
+      if (e.target === lightbox) closeLightbox();
+    };
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.classList.contains('hidden')) return;
+
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowLeft':
+          showPrev();
+          break;
+        case 'ArrowRight':
+          showNext();
+          break;
+      }
+    });
+  }
+
+  initLightbox();
+  document.addEventListener('astro:after-swap', initLightbox);
+</script>

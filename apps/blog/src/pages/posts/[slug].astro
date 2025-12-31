@@ -12,6 +12,9 @@ import RelatedPosts from '../../components/RelatedPosts.astro';
 import ShareButtons from '../../components/ShareButtons.astro';
 import ReadingPosition from '../../components/ReadingPosition.astro';
 import JsonLD from '../../components/JsonLD.astro';
+import ViewCounter from '../../components/ViewCounter.astro';
+import FontControls from '../../components/FontControls.astro';
+import Newsletter from '../../components/Newsletter.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -68,6 +71,8 @@ function formatDate(dateStr: string): string {
             <span>{formatDate(date)}</span>
             <span>·</span>
             <ReadingTime minutes={time} />
+            <span>·</span>
+            <ViewCounter slug={post.slug} />
           </div>
         </header>
 
@@ -98,6 +103,9 @@ function formatDate(dateStr: string): string {
         <!-- Related Posts -->
         <RelatedPosts currentPost={post} />
 
+        <!-- Newsletter -->
+        <Newsletter />
+
         <!-- Bio -->
         <Bio class="mb-16" />
 
@@ -110,4 +118,5 @@ function formatDate(dateStr: string): string {
     <TableOfContents headings={headings} />
   </div>
   <CodeCopy />
+  <FontControls />
 </BaseLayout>

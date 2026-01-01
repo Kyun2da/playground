@@ -69,9 +69,9 @@ export const POST: APIRoute = async ({ request }) => {
     for (const subscriber of subscribers) {
       try {
         await resend.emails.send({
-          from: 'Kyun2da Blog <onboarding@resend.dev>',
+          from: 'Kyun2da.dev <onboarding@resend.dev>',
           to: subscriber.email,
-          subject: `${postTitle} — Kyun2da Blog`,
+          subject: `새 글 알림: ${postTitle}`,
           html: `
           <!DOCTYPE html>
           <html>
@@ -86,10 +86,11 @@ export const POST: APIRoute = async ({ request }) => {
                   <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 560px;">
                     <!-- Header -->
                     <tr>
-                      <td style="padding-bottom: 32px; text-align: center;">
+                      <td style="padding-bottom: 24px; text-align: center;">
                         <a href="https://kyun2da.dev" style="text-decoration: none;">
-                          <span style="font-size: 24px; font-weight: 700; color: #111827; letter-spacing: -0.5px;">Kyun2da Blog</span>
+                          <span style="font-size: 22px; font-weight: 700; color: #111827; letter-spacing: -0.5px;">Kyun2da.dev</span>
                         </a>
+                        <p style="margin: 8px 0 0 0; font-size: 14px; color: #6b7280;">새로운 글이 발행되었어요</p>
                       </td>
                     </tr>
 
@@ -147,12 +148,12 @@ export const POST: APIRoute = async ({ request }) => {
                     <tr>
                       <td style="padding-top: 32px; text-align: center;">
                         <p style="margin: 0 0 8px 0; font-size: 13px; color: #9ca3af;">
-                          이 메일은 Kyun2da Blog 뉴스레터 구독자에게 발송되었습니다.
+                          구독해주셔서 감사해요! 새 글이 올라오면 알려드릴게요.
                         </p>
                         <p style="margin: 0; font-size: 13px;">
-                          <a href="https://kyun2da.dev" style="color: #6b7280; text-decoration: none;">블로그 방문</a>
-                          <span style="color: #d1d5db; margin: 0 8px;">|</span>
-                          <a href="https://kyun2da.dev" style="color: #6b7280; text-decoration: none;">구독 취소</a>
+                          <a href="https://kyun2da.dev" style="color: #6b7280; text-decoration: none;">kyun2da.dev</a>
+                          <span style="color: #d1d5db; margin: 0 8px;">·</span>
+                          <a href="https://kyun2da.dev" style="color: #9ca3af; text-decoration: underline;">구독 취소</a>
                         </p>
                       </td>
                     </tr>

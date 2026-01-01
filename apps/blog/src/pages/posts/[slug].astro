@@ -59,7 +59,7 @@ function formatDate(dateStr: string): string {
             {categories.map((category) => (
               <a
                 href={`/tags/${category}`}
-                class="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-900/30 px-3 py-1 text-sm font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-300/20 no-underline hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+                class="inline-flex items-center rounded-full bg-muted px-3 py-1 text-sm font-medium text-muted-foreground no-underline hover:bg-accent transition-colors"
               >
                 {category}
               </a>
@@ -101,10 +101,10 @@ function formatDate(dateStr: string): string {
         <RelatedPosts currentPost={post} />
 
         <!-- Newsletter -->
-        <Newsletter />
+        <Newsletter class="my-8" />
 
         <!-- Bio -->
-        <Bio class="mb-16" />
+        <Bio class="my-8" />
 
         <!-- Comments -->
         <Giscus />

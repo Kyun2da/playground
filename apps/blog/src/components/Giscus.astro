@@ -39,6 +39,9 @@ const categoryId = "DIC_kwDOHbjrm84CRXte";
   // Load Giscus on page load
   loadGiscus();
 
+  // Reload on View Transitions
+  document.addEventListener('astro:after-swap', loadGiscus);
+
   // Update theme when dark mode changes
   const observer = new MutationObserver(() => {
     const iframe = document.querySelector('iframe.giscus-frame');

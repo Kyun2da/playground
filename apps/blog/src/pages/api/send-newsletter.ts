@@ -62,13 +62,17 @@ export const POST: APIRoute = async ({ request }) => {
       }
     }
 
-    // 이메일 발송
-    const emailPromises = subscribers.map(subscriber =>
-      resend.emails.send({
-        from: 'Kyun2da Blog <onboarding@resend.dev>',
-        to: subscriber.email,
-        subject: `${postTitle} — Kyun2da Blog`,
-        html: `
+    // 이메일 발송 (Rate limit: 2/sec, 순차 발송)
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    const results: { status: 'fulfilled' | 'rejected'; email: string }[] = [];
+
+    for (const subscriber of subscribers) {
+      try {
+        await resend.emails.send({
+          from: 'Kyun2da Blog <onboarding@resend.dev>',
+          to: subscriber.email,
+          subject: `${postTitle} — Kyun2da Blog`,
+          html: `
           <!DOCTYPE html>
           <html>
           <head>
@@ -159,10 +163,15 @@ export const POST: APIRoute = async ({ request }) => {
           </body>
           </html>
         `,
-      })
-    );
+        });
+        results.push({ status: 'fulfilled', email: subscriber.email });
+      } catch {
+        results.push({ status: 'rejected', email: subscriber.email });
+      }
+      // Rate limit 방지: 600ms 대기
+      await delay(600);
+    }
 
-    const results = await Promise.allSettled(emailPromises);
     const successCount = results.filter(r => r.status === 'fulfilled').length;
     const failCount = results.filter(r => r.status === 'rejected').length;
 

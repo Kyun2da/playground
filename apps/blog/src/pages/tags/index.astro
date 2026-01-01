@@ -1,8 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentCard from '../../components/ContentCard.astro';
 
 const posts = await getCollection('posts', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
 const allTags = [...new Set(posts.flatMap((post) => post.data.categories))].sort();
 
 function getPostCountByTag(tag: string): number {
@@ -15,17 +19,24 @@ function getPostCountByTag(tag: string): number {
     <div class="max-w-3xl mx-auto">
       <h1 class="text-3xl font-bold mb-8 text-center">Tags</h1>
 
-      <div class="flex flex-wrap justify-center gap-4">
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
         {allTags.map((tag) => (
           <a
             href={`/tags/${tag}`}
-            class="inline-flex items-center gap-2 rounded-full bg-blue-50 dark:bg-blue-900/30 px-4 py-2 text-sm font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10 dark:ring-blue-300/20 no-underline hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+            class="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 text-sm font-medium text-muted-foreground no-underline hover:bg-accent transition-colors"
           >
             {tag}
-            <span class="bg-blue-200 dark:bg-blue-800 rounded-full px-2 py-0.5 text-xs">
+            <span class="bg-background rounded-full px-2 py-0.5 text-xs">
               {getPostCountByTag(tag)}
             </span>
           </a>
+        ))}
+      </div>
+
+      <h2 class="text-2xl font-bold mb-6">모든 글</h2>
+      <div class="space-y-6">
+        {sortedPosts.map((post) => (
+          <ContentCard post={post} />
         ))}
       </div>
     </div>

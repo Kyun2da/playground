@@ -1,7 +1,12 @@
 ---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
 ---
 
-<div class="newsletter-widget bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-xl p-6 border">
+<div class:list={["newsletter-widget bg-background rounded-xl p-6 border shadow-sm", className]}>
   <div class="text-center mb-4">
     <h3 class="text-lg font-bold mb-2">뉴스레터 구독</h3>
     <p class="text-sm text-muted-foreground">새 글이 올라오면 이메일로 알려드려요</p>

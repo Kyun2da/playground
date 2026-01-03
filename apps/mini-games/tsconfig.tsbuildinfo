@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/board.tsx","./src/components/gameinfo.tsx","./src/components/stone.tsx","./src/hooks/useomok.ts","./src/types/game.ts"],"version":"5.7.3"}

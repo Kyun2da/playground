@@ -1,0 +1,5 @@
+language: ko-KR
+reviews:
+  profile: chill
+  auto_review:
+    enabled: true

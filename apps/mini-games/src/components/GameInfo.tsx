@@ -1,3 +1,5 @@
+import { josa } from 'es-hangul';
+
 import { Player } from '../types/game';
 
 interface GameInfoProps {
@@ -38,7 +40,9 @@ export const GameInfo = ({ currentPlayer, onReset, winner }: GameInfoProps) => {
   return (
     <div style={containerStyle}>
       {winner ? (
-        <div style={statusStyle}>{playerName(winner)} 승리!</div>
+        <div style={statusStyle}>
+          {josa(playerName(winner), '이/가')} 승리했습니다!
+        </div>
       ) : (
         <div style={statusStyle}>
           현재 차례:{' '}

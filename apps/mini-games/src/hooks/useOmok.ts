@@ -1,3 +1,4 @@
+import { cloneDeep } from 'es-toolkit';
 import { useCallback, useState } from 'react';
 
 import { Board, BOARD_SIZE, GameState, Player } from '../types/game';
@@ -81,7 +82,7 @@ export const useOmok = () => {
         return;
       }
 
-      const newBoard = gameState.board.map((r) => [...r]);
+      const newBoard = cloneDeep(gameState.board);
       const targetRow = newBoard[row];
       if (targetRow) {
         targetRow[col] = gameState.currentPlayer;

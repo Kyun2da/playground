@@ -10,24 +10,24 @@ export async function GET(context) {
   const siteUrl = context.site || 'https://kyun2da.dev';
 
   return rss({
-    title: 'Kyun2da Blog',
+    customData: `<language>ko-KR</language>`,
     description: '허균의 블로그',
-    site: siteUrl,
     items: sortedPosts.map((post) => ({
-      title: post.data.title,
-      pubDate: new Date(post.data.date),
-      description: post.data.excerpt,
-      link: `/posts/${post.slug}/`,
-      enclosure: post.data.coverImage ? {
-        url: `${siteUrl}${post.data.coverImage}`,
-        length: 0,
-        type: 'image/jpeg',
-      } : undefined,
       customData: post.data.coverImage
         ? `<media:content url="${siteUrl}${post.data.coverImage}" medium="image" />`
         : '',
+      description: post.data.excerpt,
+      enclosure: post.data.coverImage ? {
+        length: 0,
+        type: 'image/jpeg',
+        url: `${siteUrl}${post.data.coverImage}`,
+      } : undefined,
+      link: `/posts/${post.slug}/`,
+      pubDate: new Date(post.data.date),
+      title: post.data.title,
     })),
-    customData: `<language>ko-KR</language>`,
+    site: siteUrl,
+    title: 'Kyun2da Blog',
     xmlns: {
       media: 'http://search.yahoo.com/mrss/',
     },

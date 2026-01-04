@@ -2,33 +2,33 @@ import { Player } from '../types/game';
 
 interface GameInfoProps {
   currentPlayer: Player;
-  winner: Player | null;
   onReset: () => void;
+  winner: null | Player;
 }
 
-export const GameInfo = ({ currentPlayer, winner, onReset }: GameInfoProps) => {
+export const GameInfo = ({ currentPlayer, onReset, winner }: GameInfoProps) => {
   const containerStyle: React.CSSProperties = {
-    textAlign: 'center',
-    marginBottom: '20px',
     fontFamily: "'Noto Sans KR', sans-serif",
+    marginBottom: '20px',
+    textAlign: 'center',
   };
 
   const statusStyle: React.CSSProperties = {
+    color: winner ? '#e74c3c' : '#2c3e50',
     fontSize: '24px',
     fontWeight: 'bold',
     marginBottom: '15px',
-    color: winner ? '#e74c3c' : '#2c3e50',
   };
 
   const buttonStyle: React.CSSProperties = {
-    padding: '12px 24px',
-    fontSize: '16px',
     backgroundColor: '#3498db',
-    color: 'white',
     border: 'none',
     borderRadius: '8px',
+    color: 'white',
     cursor: 'pointer',
+    fontSize: '16px',
     fontWeight: 'bold',
+    padding: '12px 24px',
     transition: 'background-color 0.2s',
   };
 
@@ -48,14 +48,14 @@ export const GameInfo = ({ currentPlayer, winner, onReset }: GameInfoProps) => {
         </div>
       )}
       <button
-        style={buttonStyle}
         onClick={onReset}
-        onMouseOver={(e) =>
-          (e.currentTarget.style.backgroundColor = '#2980b9')
-        }
         onMouseOut={(e) =>
           (e.currentTarget.style.backgroundColor = '#3498db')
         }
+        onMouseOver={(e) =>
+          (e.currentTarget.style.backgroundColor = '#2980b9')
+        }
+        style={buttonStyle}
       >
         새 게임
       </button>

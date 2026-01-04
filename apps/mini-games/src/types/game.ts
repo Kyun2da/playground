@@ -1,12 +1,12 @@
-export type Player = 'black' | 'white';
-export type Cell = Player | null;
 export type Board = Cell[][];
-
+export type Cell = null | Player;
 export interface GameState {
   board: Board;
   currentPlayer: Player;
-  winner: Player | null;
-  lastMove: { row: number; col: number } | null;
+  lastMove: null | { col: number; row: number; };
+  winner: null | Player;
 }
+
+export type Player = 'black' | 'white';
 
 export const BOARD_SIZE = 15;

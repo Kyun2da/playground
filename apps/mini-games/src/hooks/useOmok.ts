@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
-import { Board, Player, GameState, BOARD_SIZE } from '../types/game';
+import { useCallback, useState } from 'react';
+
+import { Board, BOARD_SIZE, GameState, Player } from '../types/game';
 
 const createEmptyBoard = (): Board => {
   return Array(BOARD_SIZE)
@@ -66,12 +67,12 @@ const checkWinner = (
 };
 
 export const useOmok = () => {
-  const [gameState, setGameState] = useState<GameState>({
+  const [gameState, setGameState] = useState<GameState>(() => ({
     board: createEmptyBoard(),
     currentPlayer: 'black',
-    winner: null,
     lastMove: null,
-  });
+    winner: null,
+  }));
 
   const placeStone = useCallback(
     (row: number, col: number) => {
@@ -96,8 +97,8 @@ export const useOmok = () => {
           : gameState.currentPlayer === 'black'
             ? 'white'
             : 'black',
+        lastMove: { col, row },
         winner: isWinner ? gameState.currentPlayer : null,
-        lastMove: { row, col },
       });
     },
     [gameState]
@@ -107,17 +108,17 @@ export const useOmok = () => {
     setGameState({
       board: createEmptyBoard(),
       currentPlayer: 'black',
-      winner: null,
       lastMove: null,
+      winner: null,
     });
   }, []);
 
   return {
     board: gameState.board,
     currentPlayer: gameState.currentPlayer,
-    winner: gameState.winner,
     lastMove: gameState.lastMove,
     placeStone,
     resetGame,
+    winner: gameState.winner,
   };
 };

@@ -4,11 +4,11 @@ export async function GET() {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
 
   const searchData = posts.map((post) => ({
-    slug: post.slug,
-    title: post.data.title,
-    excerpt: post.data.excerpt,
     categories: post.data.categories,
     date: post.data.date,
+    excerpt: post.data.excerpt,
+    slug: post.slug,
+    title: post.data.title,
   }));
 
   return new Response(JSON.stringify(searchData), {

@@ -1,20 +1,20 @@
 import { Player } from '../types/game';
 
 interface StoneProps {
-  player: Player;
   isLastMove?: boolean;
+  player: Player;
 }
 
-export const Stone = ({ player, isLastMove }: StoneProps) => {
+export const Stone = ({ isLastMove, player }: StoneProps) => {
   const baseStyle: React.CSSProperties = {
-    width: '85%',
-    height: '85%',
     borderRadius: '50%',
+    boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
+    height: '85%',
+    left: '50%',
     position: 'absolute',
     top: '50%',
-    left: '50%',
     transform: 'translate(-50%, -50%)',
-    boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
+    width: '85%',
   };
 
   const stoneStyle: React.CSSProperties =
@@ -35,14 +35,14 @@ export const Stone = ({ player, isLastMove }: StoneProps) => {
       {isLastMove && (
         <div
           style={{
+            backgroundColor: player === 'black' ? '#ff6b6b' : '#e74c3c',
+            borderRadius: '50%',
+            height: '20%',
+            left: '50%',
             position: 'absolute',
             top: '50%',
-            left: '50%',
             transform: 'translate(-50%, -50%)',
             width: '20%',
-            height: '20%',
-            borderRadius: '50%',
-            backgroundColor: player === 'black' ? '#ff6b6b' : '#e74c3c',
             zIndex: 1,
           }}
         />

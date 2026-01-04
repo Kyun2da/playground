@@ -1,35 +1,35 @@
-import { Board as BoardType, BOARD_SIZE } from '../types/game';
+import { BOARD_SIZE, Board as BoardType } from '../types/game';
 import { Stone } from './Stone';
 
 interface BoardProps {
   board: BoardType;
-  lastMove: { row: number; col: number } | null;
-  onCellClick: (row: number, col: number) => void;
   disabled: boolean;
+  lastMove: null | { col: number; row: number; };
+  onCellClick: (row: number, col: number) => void;
 }
 
-export const Board = ({ board, lastMove, onCellClick, disabled }: BoardProps) => {
+export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) => {
   const cellSize = 36;
   const boardPadding = cellSize / 2;
   const boardSize = cellSize * (BOARD_SIZE - 1) + boardPadding * 2;
 
   const boardStyle: React.CSSProperties = {
-    position: 'relative',
-    width: `${boardSize}px`,
-    height: `${boardSize}px`,
     backgroundColor: '#dcb35c',
     backgroundImage:
       'linear-gradient(135deg, #e8c97a 0%, #dcb35c 50%, #c9a227 100%)',
     borderRadius: '4px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+    height: `${boardSize}px`,
+    position: 'relative',
+    width: `${boardSize}px`,
   };
 
   const gridStyle: React.CSSProperties = {
+    height: `${cellSize * (BOARD_SIZE - 1)}px`,
+    left: `${boardPadding}px`,
     position: 'absolute',
     top: `${boardPadding}px`,
-    left: `${boardPadding}px`,
     width: `${cellSize * (BOARD_SIZE - 1)}px`,
-    height: `${cellSize * (BOARD_SIZE - 1)}px`,
   };
 
   // 격자선 생성
@@ -42,12 +42,12 @@ export const Board = ({ board, lastMove, onCellClick, disabled }: BoardProps) =>
         <div
           key={`h-${i}`}
           style={{
+            backgroundColor: '#8b7355',
+            height: '1px',
+            left: 0,
             position: 'absolute',
             top: `${i * cellSize}px`,
-            left: 0,
             width: '100%',
-            height: '1px',
-            backgroundColor: '#8b7355',
           }}
         />
       );
@@ -59,12 +59,12 @@ export const Board = ({ board, lastMove, onCellClick, disabled }: BoardProps) =>
         <div
           key={`v-${i}`}
           style={{
+            backgroundColor: '#8b7355',
+            height: '100%',
+            left: `${i * cellSize}px`,
             position: 'absolute',
             top: 0,
-            left: `${i * cellSize}px`,
             width: '1px',
-            height: '100%',
-            backgroundColor: '#8b7355',
           }}
         />
       );
@@ -83,18 +83,18 @@ export const Board = ({ board, lastMove, onCellClick, disabled }: BoardProps) =>
       [11, 11],
     ];
 
-    starPoints.forEach(([row, col], index) => {
+    starPoints.forEach(([row, col]) => {
       lines.push(
         <div
-          key={`star-${index}`}
+          key={`star-${row}-${col}`}
           style={{
+            backgroundColor: '#8b7355',
+            borderRadius: '50%',
+            height: '8px',
+            left: `${col * cellSize - 4}px`,
             position: 'absolute',
             top: `${row * cellSize - 4}px`,
-            left: `${col * cellSize - 4}px`,
             width: '8px',
-            height: '8px',
-            borderRadius: '50%',
-            backgroundColor: '#8b7355',
           }}
         />
       );
@@ -116,17 +116,17 @@ export const Board = ({ board, lastMove, onCellClick, disabled }: BoardProps) =>
         cells.push(
           <div
             key={`${row}-${col}`}
+            onClick={() => !disabled && onCellClick(row, col)}
             style={{
+              cursor: disabled || cell ? 'default' : 'pointer',
+              height: `${cellSize}px`,
+              left: `${col * cellSize - cellSize / 2}px`,
               position: 'absolute',
               top: `${row * cellSize - cellSize / 2}px`,
-              left: `${col * cellSize - cellSize / 2}px`,
               width: `${cellSize}px`,
-              height: `${cellSize}px`,
-              cursor: disabled || cell ? 'default' : 'pointer',
             }}
-            onClick={() => !disabled && onCellClick(row, col)}
           >
-            {cell && <Stone player={cell} isLastMove={!!isLastMove} />}
+            {cell && <Stone isLastMove={!!isLastMove} player={cell} />}
           </div>
         );
       }

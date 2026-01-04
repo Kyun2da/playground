@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
-import { Resend } from 'resend';
+
 import { getCollection } from 'astro:content';
+import { Resend } from 'resend';
 
 export const prerender = false;
 
@@ -15,8 +16,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!ADMIN_SECRET || secret !== ADMIN_SECRET) {
       return new Response(JSON.stringify({ error: '인증 실패' }), {
-        status: 401,
         headers: { 'Content-Type': 'application/json' },
+        status: 401,
       });
     }
 
@@ -33,8 +34,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (subscribers.length === 0) {
       return new Response(JSON.stringify({ message: '구독자가 없습니다' }), {
-        status: 200,
         headers: { 'Content-Type': 'application/json' },
+        status: 200,
       });
     }
 
@@ -58,20 +59,18 @@ export const POST: APIRoute = async ({ request }) => {
         categories = post.data.categories || [];
         readingTime = post.data.time || 0;
         const date = new Date(post.data.date);
-        postDate = date.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+        postDate = date.toLocaleDateString('ko-KR', { day: 'numeric', month: 'long', year: 'numeric' });
       }
     }
 
     // 이메일 발송 (Rate limit: 2/sec, 순차 발송)
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-    const results: { status: 'fulfilled' | 'rejected'; email: string }[] = [];
+    const results: { email: string; status: 'fulfilled' | 'rejected'; }[] = [];
 
     for (const subscriber of subscribers) {
       try {
         await resend.emails.send({
           from: 'Kyun2da.dev <onboarding@resend.dev>',
-          to: subscriber.email,
-          subject: `새 글 알림: ${postTitle}`,
           html: `
           <!DOCTYPE html>
           <html>
@@ -164,10 +163,12 @@ export const POST: APIRoute = async ({ request }) => {
           </body>
           </html>
         `,
+          subject: `새 글 알림: ${postTitle}`,
+          to: subscriber.email,
         });
-        results.push({ status: 'fulfilled', email: subscriber.email });
+        results.push({ email: subscriber.email, status: 'fulfilled' });
       } catch {
-        results.push({ status: 'rejected', email: subscriber.email });
+        results.push({ email: subscriber.email, status: 'rejected' });
       }
       // Rate limit 방지: 600ms 대기
       await delay(600);
@@ -177,19 +178,19 @@ export const POST: APIRoute = async ({ request }) => {
     const failCount = results.filter(r => r.status === 'rejected').length;
 
     return new Response(JSON.stringify({
-      success: true,
       message: `${successCount}명에게 발송 완료, ${failCount}명 실패`,
+      success: true,
       total: subscribers.length,
     }), {
-      status: 200,
       headers: { 'Content-Type': 'application/json' },
+      status: 200,
     });
 
   } catch (error) {
     console.error('Newsletter send error:', error);
     return new Response(JSON.stringify({ error: '뉴스레터 발송 중 오류가 발생했습니다' }), {
-      status: 500,
       headers: { 'Content-Type': 'application/json' },
+      status: 500,
     });
   }
 };

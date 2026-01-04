@@ -71,7 +71,7 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
     }
 
     // 화점 (star points)
-    const starPoints = [
+    const starPoints: [number, number][] = [
       [3, 3],
       [3, 7],
       [3, 11],
@@ -83,7 +83,7 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
       [11, 11],
     ];
 
-    starPoints.forEach(([row, col]) => {
+    for (const [row, col] of starPoints) {
       lines.push(
         <div
           key={`star-${row}-${col}`}
@@ -98,7 +98,7 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
           }}
         />
       );
-    });
+    }
 
     return lines;
   };
@@ -109,7 +109,7 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
 
     for (let row = 0; row < BOARD_SIZE; row++) {
       for (let col = 0; col < BOARD_SIZE; col++) {
-        const cell = board[row][col];
+        const cell = board[row]?.[col];
         const isLastMove =
           lastMove && lastMove.row === row && lastMove.col === col;
 

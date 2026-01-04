@@ -14,7 +14,7 @@ const checkWinner = (
   col: number,
   player: Player
 ): boolean => {
-  const directions = [
+  const directions: [number, number][] = [
     [1, 0], // 가로
     [0, 1], // 세로
     [1, 1], // 대각선 \
@@ -33,7 +33,7 @@ const checkWinner = (
         newRow < BOARD_SIZE &&
         newCol >= 0 &&
         newCol < BOARD_SIZE &&
-        board[newRow][newCol] === player
+        board[newRow]?.[newCol] === player
       ) {
         count++;
       } else {
@@ -50,7 +50,7 @@ const checkWinner = (
         newRow < BOARD_SIZE &&
         newCol >= 0 &&
         newCol < BOARD_SIZE &&
-        board[newRow][newCol] === player
+        board[newRow]?.[newCol] === player
       ) {
         count++;
       } else {
@@ -76,12 +76,16 @@ export const useOmok = () => {
 
   const placeStone = useCallback(
     (row: number, col: number) => {
-      if (gameState.winner || gameState.board[row][col] !== null) {
+      const currentCell = gameState.board[row]?.[col];
+      if (gameState.winner || currentCell !== null) {
         return;
       }
 
       const newBoard = gameState.board.map((r) => [...r]);
-      newBoard[row][col] = gameState.currentPlayer;
+      const targetRow = newBoard[row];
+      if (targetRow) {
+        targetRow[col] = gameState.currentPlayer;
+      }
 
       const isWinner = checkWinner(
         newBoard,

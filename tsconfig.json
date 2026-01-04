@@ -23,6 +23,8 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
     "target": "es6"
   },
   "exclude": ["**/__mocks__/*", "**/__tests__/*"]

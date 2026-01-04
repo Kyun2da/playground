@@ -2,6 +2,22 @@ import { josa } from 'es-hangul';
 
 import { Player } from '../types/game';
 
+// UI color constants
+const COLORS = {
+  black: '#000',
+  buttonHover: '#2980b9',
+  buttonPrimary: '#3498db',
+  textDefault: '#2c3e50',
+  textMuted: '#666',
+  winner: '#e74c3c',
+} as const;
+
+// Player display names
+const PLAYER_NAMES: Record<Player, string> = {
+  black: '흑돌',
+  white: '백돌',
+} as const;
+
 interface GameInfoProps {
   currentPlayer: Player;
   onReset: () => void;
@@ -16,14 +32,14 @@ export const GameInfo = ({ currentPlayer, onReset, winner }: GameInfoProps) => {
   };
 
   const statusStyle: React.CSSProperties = {
-    color: winner ? '#e74c3c' : '#2c3e50',
+    color: winner ? COLORS.winner : COLORS.textDefault,
     fontSize: '24px',
     fontWeight: 'bold',
     marginBottom: '15px',
   };
 
   const buttonStyle: React.CSSProperties = {
-    backgroundColor: '#3498db',
+    backgroundColor: COLORS.buttonPrimary,
     border: 'none',
     borderRadius: '8px',
     color: 'white',
@@ -34,30 +50,32 @@ export const GameInfo = ({ currentPlayer, onReset, winner }: GameInfoProps) => {
     transition: 'background-color 0.2s',
   };
 
-  const playerName = (player: Player) =>
-    player === 'black' ? '흑돌' : '백돌';
+  const getPlayerName = (player: Player): string => PLAYER_NAMES[player];
+
+  const getPlayerColor = (player: Player): string =>
+    player === 'black' ? COLORS.black : COLORS.textMuted;
 
   return (
     <div style={containerStyle}>
       {winner ? (
         <div style={statusStyle}>
-          {josa(playerName(winner), '이/가')} 승리했습니다!
+          {josa(getPlayerName(winner), '이/가')} 승리했습니다!
         </div>
       ) : (
         <div style={statusStyle}>
           현재 차례:{' '}
-          <span style={{ color: currentPlayer === 'black' ? '#000' : '#666' }}>
-            {playerName(currentPlayer)}
+          <span style={{ color: getPlayerColor(currentPlayer) }}>
+            {getPlayerName(currentPlayer)}
           </span>
         </div>
       )}
       <button
         onClick={onReset}
         onMouseOut={(e) =>
-          (e.currentTarget.style.backgroundColor = '#3498db')
+          (e.currentTarget.style.backgroundColor = COLORS.buttonPrimary)
         }
         onMouseOver={(e) =>
-          (e.currentTarget.style.backgroundColor = '#2980b9')
+          (e.currentTarget.style.backgroundColor = COLORS.buttonHover)
         }
         style={buttonStyle}
       >

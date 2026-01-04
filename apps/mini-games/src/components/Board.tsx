@@ -1,6 +1,32 @@
 import { BOARD_SIZE, Board as BoardType } from '../types/game';
 import { Stone } from './Stone';
 
+// Board styling constants
+const CELL_SIZE_PX = 36;
+const STAR_POINT_SIZE_PX = 8;
+const BOARD_BORDER_RADIUS = '4px';
+
+// Color constants for wooden board theme
+const BOARD_COLORS = {
+  background: '#dcb35c',
+  gridLine: '#8b7355',
+  highlight: '#e8c97a',
+  shadow: '#c9a227',
+} as const;
+
+// Star points (화점) positions on a 15x15 board
+const STAR_POINTS: [number, number][] = [
+  [3, 3],
+  [3, 7],
+  [3, 11],
+  [7, 3],
+  [7, 7],
+  [7, 11],
+  [11, 3],
+  [11, 7],
+  [11, 11],
+];
+
 interface BoardProps {
   board: BoardType;
   disabled: boolean;
@@ -9,15 +35,13 @@ interface BoardProps {
 }
 
 export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) => {
-  const cellSize = 36;
-  const boardPadding = cellSize / 2;
-  const boardSize = cellSize * (BOARD_SIZE - 1) + boardPadding * 2;
+  const boardPadding = CELL_SIZE_PX / 2;
+  const boardSize = CELL_SIZE_PX * (BOARD_SIZE - 1) + boardPadding * 2;
 
   const boardStyle: React.CSSProperties = {
-    backgroundColor: '#dcb35c',
-    backgroundImage:
-      'linear-gradient(135deg, #e8c97a 0%, #dcb35c 50%, #c9a227 100%)',
-    borderRadius: '4px',
+    backgroundColor: BOARD_COLORS.background,
+    backgroundImage: `linear-gradient(135deg, ${BOARD_COLORS.highlight} 0%, ${BOARD_COLORS.background} 50%, ${BOARD_COLORS.shadow} 100%)`,
+    borderRadius: BOARD_BORDER_RADIUS,
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
     height: `${boardSize}px`,
     position: 'relative',
@@ -25,11 +49,11 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
   };
 
   const gridStyle: React.CSSProperties = {
-    height: `${cellSize * (BOARD_SIZE - 1)}px`,
+    height: `${CELL_SIZE_PX * (BOARD_SIZE - 1)}px`,
     left: `${boardPadding}px`,
     position: 'absolute',
     top: `${boardPadding}px`,
-    width: `${cellSize * (BOARD_SIZE - 1)}px`,
+    width: `${CELL_SIZE_PX * (BOARD_SIZE - 1)}px`,
   };
 
   // 격자선 생성
@@ -42,11 +66,11 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
         <div
           key={`h-${i}`}
           style={{
-            backgroundColor: '#8b7355',
+            backgroundColor: BOARD_COLORS.gridLine,
             height: '1px',
             left: 0,
             position: 'absolute',
-            top: `${i * cellSize}px`,
+            top: `${i * CELL_SIZE_PX}px`,
             width: '100%',
           }}
         />
@@ -59,9 +83,9 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
         <div
           key={`v-${i}`}
           style={{
-            backgroundColor: '#8b7355',
+            backgroundColor: BOARD_COLORS.gridLine,
             height: '100%',
-            left: `${i * cellSize}px`,
+            left: `${i * CELL_SIZE_PX}px`,
             position: 'absolute',
             top: 0,
             width: '1px',
@@ -71,30 +95,19 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
     }
 
     // 화점 (star points)
-    const starPoints: [number, number][] = [
-      [3, 3],
-      [3, 7],
-      [3, 11],
-      [7, 3],
-      [7, 7],
-      [7, 11],
-      [11, 3],
-      [11, 7],
-      [11, 11],
-    ];
-
-    for (const [row, col] of starPoints) {
+    const starPointOffset = STAR_POINT_SIZE_PX / 2;
+    for (const [row, col] of STAR_POINTS) {
       lines.push(
         <div
           key={`star-${row}-${col}`}
           style={{
-            backgroundColor: '#8b7355',
+            backgroundColor: BOARD_COLORS.gridLine,
             borderRadius: '50%',
-            height: '8px',
-            left: `${col * cellSize - 4}px`,
+            height: `${STAR_POINT_SIZE_PX}px`,
+            left: `${col * CELL_SIZE_PX - starPointOffset}px`,
             position: 'absolute',
-            top: `${row * cellSize - 4}px`,
-            width: '8px',
+            top: `${row * CELL_SIZE_PX - starPointOffset}px`,
+            width: `${STAR_POINT_SIZE_PX}px`,
           }}
         />
       );
@@ -106,24 +119,26 @@ export const Board = ({ board, disabled, lastMove, onCellClick }: BoardProps) =>
   // 클릭 가능한 셀 생성
   const renderCells = () => {
     const cells = [];
+    const cellOffset = CELL_SIZE_PX / 2;
 
     for (let row = 0; row < BOARD_SIZE; row++) {
       for (let col = 0; col < BOARD_SIZE; col++) {
         const cell = board[row]?.[col];
         const isLastMove =
           lastMove && lastMove.row === row && lastMove.col === col;
+        const isClickable = !disabled && !cell;
 
         cells.push(
           <div
             key={`${row}-${col}`}
-            onClick={() => !disabled && onCellClick(row, col)}
+            onClick={() => isClickable && onCellClick(row, col)}
             style={{
-              cursor: disabled || cell ? 'default' : 'pointer',
-              height: `${cellSize}px`,
-              left: `${col * cellSize - cellSize / 2}px`,
+              cursor: isClickable ? 'pointer' : 'default',
+              height: `${CELL_SIZE_PX}px`,
+              left: `${col * CELL_SIZE_PX - cellOffset}px`,
               position: 'absolute',
-              top: `${row * cellSize - cellSize / 2}px`,
-              width: `${cellSize}px`,
+              top: `${row * CELL_SIZE_PX - cellOffset}px`,
+              width: `${CELL_SIZE_PX}px`,
             }}
           >
             {cell && <Stone isLastMove={!!isLastMove} player={cell} />}

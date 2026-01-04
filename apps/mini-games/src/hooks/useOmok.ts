@@ -3,10 +3,17 @@ import { useCallback, useState } from 'react';
 
 import { Board, BOARD_SIZE, GameState, Player } from '../types/game';
 
+const WIN_COUNT = 5;
+const MAX_SEARCH_DISTANCE = WIN_COUNT - 1;
+
 const createEmptyBoard = (): Board => {
   return Array(BOARD_SIZE)
     .fill(null)
     .map(() => Array(BOARD_SIZE).fill(null));
+};
+
+const isWithinBoard = (row: number, col: number): boolean => {
+  return row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE;
 };
 
 const checkWinner = (
@@ -26,16 +33,13 @@ const checkWinner = (
     let count = 1;
 
     // 정방향 탐색
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i <= MAX_SEARCH_DISTANCE; i++) {
       const newRow = row + dy * i;
       const newCol = col + dx * i;
-      if (
-        newRow >= 0 &&
-        newRow < BOARD_SIZE &&
-        newCol >= 0 &&
-        newCol < BOARD_SIZE &&
-        board[newRow]?.[newCol] === player
-      ) {
+      const isValidPosition = isWithinBoard(newRow, newCol);
+      const isSamePlayer = board[newRow]?.[newCol] === player;
+
+      if (isValidPosition && isSamePlayer) {
         count++;
       } else {
         break;
@@ -43,23 +47,20 @@ const checkWinner = (
     }
 
     // 역방향 탐색
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i <= MAX_SEARCH_DISTANCE; i++) {
       const newRow = row - dy * i;
       const newCol = col - dx * i;
-      if (
-        newRow >= 0 &&
-        newRow < BOARD_SIZE &&
-        newCol >= 0 &&
-        newCol < BOARD_SIZE &&
-        board[newRow]?.[newCol] === player
-      ) {
+      const isValidPosition = isWithinBoard(newRow, newCol);
+      const isSamePlayer = board[newRow]?.[newCol] === player;
+
+      if (isValidPosition && isSamePlayer) {
         count++;
       } else {
         break;
       }
     }
 
-    if (count >= 5) {
+    if (count >= WIN_COUNT) {
       return true;
     }
   }
@@ -95,13 +96,14 @@ export const useOmok = () => {
         gameState.currentPlayer
       );
 
+      const getNextPlayer = (): Player => {
+        if (isWinner) return gameState.currentPlayer;
+        return gameState.currentPlayer === 'black' ? 'white' : 'black';
+      };
+
       setGameState({
         board: newBoard,
-        currentPlayer: isWinner
-          ? gameState.currentPlayer
-          : gameState.currentPlayer === 'black'
-            ? 'white'
-            : 'black',
+        currentPlayer: getNextPlayer(),
         lastMove: { col, row },
         winner: isWinner ? gameState.currentPlayer : null,
       });

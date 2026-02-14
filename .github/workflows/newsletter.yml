@@ -1,0 +1,62 @@
+name: Newsletter
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/blog/src/content/posts/*.mdx'
+
+jobs:
+  send-newsletter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: 새 포스트 감지
+        id: detect
+        run: |
+          NEW_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'apps/blog/src/content/posts/*.mdx')
+
+          if [ -z "$NEW_FILES" ]; then
+            echo "새 포스트 없음"
+            echo "has_new_post=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          SLUG=$(basename "$NEW_FILES" .mdx | head -n 1)
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+
+          if grep -q 'draft: true' "apps/blog/src/content/posts/${SLUG}.mdx"; then
+            echo "draft 포스트 스킵: $SLUG"
+            echo "has_new_post=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "새 포스트 감지: $SLUG"
+          echo "has_new_post=true" >> "$GITHUB_OUTPUT"
+
+      - name: Vercel 배포 대기
+        if: steps.detect.outputs.has_new_post == 'true'
+        run: sleep 120
+
+      - name: 뉴스레터 발송
+        if: steps.detect.outputs.has_new_post == 'true'
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST https://kyun2da.dev/api/send-newsletter \
+            -H "Content-Type: application/json" \
+            -d "{\"secret\": \"${{ secrets.NEWSLETTER_ADMIN_SECRET }}\", \"slug\": \"${{ steps.detect.outputs.slug }}\"}")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n 1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            echo "뉴스레터 발송 실패"
+            exit 1
+          fi

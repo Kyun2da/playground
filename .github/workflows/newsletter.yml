@@ -46,7 +46,7 @@ jobs:
       - name: 뉴스레터 발송
         if: steps.detect.outputs.has_new_post == 'true'
         run: |
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST https://kyun2da.dev/api/send-newsletter \
+          RESPONSE=$(curl -L -s -w "\n%{http_code}" -X POST https://kyun2da.dev/api/send-newsletter \
             -H "Content-Type: application/json" \
             -d "{\"secret\": \"${{ secrets.NEWSLETTER_ADMIN_SECRET }}\", \"slug\": \"${{ steps.detect.outputs.slug }}\"}")
 
